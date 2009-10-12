@@ -1,0 +1,31 @@
+\documentclass[english,a4paper, 10pt, smallheadings, DIV11]{scrartcl} % ursprünglich DIV 15
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{color}
+\usepackage{babel}
+
+\usepackage{pdfpages}
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[numbers]{natbib}
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+\hypersetup{pdftitle={Chondro Vignette},
+ pdfauthor={C. Beleites},
+ pdfsubject={Vignette on hyperSpec's chondro data set},
+ pdfkeywords={chondro, hyperSpec, cluster analysis, preprocessing, Raman, principal component analysis, PCA}}
+\usepackage{hyphenat}
+
+% Meta information - fill between {} and do not remove %
+% \VignetteIndexEntry{Vignette on the chondro data set. Shows common Preprocessing tasks for Raman spectra, principal component analysis (PCA), and hierarchical cluster analysis.}
+% \VignetteKeywords{chondro, hyperSpec, cluster analysis, preprocessing, Raman, principal component analysis, PCA}
+% \VignettePackage{hyperSpec}
+\begin{document}
+\includepdf[pages=-,fitpaper=true]{chondrocytes.pdf}
+\end{document}

@@ -1,0 +1,98 @@
+#import(methods)
+importFrom (methods, initialize)
+importFrom (methods, Arith)
+importFrom (methods, show)
+importFrom (methods, cbind2)
+importFrom (methods, rbind2)
+importFrom (stats, aggregate)
+importFrom (graphics, plot)
+importFrom (lattice, trellis.focus)
+importFrom (lattice, panel.identify)
+importFrom (lattice, levelplot)
+importFrom (grDevices, rainbow) 
+#import(graphics)
+
+export (bind,
+        cbind.hyperSpec,
+        rbind.hyperSpec,
+        logentry,
+        plotmap, 
+        plotc, 
+        plotspc, 
+        nwl, 
+        wl2i,
+        i2wl,
+        wl,
+        "wl<-",
+        "labels<-",
+        logbook,
+		  spc.loess,
+        decomposition,
+        as.long.df,
+        read.txt.long,
+        read.txt.wide,
+        scan.txt.Renishaw,
+        read.ENVI,
+        write.txt.wide, 
+        write.txt.long, 
+        spc.bin, 
+        spc.fit.poly, 
+        spc.fit.poly.below,
+        orderwl,
+        index.grid,
+        map.identify,
+        spc.identify,
+        vec2array,
+        array2vec,
+        array2df,
+        matlab.palette,
+        matlab.dark.palette,
+        pearson.dist,
+        mean_pm_sd,
+        mean_sd,
+        wc,
+        stacked.offsets
+        )
+
+exportClass (hyperSpec)
+
+exportMethods ("initialize",
+               "cbind2",
+               "rbind2",
+               "print",
+               "show",
+               "summary",
+               "[", 
+               "$", 
+               "[[",
+               "as.data.frame",
+               "as.matrix",
+               "as.character",
+               "ncol", 
+               "nrow", 
+               "dim",
+               "colnames",
+               "rownames",
+               "colnames<-",
+               "rownames<-",
+               "dimnames",
+               "labels",
+               "[<-", 
+               "[[<-", 
+               "$<-", 
+               "Arith",
+               "Compare",
+               "all.equal",
+               "Math",
+               "Math2",
+               "Summary",
+	            "%*%",
+	            "log",
+               "apply", 
+               "split", 
+               "sweep", 
+               "aggregate", 
+               "plot"
+               ) 
+
+
