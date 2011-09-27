@@ -1,21 +1,14 @@
 \name{flu}
 \alias{flu}
-\docType{data}
-\title{Chitin Fluorescence Spectra}
-\description{
+\alias{flu}
+\title{Quinine Fluorescence Spectra...}
+\description{Quinine Fluorescence Spectra
 Fluorescence spectra of different dilutions of quinine forming a
-calibration set.
-}
-\usage{data(flu)}
-\format{
- The data set has 6 fluorescence emission spectra measured on quinine
- concentrations between 0.05 mg/l and 0.30 mg/l.
- Each spectrum consists of 181 data points in the range of 405 nm to 495 nm. 
-}
-\details{
-  See the vignette.
-}
+calibration set.}
+\details{See the vignette.}
+\docType{data}
 \author{M. Kammer and C. Beleites}
+\keyword{datasets}
 \examples{
 flu
 
@@ -23,6 +16,6 @@ plot (flu)
 
 plotc (flu)
 
-vignette ("flu", package = "hyperSpec")
+\dontrun{vignette ("flu", package = "hyperSpec")}
 }
-\keyword{datasets}
+

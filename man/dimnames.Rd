@@ -1,65 +1,52 @@
 \name{dimnames}
-\docType{methods}
 \alias{dimnames,hyperSpec-method}
-\alias{colnames,hyperSpec-method}
-\alias{rownames,hyperSpec-method}
-\alias{colnames<-,hyperSpec-method}
-\alias{rownames<-,hyperSpec-method}
+\alias{dimnames}
+\title{Dimnames for hyperSpec objects...}
+\usage{\S4method{dimnames}{hyperSpec}(x)
 
-\title{Dimnames of an hyperSpec Object}
-\description{
-  \code{rownames} yields the names of the rows (spectra) of a \code{hyperSpec} object,
-  
-  \code{colnames} the names of the data colums, and 
-  
-  \code{dimnames} both together with the names of the wavelengths (see
-  below).
-}
-\usage{
-\S4method{colnames}{hyperSpec}(x, do.NULL = TRUE, prefix = "col")
-\S4method{rownames}{hyperSpec}(x, do.NULL = TRUE, prefix = "row")
-\S4method{dimnames}{hyperSpec}(x)
-}
-\details{
-\code{dimnames} returns in element \code{wl} the colnames of the spectra
-matrix, \emph{not} the values. 
+\S4method{rownames}{hyperSpec}(x, do.NULL=TRUE, prefix="row")
 
-The replacement functions for column and row names are used like:
-\preformatted{
-colnames (x) <- value
-rownames (x) <- value
-}
 
-If changing the colnames, be careful not to touch \code{spc}. Otherwise
-an error about an invalid hyperSpec object results.
+\S4method{rownames}{hyperSpec} (x) <- value
+
+\S4method{colnames}{hyperSpec}(x, do.NULL=TRUE, prefix="col")
+
+
+\S4method{colnames}{hyperSpec} (x) <- value
 }
-\arguments{
-  \item{x}{a \code{hyperSpec} object}
-  \item{do.NULL, prefix}{handed to \code{\link[base]{rownames}} and
-	 \code{\link[base]{colnames}}, respectively.}
+\description{Dimnames for hyperSpec objects}
+\details{\code{dimnames,hyperSpec-method}: hyperSpec objects can have row- and column names like data.frames. The "names" of the wavelengths
+are treated separately: see \code{\link{wl}}
+
 }
-\value{
-  \code{rownames} and \code{colnames} return an \code{character} vector,
-  
-   \code{dimames} returns a list with elements \code{row},  \code{data}, \code{wl} with the 
-   respective character vectors. 
-}
+\alias{dimnames}
+\keyword{methods}
+\docType{methods}
 \author{C. Beleites}
-\seealso{\code{\link[base]{rownames}}, \code{\link[base]{colnames}}, and
-  \code{\link[base]{dimnames}}
+\seealso{\code{\link{wl}} for the wavelength dimension
 
-  \code{\link[base]{rownames<-}} and \code{\link[base]{colnames<-}} for the
-  replacement functions
-
-\code{\link[hyperSpec]{wl}}, \code{\link[hyperSpec]{wl<-}} for
-accessing the values of the wavelength axis. 
+\code{\link[base]{dimnames}}\code{\link[base]{rownames}}\code{\link[base]{colnames}}}
+\arguments{\item{x}{the hyperSpec object}
+\item{do.NULL}{handed to \code{\link[base]{rownames}} or \code{\link[base]{colnames}}: logical.
+Should this create names if they are \code{NULL}?}
+\item{prefix}{handed to \code{\link[base]{rownames}} or \code{\link[base]{colnames}}}
+\item{value}{the new names}
 }
 \examples{
-rownames (flu)
-colnames (flu)
-dimnames (laser)
+dimnames (flu)
 
-rownames (flu) <- paste ("sample", LETTERS [1 : 6])
-flu$..
+rownames (flu)
+
+colnames (chondro)
 }
-\keyword{methods}
+\alias{rownames,hyperSpec-method}
+\alias{rownames}
+\alias{rownames}
+\alias{rownames<-,hyperSpec-method}
+\alias{rownames<-}
+\alias{colnames,hyperSpec-method}
+\alias{colnames}
+\alias{colnames}
+\alias{colnames<-,hyperSpec-method}
+\alias{colnames<-}
+

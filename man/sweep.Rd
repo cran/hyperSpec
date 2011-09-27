@@ -1,49 +1,42 @@
 \name{sweep}
-\docType{methods}
+\alias{sweep,hyperSpec-method}
 \alias{sweep}
+\title{Sweep Summary Statistic out of an hyperSpec Object...}
+\usage{\S4method{sweep}{hyperSpec}(x, MARGIN, STATS, FUN="-", check.margin=TRUE, ..., short="sweep",
+    user=NULL, date=NULL)
+}
+\description{Sweep Summary Statistic out of an hyperSpec Object
+\code{\link[base]{sweep}} for \code{hyperSpec} objects.}
+\details{Calls \code{\link[base]{sweep}} for the spectra matrix.
+
+\code{sweep} is useful for some spectra preprocessing, like offset
+correction, substraction of background spectra, and normalization of the
+spectra.}
 \alias{sweep-methods}
 \alias{sweep,hyperSpec-method}
-\title{Sweep Summary Statistic out of an hyperSpec Object}
-
-\description{
-  \code{\link[base]{sweep}} for \code{hyperSpec} objects.
-}
-\usage{
-\S4method{sweep}{hyperSpec}(x, MARGIN, STATS, FUN = "-",
-   check.margin = TRUE, \dots, 
-   short = NULL, user = NULL, date = NULL)
-}
-\arguments{
-  \item{x}{a \code{hyperSpec object.}}
-  
-  \item{MARGIN}{direction of the spectra matrix that \code{STATS} goees along.}
-
-  \item{STATS}{the summary statistic to sweep out. Either a vector or a
-	 \code{hyperSpec} object.}
-
-  \item{FUN}{the function to do the sweeping, e.g. `-` or `/`.}
-
-  \item{check.margin}{If \code{TRUE} (the default), warn if the length or
-    dimensions of \code{STATS} do not match the specified dimensions
-    of \code{x}.  Set to \code{FALSE} for a small speed gain when you
-    \emph{know} that dimensions match.}
-
-  \item{\dots}{further arguments for \code{FUN}}
-
-  \item{short, user, date}{handed over to \code{\link{logentry}}.}
-}
-\details{
-  Calls \code{\link[base]{sweep}} for the spectra matrix.
-
-  \code{sweep} is useful for some spectra preprocessing, like
-  offset correction, substraction of background spectra, and
-  normalization of the spectra.
-}
-\value{
-  A \code{hyperSpec} object.
-}
+\docType{methods}
+\value{A \code{hyperSpec} object.}
 \author{C. Beleites}
 \seealso{\code{\link[base]{sweep}}}
+\keyword{methods}
+\arguments{\item{x}{a \code{hyperSpec object.}}
+\item{MARGIN}{direction of the spectra matrix that \code{STATS} goees
+along.}
+\item{STATS}{the summary statistic to sweep out. Either a vector or a
+\code{hyperSpec} object.
+
+hyperSpec offers a non-standard convenience function: if \code{STATS} is a
+function, this function is applied first (with the same \code{MARGIN}) to
+compute the statistic. However, no further arguments to the apply
+function can be given.  See the examples.}
+\item{FUN}{the function to do the sweeping, e.g. `-` or `/`.}
+\item{check.margin}{If \code{TRUE} (the default), warn if the length or
+dimensions of \code{STATS} do not match the specified dimensions of
+\code{x}.  Set to \code{FALSE} for a small speed gain when you
+\emph{know} that dimensions match.}
+\item{\dots}{further arguments for \code{FUN}}
+\item{short,user,date}{handed over to \code{\link{logentry}}.}
+}
 \examples{
 ## Substract the background / slide / blank spectrum
 # the example data does not have spectra of the empty slide,
@@ -60,8 +53,14 @@ plot (corrected, "spcprctl5")
 ## Min-max normalization (on max amide I)
 # the minimum is set to zero by the offset correction.
 factor <- apply (corrected, 1, max)
-corrected <- sweep (corrected, 1, factor, "/")
-plot (corrected, "spcprctl5")
+mm.corrected <- sweep (corrected, 1, factor, "/")
+plot (mm.corrected, "spcprctl5")
+
+## convenience: give function to compute STATS:
+mm.corrected2 <- sweep (corrected, 1, max, "/")
+plot (mm.corrected2)
+
+## checking
+stopifnot (all (mm.corrected2 == mm.corrected))
 }
 
-\keyword{methods}

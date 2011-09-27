@@ -102,6 +102,6 @@ Objects can be created by calls of the form \code{new("hyperSpec", spc,
 }
 \examples{
 showClass("hyperSpec")
-vignette ("introduction")
+\dontrun{vignette ("introduction")}
 }
 \keyword{classes}

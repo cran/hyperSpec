@@ -1,77 +1,67 @@
 \name{wl}
 \alias{wl}
-\alias{wl<-}
-\title{Getting and Setting the Wavelength Axis}
-\description{
-\code{wl} returns the wavelength axis, \code{wl<-} sets it.
+\title{Getting and Setting the Wavelength Axis...}
+\usage{wl(x)
+
+wl (x, label=NULL, digits=6, short="wl<-", user = NULL, date = NULL) <- value
 }
-\section{Usage}{
-\code{wl (x)}
+\description{Getting and Setting the Wavelength Axis
+\code{wl} returns the wavelength axis, \code{wl<-} sets it.}
+\details{\code{wl}: The wavelength axis of a \code{hyperSpec} object can be retrieved and
+replaced with \code{wl} and \code{wl<-}, respectively.
 
-\code{## Replacement method}
+When the wavelength axis is replaced, the colnames of \code{x@data$spc} are
+replaced by the rounded new wavelengths.  \code{digits} specifies the how
+many significant digits should be used.
 
-\code{wl (x, label) <- value}
+There are two ways to set the label of the new wavelength axis, see the
+examples.  If no label is given, a warning will be issued.
 
-\code{wl (x) <- list (wl =  value, label = label)}
-
-\code{wl (x, label = NULL, digits = 6, short = "wl<-", user = NULL, date = NULL) <- value}
-
-\code{`wl<-` (x, label = NULL, digits = 6, short = "wl<-", user = NULL, date = NULL, value)}
 }
-\arguments{
-  \item{x}{a \code{hyperSpec} object}
-  
-  \item{value}{either a numeric containing the new wavelength vector,
-  or a list with \code{value$wl} containing the new wavelength vector 
-  and \code{value$label} holding the corresponding \code{label}.}
-  
-  \item{label}{The label for the new wavelength axis. See \link{initialize} for details.}
- 
-  \item{digits}{handed to \code{\link[base]{signif}}. See details.}
+\alias{wl}
+\value{\code{wl}: a numeric vector
 
-  \item{short, user, date}{handed to \code{\link{logentry}}.}
-}
-\details{
-The wavelength axis of a \code{hyperSpec} object can be retrieved and replaced with 
-\code{wl} and \code{wl<-}, respectively.
+\code{wl<-}: \code{hyperSpec} object
 
-When the wavelength axis is replaced, the colnames of 
-\code{x@data$spc} are replaced by the rounded new wavelengths. 
-\code{digits} specifies the how many significant digits should be used.
 
-There are two ways to set the label of the new wavelength axis, see the examples. 
-If no label is given, a warning will be issued. 
 }
-\note{
-  \code{wl<-} always sets the complete wavelength axis, without changing the columns 
-  of the spectra matrix. If you rather want to cut the spectral range, use \code{\link[hyperSpec:extract_replace]{[}}, 
-  for interpolation along the spectral axis see \code{\link[hyperSpec]{spc.loess}} 
-  and for spectral binning \code{\link[hyperSpec]{spc.bin}}.
-}
-\value{
-  for \code{wl} a numeric vector, for \code{wl<-} a \code{hyperSpec} object.
-}
-\seealso{
-\code{\link[base]{signif}}
+\note{\code{wl<-} always sets the complete wavelength axis, without
+changing the columns of the spectra matrix. If you rather want to cut the
+spectral range, use \code{\link[hyperSpec:extractreplace]{[}}, for
+interpolation along the spectral axis see
+\code{\link[hyperSpec]{spc.loess}} and for spectral binning
+\code{\link[hyperSpec]{spc.bin}}.}
+\author{C. Beleites}
+\seealso{\code{\link[base]{signif}}
 
-cutting the spectral range: \code{\link[hyperSpec:extract_replace]{[}}
+cutting the spectral range: \code{\link[hyperSpec:extractreplace]{[}}
 
 interpolation along the spectral axis: \code{\link[hyperSpec]{spc.loess}}
 
- spectral binning: \code{\link[hyperSpec]{spc.bin}}
+spectral binning: \code{\link[hyperSpec]{spc.bin}}}
+\arguments{\item{x}{a \code{hyperSpec} object}
+\item{value}{either a numeric containing the new wavelength vector, or a
+list with \code{value$wl} containing the new wavelength vector and
+\code{value$label} holding the corresponding \code{label}.}
+\item{label}{The label for the new wavelength axis. See \link{initialize}
+for details.}
+\item{digits}{handed to \code{\link[base]{signif}}. See details.}
+\item{short,user,date}{handed to \code{\link{logentry}}.}
 }
-\author{C. Beleites}
 \examples{
-	wl (laser)
-	
-	# convert from wavelength to frequency 
-	plot (laser)
-	wl (laser, "f / Hz") <- 2.998e8 * wl (laser) * 1e9
-	plot (laser)
-	
-	# convert from Raman shift to wavelength
-	# excitation was at 785 nm
-	plot (chondro [1])
-	wl (chondro) <- list (wl = 1e7 / (1e7/785 - wl (chondro)), label = expression (lambda / nm))
-	plot (chondro [1])
+wl (laser)
+
+# convert from wavelength to frequency 
+plot (laser)
+wl (laser, "f / Hz") <- 2.998e8 * wl (laser) * 1e9
+plot (laser)
+
+# convert from Raman shift to wavelength
+# excitation was at 785 nm
+plot (chondro [1])
+wl (chondro) <- list (wl = 1e7 / (1e7/785 - wl (chondro)), label = expression (lambda / nm))
+plot (chondro [1])
 }
+\alias{wl<-}
+\alias{wl<-}
+

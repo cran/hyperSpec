@@ -1,7 +1,26 @@
-\name{Summary}
+\name{summary}
+\alias{Summary,-method}
+\alias{Summary}
+\title{The functions...}
+\description{The functions}
+\details{\code{Summary,-method}: \code{all}, \code{any},
+
+\code{sum}, \code{prod},
+
+\code{min}, \code{max}, 
+
+\code{range}, and
+
+\code{is.na}
+
+for \code{hyperSpec} objects.
+
+All these functions work on the spectra matrix.
+
+}
 \docType{methods}
 \alias{Summary,hyperSpec-method}
-\alias{hyperSpec Summary}
+\alias{Summary}
 \alias{all,hyperSpec-method}
 \alias{any,hyperSpec-method}
 \alias{sum,hyperSpec-method}
@@ -9,57 +28,21 @@
 \alias{min,hyperSpec-method}
 \alias{max,hyperSpec-method}
 \alias{range,hyperSpec-method}
-\title{Math Functions for hyperSpec Objects}
-\description{The functions 
+\value{\code{Summary,-method}: \code{sum}, \code{prod}, \code{min}, \code{max}, and \code{range} return  a numeric,
+\code{all}, \code{any}, and \code{is.na} a logical.
 
-\code{all},
-\code{any},
-
-\code{sum},
-\code{prod},
-
-\code{min},
-\code{max}, and
-
-\code{range}
-
-  for \code{hyperSpec} objects. 
 }
-\usage{
-\S4method{all}{hyperSpec}(x, \dots, na.rm = FALSE)
-\S4method{any}{hyperSpec}(x, \dots, na.rm = FALSE)
-\S4method{sum}{hyperSpec}(x, \dots, na.rm = FALSE)
-\S4method{prod}{hyperSpec}(x, \dots, na.rm = FALSE)
-\S4method{min}{hyperSpec}(x, \dots, na.rm = FALSE)
-\S4method{max}{hyperSpec}(x, \dots, na.rm = FALSE)
-\S4method{range}{hyperSpec}(x, \dots, na.rm = FALSE)
+\seealso{\code{\link[base]{Summary}} for the base summary functions.\code{\link[base]{all.equal}} and \code{\link[base]{isTRUE}}}
+\arguments{\item{\dots}{further objects}
+\item{na.rm}{logical indicating whether missing values should be removed}
+\item{digits}{integer stating the rounding precision}
 }
-\arguments{
-  \item{x}{the \code{hyperSpec} object} 
-  \item{\dots}{further objects} 
-  \item{na.rm}{logical indicating whether missing values should be
-          removed} 
-}
-\details{
-  All these functions work on the spectra matrix. 
-}
-
-\value{a numeric}
-
-\author{C. Beleites}
-
 \examples{
-	range (flu) 
-}
-\seealso{
-  \code{\link[methods]{S4groupGeneric}} for group generic methods.
+range (flu)
 
-  \code{\link[base]{Summary}} for the base summary functions.
-  
-  \code{\link[hyperSpec]{Arith}} for arithmetic operators,
-  \code{\link[hyperSpec]{Comparison}} for comparison operators, and 
-  \code{\link[hyperSpec]{Math}}
-  for group generic functions working on \code{hyperSpec} objects.  
+is.na (flu [,, 405 ~ 410]);
 }
-\keyword{methods}
-\keyword{arith}
+\alias{is.na,-method}
+\alias{is.na}
+\alias{is.na,hyperSpec-method}
+

@@ -1,98 +1,120 @@
-#import(methods)
-importFrom (methods, initialize)
-importFrom (methods, Arith)
-importFrom (methods, show)
-importFrom (methods, cbind2)
-importFrom (methods, rbind2)
-importFrom (stats, aggregate)
-importFrom (graphics, plot)
-importFrom (lattice, trellis.focus)
-importFrom (lattice, panel.identify)
-importFrom (lattice, levelplot)
-importFrom (grDevices, rainbow) 
-#import(graphics)
-
-export (bind,
-        cbind.hyperSpec,
-        rbind.hyperSpec,
-        logentry,
-        plotmap, 
-        plotc, 
-        plotspc, 
-        nwl, 
-        wl2i,
-        i2wl,
-        wl,
-        "wl<-",
-        "labels<-",
-        logbook,
-		  spc.loess,
-        decomposition,
-        as.long.df,
-        read.txt.long,
-        read.txt.wide,
-        scan.txt.Renishaw,
-        read.ENVI,
-        write.txt.wide, 
-        write.txt.long, 
-        spc.bin, 
-        spc.fit.poly, 
-        spc.fit.poly.below,
-        orderwl,
-        index.grid,
-        map.identify,
-        spc.identify,
-        vec2array,
-        array2vec,
-        array2df,
-        matlab.palette,
-        matlab.dark.palette,
-        pearson.dist,
-        mean_pm_sd,
-        mean_sd,
-        wc,
-        stacked.offsets
-        )
-
-exportClass (hyperSpec)
-
-exportMethods ("initialize",
-               "cbind2",
-               "rbind2",
-               "print",
-               "show",
-               "summary",
-               "[", 
-               "$", 
-               "[[",
-               "as.data.frame",
-               "as.matrix",
-               "as.character",
-               "ncol", 
-               "nrow", 
-               "dim",
-               "colnames",
-               "rownames",
-               "colnames<-",
-               "rownames<-",
-               "dimnames",
-               "labels",
-               "[<-", 
-               "[[<-", 
-               "$<-", 
-               "Arith",
-               "Compare",
-               "all.equal",
-               "Math",
-               "Math2",
-               "Summary",
-	            "%*%",
-	            "log",
-               "apply", 
-               "split", 
-               "sweep", 
-               "aggregate", 
-               "plot"
-               ) 
-
-
+exportMethods(aggregate)
+import(stats)
+exportMethods(all.equal)
+exportMethods(apply)
+exportMethods(Arith)
+export("%*%")
+exportMethods(as.data.frame)
+exportMethods(as.matrix)
+export(as.wide.df)
+export(as.long.df)
+export(as.t.df)
+export(bind)
+export(cbind.hyperSpec)
+export(rbind.hyperSpec)
+exportMethods(cbind2)
+exportMethods(rbind2)
+export(chk.hy)
+export(chondro)
+export(collapse)
+exportMethods(Compare)
+export(decomposition)
+exportMethods(dimnames)
+exportMethods(rownames)
+export("rownames<-")
+exportMethods(colnames)
+export("colnames<-")
+exportMethods(ncol)
+exportMethods(nrow)
+export(nwl)
+exportMethods(dim)
+exportMethods(length)
+export(.DollarNames.hyperSpec)
+export(empty)
+export("[")
+export("[[")
+export("$")
+exportClasses(hyperSpec)
+export("labels<-")
+exportMethods(labels)
+import(lattice)
+exportMethods(levelplot)
+export(logbook)
+export(logentry)
+exportMethods(log)
+export(map.identify)
+export(map.sel.poly)
+export(mark.dendrogram)
+exportMethods(Math2)
+exportMethods(Math)
+export(matlab.palette)
+importFrom(grDevices, rainbow)
+export(matlab.dark.palette)
+export(alois.palette)
+exportMethods(mean_sd)
+exportMethods(mean_pm_sd)
+exportMethods(mean)
+exportMethods(quantile)
+exportMethods(merge)
+export(hy.getOptions)
+export(hy.getOption)
+export(hy.setOptions)
+export(orderwl)
+export(pearson.dist)
+export(plotc)
+import(graphics)
+export(plotmap)
+exportMethods(plot)
+export(plotspc)
+export(stacked.offsets)
+export(plotvoronoi)
+export(qplotspc)
+export(qplotmap)
+export(qplotc)
+export(rbind.fill.matrix)
+export(read.ENVI.Nicolet)
+export(read.ENVI)
+export(read.spc.KaiserMap)
+export(read.spc)
+export(read.txt.long)
+export(read.txt.wide)
+export("[<-")
+export("[[<-")
+export("$<-")
+exportMethods(sample)
+export(isample)
+export(scan.txt.Renishaw)
+export(scan.zip.Renishaw)
+export(scan.txt.Witec)
+export(sel.poly)
+export(seq.hyperSpec)
+import(methods)
+exportMethods(as.character)
+exportMethods(show)
+exportMethods(print)
+exportMethods(summary)
+export(spc.bin)
+export(spc.fit.poly)
+export(spc.fit.poly.below)
+export(spc.identify)
+export(spc.point.max)
+export(spc.point.default)
+export(spc.point.min)
+export(spc.point.sqr)
+export(spc.label.default)
+export(spc.label.wlonly)
+export(spc.loess)
+export(spc.NA.linapprox)
+exportMethods(split)
+exportMethods(Summary)
+exportMethods(is.na)
+exportMethods(sweep)
+export(trellis.factor.key)
+export(hy.unittest)
+export(wc)
+export(wl2i)
+export(i2wl)
+export(wl)
+export("wl<-")
+export(write.txt.long)
+export(write.txt.wide)
