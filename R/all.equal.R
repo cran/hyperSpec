@@ -11,6 +11,7 @@
 ##'   labels differ only in the order of their entries, they are conidered
 ##'   equal.
 ##' @param check.log Should the slot \code{label} be checked?
+##' @param check.attributes,check.names see \code{\link[base]{all.equal}}
 ##' @return \code{all.equal} returns either \code{TRUE}, or a character vector describing the
 ##' differences. In conditions, the result must therefore be tested with
 ##' \code{\link[base]{isTRUE}}.

@@ -4,7 +4,7 @@
 ##' @title Spectra plotting with ggplot2
 ##' @param x hyperSpec object
 ##' @param wl.range wavelength ranges to plot
-##' @param ... handed to \code{\link[ggplot2]{geom_line}}
+##' @param \dots handed to \code{\link[ggplot2]{geom_line}}
 ##' @param mapping see  \code{\link[ggplot2]{geom_line}}
 ##' @param spc.nmax maximum number of spectra to plot
 ##' @return a \code{\link[ggplot2]{ggplot}} object
@@ -76,7 +76,7 @@ qplotspc <- function (x,
 ##' @title Spectra plotting with ggplot2
 ##' @param object  hyperSpec object
 ##' @param mapping see  \code{\link[ggplot2]{geom_tile}}
-##' @param ... handed to \code{\link[ggplot2]{geom_tile}}
+##' @param \dots handed to \code{\link[ggplot2]{geom_tile}}
 ##' @param func function to summarize the wavelengths
 ##' @param func.args arguments to \code{func}
 ##' @return a \code{\link[ggplot2]{ggplot}} object
@@ -100,7 +100,7 @@ qplotmap <- function (object, mapping = aes_string (x = "x", y = "y", fill = "sp
   p <- ggplot (as.long.df (object), mapping = mapping) +
     coord_equal () + geom_tile () +
     xlab (labels (object)[[as.character (mapping$x)]]) + 
-    ylab (labels (object)[[as.character (mapping$x)]])   
+    ylab (labels (object)[[as.character (mapping$y)]])   
       
   p
 }
@@ -112,7 +112,7 @@ qplotmap <- function (object, mapping = aes_string (x = "x", y = "y", fill = "sp
 ##' @title Spectra plotting with ggplot2
 ##' @param object hyperSpec object
 ##' @param mapping see  \code{\link[ggplot2]{geom_point}}
-##' @param ... handed to \code{\link[ggplot2]{geom_point}}
+##' @param \dots handed to \code{\link[ggplot2]{geom_point}}
 ##' @export 
 ##' @param func function to summarize the wavelengths, if \code{NULL}, only the first wavelength is used
 ##' @param func.args arguments to \code{func}

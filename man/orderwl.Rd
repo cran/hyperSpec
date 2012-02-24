@@ -1,19 +1,26 @@
 \name{orderwl}
 \alias{orderwl}
-\title{Sorting the Wavelengths of a hyperSpec Object...}
-\usage{orderwl(x, na.last=TRUE, decreasing=FALSE, short="orderwl", date=NULL,
-    user=NULL)
-}
-\description{Sorting the Wavelengths of a hyperSpec Object
+\title{Sorting the Wavelengths of a hyperSpec Object
 Rearranges the \code{hyperSpec} object so that the wavelength vector is in increasing (or
 decreasing) order.}
-\details{The wavelength vector is sorted and the columns of the spectra matrix are rearranged accordingly.}
-\value{A \code{hyperSpec} object.}
-\author{C. Beleites}
-\seealso{\code{\link[base]{order}}}
-\arguments{\item{x}{The \code{hyperSpec} object.}
-\item{na.last,decreasing}{Handed to \code{\link[base]{order}}.}
-\item{short,date,user}{Handed to \code{\link{logentry}}.}
+\usage{
+  orderwl(x, na.last = TRUE, decreasing = FALSE,
+    short = "orderwl", date = NULL, user = NULL)
+}
+\arguments{
+  \item{x}{The \code{hyperSpec} object.}
+
+  \item{na.last,decreasing}{Handed to
+  \code{\link[base]{order}}.}
+
+  \item{short,date,user}{Handed to \code{\link{logentry}}.}
+}
+\value{
+  A \code{hyperSpec} object.
+}
+\description{
+  The wavelength vector is sorted and the columns of the
+  spectra matrix are rearranged accordingly.
 }
 \examples{
 ## Example 1: different drawing order in plotspc
@@ -36,5 +43,11 @@ spc[[]]
 spc <- orderwl (spc)
 lines (seq_len(nwl(spc)), spc[[]], type = "l", col = "red")
 spc[[]]
+}
+\author{
+  C. Beleites
+}
+\seealso{
+  \code{\link[base]{order}}
 }
 

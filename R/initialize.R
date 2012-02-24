@@ -6,11 +6,10 @@
 ###
 
 ##' @include paste.row.R
-##' @nord
+##' @noRd
 .initialize <- function (.Object, spc = NULL, data = NULL, wavelength = NULL, labels = NULL, log = NULL,
                          ## ...,
                          short = "initialize", user = NULL, date = NULL){
-
   
   if (is.null (log) && .options$log)    # avoid if no log is needed: involves copy of data
     long <- list (data       = if (missing (data))       "missing" else .paste.row (data, val = TRUE),
@@ -102,61 +101,6 @@
   if (! is.null (spc) && !is.matrix (spc)) {
     spc <- structure (spc,
                       dim = c (1L, length (spc)), # use spc as row vector
-
-
-##' Dimnames of an hyperSpec Object
-##' \code{rownames} yields the names of the rows (spectra) of a
-##' \code{hyperSpec} object,
-##' 
-##' \code{colnames} the names of the data colums, and
-##' 
-##' \code{dimnames} both together with the names of the wavelengths (see
-##' below).
-##' 
-##' \code{dimnames} returns in element \code{wl} the colnames of the spectra
-##' matrix, \emph{not} the values.
-##' 
-##' The replacement functions for column and row names are used like:
-##' \preformatted{ colnames (x) <- value rownames (x) <- value }
-##' 
-##' If changing the colnames, be careful not to touch \code{spc}. Otherwise an
-##' error about an invalid hyperSpec object results.
-##' 
-##' \code{colnames<-} renames the respective labels as well.
-##' 
-##' @name dimnames
-##' @aliases dimnames,hyperSpec-method colnames,hyperSpec-method
-##'   rownames,hyperSpec-method colnames<-,hyperSpec-method
-##'   rownames<-,hyperSpec-method
-##' @docType methods
-##' @param x a \code{hyperSpec} object
-##' @param do.NULL,prefix handed to \code{\link[base]{rownames}} and
-##'   \code{\link[base]{colnames}}, respectively.
-##' @return \code{rownames} and \code{colnames} return an \code{character}
-##'   vector,
-##' 
-##' \code{dimames} returns a list with elements \code{row}, \code{data},
-##'   \code{wl} with the respective character vectors.
-##' @author C. Beleites
-##' @seealso \code{\link[base]{rownames}}, \code{\link[base]{colnames}}, and
-##'   \code{\link[base]{dimnames}}
-##' 
-##' \code{\link[base]{rownames<-}} and \code{\link[base]{colnames<-}} for the
-##'   replacement functions
-##' 
-##' \code{\link[hyperSpec]{wl}}, \code{\link[hyperSpec]{wl<-}} for accessing
-##'   the values of the wavelength axis.
-##' @keywords methods
-##' @export
-##' @examples
-##' 
-##' rownames (flu)
-##' colnames (flu)
-##' dimnames (laser)
-##' 
-##' rownames (flu) <- paste ("sample", LETTERS [1 : 6])
-##' flu$..
-##' 
                       dimnames = list (NULL, names (spc))) 
   } 
   if (.options$gc) gc ()
@@ -169,7 +113,10 @@
   ## deal with extra data
   if (is.null (data)){
     data <- data.frame (spc = spc)
-  } else if (is.null (data$spc)){
+  } else if (! is.null (spc)){
+    if (nrow (data) == 1 && nrow (spc) > 1)
+      data <- data [rep (1, nrow (spc)), , drop = FALSE]
+
     data$spc <- spc
   }
   rm (spc)
@@ -216,7 +163,7 @@
 ##'   \code{data}. If no wavelengths are given, an appropriate vector is
 ##'   derived from the column names of \code{data$spc}. If this is not
 ##'   possible, \code{1 : ncol (data$spc)} is used instead.
-##' @param label A \code{list} containing the labels for the columns of the
+##' @param labels A \code{list} containing the labels for the columns of the
 ##'   \code{data} slot of the \code{hyperSpec} object and for the wavelength
 ##'   (in \code{label$.wavelength}). The labels should be given in a form ready
 ##'   for the text-drawing functions (see \code{\link[grDevices]{plotmath}}).
@@ -227,6 +174,7 @@
 ##'   \code{.Object@@log}. The elements \code{log$short}, \code{log$long},
 ##'   \code{log$date}, and \code{log$user} are handed down to
 ##'   \code{\link{logentry}}.
+##' @param short,user,date passed to \code{\link[hyperSpec]{logentry}}
 ##' @author C.Beleites
 ##' @seealso \code{\link[methods]{new}} for more information on creating and
 ##'   initializing S4 objects.
@@ -235,7 +183,6 @@
 ##'   for slot \code{label}.
 ##' 
 ##' \code{\link{hy.setOptions}}
-##' @include utils.R
 ##' @keywords methods datagen
 ##' @examples
 ##' 
@@ -268,7 +215,8 @@
 ##' 
 setMethod ("initialize", "hyperSpec", .initialize)
 
-test (.initialize) <- function (){
+##' @include hyperspec-package.R
+.test (.initialize) <- function (){
 
   checkEqualsNumeric (dim (new ("hyperSpec")), c (0L, 1L, 0L))
 
@@ -289,4 +237,23 @@ test (.initialize) <- function (){
   checkEqualsNumeric (h@data$spc, spc)
   checkEqualsNumeric (dim (h), c (3L, 1L, 4L))
   checkEqualsNumeric (h@wavelength, c(600, 601, 602, 603))
+
+  h <- new ("hyperSpec", spc = spc, data = data.frame (x = 3))
+  checkEqualsNumeric (h@data$spc, spc)
+  checkEqualsNumeric (dim (h), c (3L, 2L, 4L))
+  checkEqualsNumeric (h@wavelength, c(600, 601, 602, 603))
+  checkEqualsNumeric (h@data$x, rep (3, 3L))
+
+  h <- new ("hyperSpec", spc = spc, data = data.frame (spc = 11:13))
+  checkEqualsNumeric (h@data$spc, spc)
+  checkEqualsNumeric (dim (h), c (3L, 1L, 4L))
+  checkEqualsNumeric (h@wavelength, c(600, 601, 602, 603))
+
+  checkException (new ("hyperSpec", spc = spc, data = data.frame (x = 11:12))) # different number of rows
+
+  h <- new ("hyperSpec", data = data.frame (spc = I (spc)))
+  checkEqualsNumeric (h@data$spc, spc)
+  checkEqualsNumeric (dim (h), c (3L, 1L, 4L))
+  checkEqualsNumeric (h@wavelength, c(600, 601, 602, 603))
+ 
 }

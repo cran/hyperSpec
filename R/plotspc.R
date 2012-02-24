@@ -352,8 +352,8 @@ plotspc <- function  (object,
           group.mins <- stacked$offsets
         else
           group.mins <- apply (spc[!duplicated (stacked$groups),, drop = FALSE], 1, min, na.rm = TRUE)
-        
-        axis.args$y <- modifyList (list (at = group.mins,
+    
+        axis.args$y <- modifyList (list (at = stacked$offsets,
                                          labels = stacked$levels [!duplicated (stacked$levels)]),
                                    axis.args$y)
       }
@@ -491,9 +491,6 @@ plotspc <- function  (object,
 ##' case.)
 ##' 
 ##' @param x a \code{hyperSpec} object
-##' @param stacked \code{TRUE} to stack single spectra.  A numeric or factor is interpreted as giving
-##' the grouping, a character is interpreted as the name of the extra data column of \code{x} that
-##' holds the grouping.
 ##' @param min.zero if \code{TRUE}, the lesser of zero and the minimum intensity of the spectrum is
 ##' used as minimum.
 ##' @param add.factor,add.sum proportion and absolute amount of space that should be added.
@@ -625,7 +622,9 @@ stacked.offsets <- function (x, stacked = TRUE,
         at     = as.numeric (unlist (at)),
         cut    = cutmarks)
 }
-test (.cut.ticks) <- function (){
+
+##' @include hyperspec-package.R
+.test (.cut.ticks) <- function (){
   ## bugfix:
   ## plotspc (paracetamol, wl.range = c (min ~ 1800, 2800 ~ max), xoffset = 900)
   ## had 2600 1/cm label printed in low wavelength range

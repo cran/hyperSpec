@@ -19,9 +19,9 @@
 ##' @aliases Summary,hyperSpec-method Summary all,hyperSpec-method
 ##'   any,hyperSpec-method sum,hyperSpec-method prod,hyperSpec-method
 ##'   min,hyperSpec-method max,hyperSpec-method range,hyperSpec-method
+##' @param x hyperSpec object
 ##' @param \dots further objects
 ##' @param na.rm logical indicating whether missing values should be removed
-##' @param digits integer stating the rounding precision
 ##' @return \code{sum}, \code{prod}, \code{min}, \code{max}, and \code{range} return  a numeric,
 ##' \code{all}, \code{any}, and \code{is.na} a logical.
 ##' @seealso \code{\link[base]{Summary}} for the base summary functions.

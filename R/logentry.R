@@ -37,7 +37,7 @@ logentry <- function (x, short = NULL, long = NULL, date = NULL, user = NULL){
 ###
 ###
 ##' @include call.list.R
-##' @nord
+##' @noRd
 .logentry <- function (x, ..., .entry = NULL){
   if (.options$log){
     .entry <- c (.entry, list (...))

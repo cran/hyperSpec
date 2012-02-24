@@ -11,7 +11,7 @@
 ##' object. As hyperSpec provides a Method \code{\link{length}}, it can be used. The result is a
 ##' sequence of indices for the spectra.
 ##' 
-##' @aliases seq.hyperSpec seq,hyperSpec-method
+##' @aliases seq seq,hyperSpec-method
 ##' @param x the hyperSpec object
 ##' @param from,to arguments handed to \code{\link[base]{seq.int}}
 ##' @param \dots arguments for \code{\link[base]{seq}}, namely \code{by}, \code{length.out}
@@ -24,6 +24,8 @@
 ##' \code{\link[base]{seq}}
 ##' @rdname seq
 ##' @export
+##' @method seq hyperSpec
+##' @S3method seq hyperSpec
 ##' @keywords manip
 ##' @examples
 ##' 
@@ -36,8 +38,6 @@
 ##' plot (seq (flu, by = 2), add = TRUE, col= "red")
 ##' plot (seq (flu, length.out = 2), add = TRUE, col= "blue")
 ##' 
-
-
 ### needs to be an S3 function as S4 ... dispatch has to have the same signature for all parameters
 seq.hyperSpec <- function (x, from = 1, to = nrow (x),
                            ..., index = FALSE,

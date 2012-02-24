@@ -1,54 +1,68 @@
-\name{show}
-\alias{as.character,hyperSpec-method}
-\alias{as.character}
-\title{as.character,hyperSpec-method}
-\usage{\S4method{as.character}{hyperSpec}(x, digits=getOption("digits"), range=TRUE, max.print=5, shorten.to=c(2,
-    1), log=TRUE)
-
-\S4method{show}{hyperSpec}(object)
-
-
-\S4method{print}{hyperSpec}(x, log=FALSE, range=FALSE, ...)
-
-
-\S4method{summary}{hyperSpec}(object, log=TRUE, ...)
-
-}
 \docType{methods}
+\name{as.character}
 \alias{as.character}
-\value{\code{as.character,hyperSpec-method}: \code{as.character} returns a character vector fit to be printed by
-\code{cat} with \code{sep = "\n"}.
-
-\code{print,hyperSpec-method}: \code{print} invisibly returns \code{x} after printing, \code{show} returns
-an invisible \code{NULL}.
-
-
-}
-\seealso{\code{\link[base]{as.character}}\code{\link[methods]{show}}\code{\link[base]{print}}\code{\link[base]{summary}}}
-\arguments{\item{digits}{number of digits handed over to \code{format}}
-\item{range}{should the values be indicated as range rather then first and
-last elements?}
-\item{max.print}{maximum number of elements to be printed (of a variable)}
-\item{shorten.to}{if a vector is longer than \code{max.print}, only the
-first \code{shorten.to[1]} and the last \code{shorten.to[2]} elements are
-printed}
-\item{object}{a \code{hyperSpec} object}
-\item{log}{should the log be printed?}
-\item{x}{a \code{hyperSpec} object}
-\item{\dots}{\code{print} and \code{summary}  hand further arguments to \code{as.character}}
-}
-\alias{show,hyperSpec-method}
+\alias{as.character,hyperSpec-method}
+\alias{print}
+\alias{print,hyperSpec-method}
 \alias{show}
-\description{Convert a hyerSpec object to character strings for Display
+\alias{show,hyperSpec-method}
+\alias{summary}
+\alias{summary,hyperSpec-method}
+\title{Convert a hyerSpec object to character strings for Display
 \code{print}, \code{show}, and \code{summary} show the result of
 \code{as.character}.}
-\details{\code{show,hyperSpec-method}: \code{print}, \code{show}, and \code{summary} differ only in the defaults.
-\code{show} displays the range of values instead,
+\usage{
+  \S4method{as.character}{hyperSpec}(x,
+    digits = getOption("digits"), range = TRUE,
+    max.print = 5, shorten.to = c(2, 1), log = TRUE)
 
+  \S4method{show}{hyperSpec}(object)
+
+  \S4method{print}{hyperSpec}(x, log = FALSE,
+    range = FALSE, ...)
+
+  \S4method{summary}{hyperSpec}(object, log = TRUE, ...)
 }
-\alias{show}
-\keyword{methods}
-\keyword{print}
+\arguments{
+  \item{digits}{number of digits handed over to
+  \code{format}}
+
+  \item{range}{should the values be indicated as range
+  rather then first and last elements?}
+
+  \item{max.print}{maximum number of elements to be printed
+  (of a variable)}
+
+  \item{shorten.to}{if a vector is longer than
+  \code{max.print}, only the first \code{shorten.to[1]} and
+  the last \code{shorten.to[2]} elements are printed}
+
+  \item{object}{a \code{hyperSpec} object}
+
+  \item{log}{should the log be printed?}
+
+  \item{x}{a \code{hyperSpec} object}
+
+  \item{\dots}{\code{print} and \code{summary} hand further
+  arguments to \code{as.character}}
+}
+\value{
+  \code{as.character} returns a character vector fit to be
+  printed by \code{cat} with \code{sep = "\n"}.
+
+  \code{print} invisibly returns \code{x} after printing,
+  \code{show} returns an invisible \code{NULL}.
+}
+\description{
+  \code{print}, \code{show}, and \code{summary} differ only
+  in the defaults. \code{show} displays the range of values
+  instead,
+
+  \code{print} shows the overview giving the first and last
+  values of each data column (fastest).
+
+  \code{summary} displays the logbook in addition.
+}
 \examples{
 chondro
 
@@ -61,10 +75,15 @@ print (chondro, range = TRUE)
 
 logbook (chondro)
 }
-\alias{print,hyperSpec-method}
-\alias{print}
-\alias{print}
-\alias{summary,hyperSpec-method}
-\alias{summary}
-\alias{summary}
+\seealso{
+  \code{\link[base]{as.character}}
+
+  \code{\link[methods]{show}}
+
+  \code{\link[base]{print}}
+
+  \code{\link[base]{summary}}
+}
+\keyword{methods}
+\keyword{print}
 

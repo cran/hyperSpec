@@ -4,7 +4,7 @@
 ##' @rdname spc.NA.linapprox
 ##' @param spc hyperSpec object with spectra matrix containing \code{NA}s
 ##' @param neighbours how many neighbour data points should be used to fit the line
-##' @param ... ignored
+##' @param \dots ignored
 ##' @param short,user,date handed to \code{\link{logentry}}
 ##' @return hyperSpec object
 ##' @export

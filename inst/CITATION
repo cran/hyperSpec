@@ -1,4 +1,4 @@
-citHeader("To cite package 'hyperSpec' in publications use:")
+citHeader("To cite package 'hyperSpec' please use:")
      
 desc <- packageDescription("hyperSpec")
 year <- sub("^[^-]*-([[:digit:]]{4}).*$", "\\1", desc$Version)

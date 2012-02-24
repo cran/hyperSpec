@@ -6,8 +6,8 @@
 ###
 
 ### the workhorse function
-.levelplot <- function (x, data, transform.factor = TRUE,
-                        panel = panel.levelplot.raster, ...) {
+.levelplot <- function (x, data, transform.factor = TRUE, ...,
+                        contour = FALSE, useRaster = !contour) {
   validObject (data)
 
   data$.row <- row.seq (data)
@@ -21,7 +21,7 @@
   use.y <- parsed.formula$right.y.name
   use.z <- parsed.formula$left.name
 
-  dots <- list (..., panel = panel)
+  dots <- list (..., contour = contour, useRaster = useRaster)
   
   ## if spc is used as z and the data set has multiple wavelengths cut and warn
   if (use.z == "spc" && nwl (data) > 1 &&
@@ -39,7 +39,11 @@
   if (any (grepl ("spc", c(as.character (x),
                            as.character (dots$groups),
                            as.character (dots$subset))))){
-    data <- as.long.df (data, rownames = TRUE)
+    data <- as.long.df (data, rownames = TRUE,
+                        wl.factor =  ".wavelength" %in% c (as.character (dots$groups),
+                                                           as.character (dots$subset),
+                                                           names (parsed.formula$condition))
+                        )
   } else {
     data <- data$..
     data$.rownames <- as.factor (rownames (data))
@@ -57,16 +61,11 @@
 
 ##' @include plotmap.R
 ##' @rdname levelplot
-##' @usage
-##'
-##' \S4method{levelplot}{formula,hyperSpec}(x, data, transform.factor = TRUE,
-##' panel = panel.levelplot.raster, \dots)
-##' 
 ##' @import lattice
 ##' @param transform.factor If the color-coded variable is a factor, should
 ##'   \code{\link{trellis.factor.key}} be used to compute the color coding and
 ##'   legend?
-##' @param panel panel function
+##' @param contour,useRaster see  \code{\link[lattice]{levelplot}}
 ##' @export
 ##' @seealso  \code{\link[lattice]{levelplot}}
 ##'
@@ -75,10 +74,6 @@ setMethod ("levelplot", signature = signature (x = "formula", data = "hyperSpec"
 
 ##' @rdname levelplot
 ##' @export
-##' @usage
-##'
-##' \S4method{levelplot}{hyperSpec,missing}(x, data, \dots)
-##' 
 
 setMethod ("levelplot", signature = signature (x = "hyperSpec", data = "missing"),
            function (x, data, ...) {

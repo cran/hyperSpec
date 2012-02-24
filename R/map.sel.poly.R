@@ -6,7 +6,7 @@
 ##' @param data hyperSpec object for plotting map
 ##' @param pch symbol to display the points of the polygon for \code{\link{sel.poly}}
 ##' @param size size for polygon point symbol for \code{\link{sel.poly}}
-##' @param ... further arguments for \code{\link[grid]{grid.points}} and
+##' @param \dots further arguments for \code{\link[grid]{grid.points}} and
 ##' \code{\link[grid]{grid.lines}}
 ##' @return array of indices for points within selected polygon
 ##' @author Claudia Beleites, Sebastian Mellor

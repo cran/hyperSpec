@@ -41,6 +41,7 @@ setMethod ("rownames", signature = signature (x = "hyperSpec"), function (x, do.
 ##' @param value the new names
 ##' @usage
 ##' \S4method{rownames}{hyperSpec} (x) <- value
+##' @aliases rownames<-,hyperSpec-method
 ##' @rdname dimnames
 ##' @name rownames<-
 ##' @export "rownames<-"
@@ -67,6 +68,7 @@ setMethod ("colnames", signature = signature (x = "hyperSpec"),
 ##' @rdname dimnames
 ##' @usage
 ##' \S4method{colnames}{hyperSpec} (x) <- value
+##' @aliases colnames<-,hyperSpec-method
 ##' @name colnames<-
 ##' @export "colnames<-"
 setReplaceMethod ("colnames", signature = signature (x = "hyperSpec"),

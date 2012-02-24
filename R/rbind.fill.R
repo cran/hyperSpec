@@ -10,7 +10,6 @@
 ##' @author C. Beleites
 ##' @seealso   \code{\link[base]{rbind}}, \code{\link[base]{cbind}}, \code{\link[plyr]{rbind.fill}}
 ##' @export
-##' @callGraph
 ##' @keywords manip
 ##' @rdname rbind-fill
 ##' @examples 
@@ -24,7 +23,6 @@
 ##'  A
 ##'  rbind.fill.matrix (A, B)
 ##' 
-##' @param \dots the matrices to rbind
 ##' @return a matrix
 rbind.fill.matrix <- function (...){
   matrices <- list (...)
@@ -174,7 +172,7 @@ rbind.fill.matrix <- function (...){
 ##' that are not present in all inputs, accepts a list of data frames, and 
 ##' operates substantially faster
 ##'  
-##' @param \dots data frames to row bind together
+##' @param \dots data frames/matrices to row bind together
 ##' @keywords manip
 ##' @rdname rbind-fill
 ##' @examples

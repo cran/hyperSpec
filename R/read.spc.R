@@ -106,7 +106,7 @@
 
 ## helper functions ---------------------------------------------------------------------------------
 ### raw.split.nul - rawToChar conversion, splitting at \0
-raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
+raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 	# todo make better truncation
 	trunc <- rep (trunc, length.out = 2)
 	
@@ -127,6 +127,11 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
 	for (i in 1 : (length (tmp) - 1))
 		if (tmp [i] + 1 < tmp [i + 1] - 1)
 			out [i] <- rawToChar (raw [(tmp [i] + 1)  : (tmp [i + 1] - 1)])
+	
+	if (length (out) > 1L & firstonly){
+		warning ("multiple strings encountered: ", paste (out, collapse = ", "), " but using only the first one.")
+		out <- out [1]
+	}
 	
 	out
 }
@@ -150,43 +155,50 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
 			## byte 2 is already interpreted
 			fexper   = readBin       (raw.data [        3], "integer", 1, 1, signed = TRUE ),
 			fexp     = readBin       (raw.data [        4], "integer", 1, 1, signed = TRUE ),
-			fnpts    = readBin       (raw.data [  5 :   8], "integer", 1, 4, signed = FALSE),
+			fnpts    = readBin       (raw.data [  5 :   8], "integer", 1, 4                ),
 			ffirst   = readBin       (raw.data [  9 :  16], "double",  1, 8                ),
 			flast    = readBin       (raw.data [ 17 :  24], "double",  1, 8                ),
-			fnsub    = readBin       (raw.data [ 25 :  28], "integer", 1, 4, signed = FALSE),
+			fnsub    = readBin       (raw.data [ 25 :  28], "integer", 1, 4                ),
 			fxtype   = readBin       (raw.data [       29], "integer", 1, 1, signed = FALSE),
 			fytype   = readBin       (raw.data [       30], "integer", 1, 1, signed = FALSE),
 			fztype   = readBin       (raw.data [       31], "integer", 1, 1, signed = FALSE),
 			fpost    = readBin       (raw.data [       32], "integer", 1, 1, signed = TRUE ),
-			fdate    = readBin       (raw.data [ 33 :  36], "integer", 1, 4, signed = FALSE),
-			fres     = raw.split.nul (raw.data [ 37 :  45]),
-			fsource  = raw.split.nul (raw.data [ 46 :  54]),
+			fdate    = readBin       (raw.data [ 33 :  36], "integer", 1, 4                ),
+			fres     = raw.split.nul (raw.data [ 37 :  45], firstonly = TRUE),
+			fsource  = raw.split.nul (raw.data [ 46 :  54], firstonly = TRUE),
 			fpeakpt  = readBin       (raw.data [ 55 :  56], "integer", 1, 2, signed = FALSE),
 			fspare   = readBin       (raw.data [ 57 :  88], "numeric", 8, 4                ),
-			fcmnt    = raw.split.nul (raw.data [ 89 : 218]),
+			fcmnt    = raw.split.nul (raw.data [ 89 : 218], firstonly = TRUE),
 			fcatxt   = raw.split.nul (raw.data [219 : 248], trunc = c (FALSE, TRUE)        ),                
-			flogoff  = readBin       (raw.data [249 : 252], "integer", 1, 4, signed = FALSE),
-			fmods    = readBin       (raw.data [253 : 256], "integer", 1, 4, signed = FALSE),
+			flogoff  = readBin       (raw.data [249 : 252], "integer", 1, 4), #, signed = FALSE),
+			fmods    = readBin       (raw.data [253 : 256], "integer", 1, 4), #, signed = FALSE),
 			fprocs   = readBin       (raw.data [      257], "integer", 1, 1, signed = TRUE ),
 			flevel   = readBin       (raw.data [      258], "integer", 1, 1, signed = TRUE ),
 			fsampin  = readBin       (raw.data [259 : 260], "integer", 1, 2, signed = FALSE),
 			ffactor  = readBin       (raw.data [261 : 264], "numeric", 1, 4                ),
 			fmethod  = raw.split.nul (raw.data [265 : 312]),
-			fzinc    = readBin       (raw.data [313 : 316], "numeric", 1, 4, signed = FALSE),
-			fwplanes = readBin       (raw.data [317 : 320], "integer", 1, 4, signed = FALSE),
+			fzinc    = readBin       (raw.data [313 : 316], "numeric", 1, 4), #, signed = FALSE),
+			fwplanes = readBin       (raw.data [317 : 320], "integer", 1, 4), #, signed = FALSE),
 			fwinc    = readBin       (raw.data [321 : 324], "numeric", 1, 4                ),
 			fwtype   = readBin       (raw.data [      325], "integer", 1, 1, signed = TRUE ),
 			## 187 bytes reserved
 			.last.read = .spc.size ['hdr'] 
 	)
 	
-	## do some post processing ..........................................
-	
+	## R doesn't have unsigned long int .................................
+   if (any (unlist (hdr [c ("flogoff", "fmods", "fzinc", "fwplanes")]) < 0))
+     stop ("error reading header: R does not support unsigned long integers.",
+           "Please contact the maintainer of the package.")
+   
+
+
+   ## do some post processing ..........................................
+   
 	experiments <- c ("General", "Gas Chromatogram", "General Chromatogram", "HPLC Chromatogram",
 			"NIR Spectrum", "UV-VIS Spectrum", "* reserved *", "X-ray diffraction spectrum",
 			"Mass Spectrum", "NMR Spectrum", "Raman Spectrum", "Fluorescence Spectrum",
 			"Atomic Spectrum", "Chroatography Diode Array Data")
-	hdr$fexper <- factor (hdr$fexper, levels = seq_along (experiments))
+	hdr$fexper <- factor (hdr$fexper + 1, levels = seq_along (experiments))
 	levels (hdr$fexper) <- experiments
 	
 	hdr$ftflgs <- .spc.ftflags (hdr$ftflgs)
@@ -297,10 +309,15 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
 			subtime   = readBin (raw.data [pos + ( 5 :  8)], "numeric", 1, 4),
 			subnext   = readBin (raw.data [pos + ( 9 : 12)], "numeric", 1, 4),
 			subnois   = readBin (raw.data [pos + (13 : 16)], "numeric", 1, 4),
-			subnpts   = readBin (raw.data [pos + (17 : 20)], "integer", 1, 4, signed = FALSE),
-			subscan   = readBin (raw.data [pos + (21 : 24)], "integer", 1, 4, signed = FALSE),
+			subnpts   = readBin (raw.data [pos + (17 : 20)], "integer", 1, 4), #, signed = FALSE),
+			subscan   = readBin (raw.data [pos + (21 : 24)], "integer", 1, 4), #, signed = FALSE),
 			subwlevel = readBin (raw.data [pos + (25 : 28)], "numeric", 1, 4))
 	## 4 bytes reserved
+
+	## R doesn't have unsigned long int .................................
+   if (any (unlist (subhdr [c ("subnpts", "subscan")]) < 0))
+     stop ("error reading subheader: R does not support unsigned long integers.",
+           "Please contact the maintainer of the package.")
 	
 	hdr$.last.read <- pos + .spc.size ['subhdr']
 	
@@ -379,12 +396,18 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
 			ssftime = rep (NA, nsub))
 	
 	for (s in seq_len (nsub)){
-		dir [s,] <- c (readBin (raw.data [pos + ( 1 :  4)], "integer", 1, 4 , signed = FALSE),
-				readBin (raw.data [pos + ( 5 :  8)], "integer", 1, 4 , signed = FALSE),
+		dir [s,] <- c (readBin (raw.data [pos + ( 1 :  4)], "integer", 1, 4), # , signed = FALSE),
+				readBin (raw.data [pos + ( 5 :  8)], "integer", 1, 4), # , signed = FALSE),
 				readBin (raw.data [pos + ( 9 : 12)], "numeric", 1, 4))
 		pos <- pos + .spc.size ['subfiledir']
 	}
-	dir$ssfposn <- dir$ssfposn
+
+	## R doesn't have unsigned long int .................................
+   if (any (dir [, 1:2] < 0))
+     stop ("error reading subfiledir: R does not support unsigned long integers.",
+           "Please contact the maintainer of the package.")
+   
+#	dir$ssfposn <- dir$ssfposn
 	dir
 }
 
@@ -398,15 +421,20 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
 		return (list (data = list (),
 						log = list ()))
 	
-	loghdr <- list (logsizd = readBin (raw.data [pos + ( 1 :  4)], "integer", 1, 4 , signed = FALSE),
-			logsizm = readBin (raw.data [pos + ( 5 :  8)], "integer", 1, 4 , signed = FALSE),
-			logtxto = readBin (raw.data [pos + ( 9 : 12)], "integer", 1, 4 , signed = FALSE),
-			logbins = readBin (raw.data [pos + (13 : 16)], "integer", 1, 4 , signed = FALSE),
-			logdsks = readBin (raw.data [pos + (17 : 20)], "integer", 1, 4 , signed = FALSE),
+	loghdr <- list (logsizd = readBin (raw.data [pos + ( 1 :  4)], "integer", 1, 4), #  , signed = FALSE),
+			logsizm = readBin (raw.data [pos + ( 5 :  8)], "integer", 1, 4), # , signed = FALSE),
+			logtxto = readBin (raw.data [pos + ( 9 : 12)], "integer", 1, 4), # , signed = FALSE),
+			logbins = readBin (raw.data [pos + (13 : 16)], "integer", 1, 4), # , signed = FALSE),
+			logdsks = readBin (raw.data [pos + (17 : 20)], "integer", 1, 4), # , signed = FALSE),
 			## 44 bytes reserved
 			.last.read = pos + .spc.size ['loghdr']
 	)
 	
+	## R doesn't have unsigned long int .................................
+   if (any (unlist (loghdr) < 0))
+     stop ("error reading log: R does not support unsigned long integers.",
+           "Please contact the maintainer of the package.")
+   
 	log <- list ()
 	data <- list ()
 	
@@ -455,7 +483,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE)) {
 				.last.read = pos + npts * 2)
 		
 	} else { # 4 byte fixed point integer = dword
-		list (y = readBin (raw.data [pos + seq_len (npts * 4)], "integer", npts, 4, signed = TRUE) *
+		list (y = readBin (raw.data [pos + seq_len (npts * 4)], "integer", npts, 4) *
 						2 ^ (exponent - 32),
 				.last.read = pos + npts * 4)
 	}

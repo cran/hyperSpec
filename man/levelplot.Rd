@@ -1,112 +1,133 @@
-\name{levelplot}
+\name{plotmap}
+\alias{levelplot}
 \alias{levelplot,formula,hyperSpec-method}
-\alias{levelplot}
-\title{levelplot,formula,hyperSpec-method}
-\usage{\S4method{levelplot}{formula,hyperSpec}(x, data, transform.factor = TRUE,
-panel = panel.levelplot.raster, \dots)
-\S4method{levelplot}{hyperSpec,missing}(x, data, \dots)
-
-map.identify(object, model=spc ~ x * y, voronoi=FALSE, ..., tol=0.02, warn=TRUE)
-
-
-plotmap(object, model=spc ~ x * y, func=mean, func.args=list(), ...)
-
-
-plotvoronoi(object, model=spc ~ x * y, use.tripack=FALSE, mix=FALSE, ...)
-
-}
-\seealso{\code{\link[lattice]{levelplot}}
-
-\code{\link{trellis.factor.key}} for improved color coding of factors\code{\link[hyperSpec:options]{hyperSpec options}} \code{\link{spc.identify}}
-\code{\link{map.sel.poly}}\code{vignette (plotting)}, \code{vignette (introduction)}
-
-\code{\link{plot}}\code{\link[latticeExtra]{panel.voronoi}}}
-\arguments{\item{transform.factor}{If the color-coded variable is a factor, should
-\code{\link{trellis.factor.key}} be used to compute the color coding and
-legend?}
-\item{panel}{panel function}
-\item{tol}{tolerance for \code{map.identify} as fraction of the viewport
-(i.e. in "npc" \link[grid]{unit}s)}
-\item{warn}{should a warning be issued if no point is within the specified
-tolerance? See also details.}
-\item{object,data}{the \code{hyperSpec} object}
-\item{model,x}{formula specifying the columns of object that are to be
-displayed by \code{\link[lattice]{levelplot}}}
-\item{func,func.args}{Before plotting, \code{plotmap} applies function
-\code{func} with the arguments given in the list \code{func.args} to each
-of the spectra. Thus a single summary value is displayed for each of the
-spectra.
-
-This can be suppressed manually by setting \code{func} to NULL. It is automatically suppressed if
-\code{.wavelength} appears in the formula.}
-\item{voronoi}{Should the plot for identifying spectra by mouse click be
-produced by \code{plotmap} (default) or \code{plotvoronoi}?}
-\item{\dots}{further arguments are passed down the call chain, and finally
-to \code{\link[lattice]{levelplot}}}
-\item{use.tripack}{Whether package tripack should be used for calculating
-the voronoi polygons. If \code{FALSE}, package deldir is used instead.
-See details.}
-\item{mix}{For Voronoi plots using package tripack, I experienced errors if
-the data was spatially ordered. Randomly rearrangig the rows of the
-hyperSpec object circumvents this problem.}
-}
 \alias{levelplot,hyperSpec,missing-method}
-\alias{levelplot}
 \alias{map.identify}
-\alias{levelplot,hyperSpec,missing-method}
-\alias{plotmap}
-\description{Plot a Map and Identify/Select Spectra in the Map
-\code{\link[lattice]{levelplot}} functions for hyperSpec objects.  An image or map of a summary
-value of each spectrum is plotted. Spectra may be identified by mouse click.}
-\details{\code{plotmap}: The \code{model} can contain the special column name \code{.wavelength} to specify the wavelength
-axis.
-
-\code{plotmap}, \code{map.identify}, and the \code{levelplot} methods internally use the same
-gateway function to \code{\link[lattice]{levelplot}}. Thus \code{transform.factor} can be used
-with all of them and the panel function defaults to \code{\link[lattice]{panel.levelplot.raster}}
-for all three. Two special column names, \code{.rownames} and \code{.wavelength} may be used. 
-
-\code{levelplot} plots the spectra matrix.
-
-\code{plotvoronoi} calls \code{plotmap} with different default settings, namely the panel
-function defaults to \code{\link[latticeExtra]{panel.voronoi}}.
-\code{\link[latticeExtra]{panel.voronoi}} depends on either of the packages 'tripack' or 'deldir'
-being installed. For further information, please consult the help page of
-\code{\link[latticeExtra]{panel.voronoi}}.  On the \code{\link{chondro}} data set, \code{plotmap}
-is roughly 5 times faster than \code{plotvoronoi} using tripack, and ca. 15 times faster than
-\code{plotvoronoi} using deldir. Package tripack, however, is free only for non-commercial
-use. Also, it seems that tripack version hang (R running at full CPU power, but not responding
-nor finishing the calculation) for certain data sets. In this case, \code{mix = TRUE} may help.
-
-\code{map.identify} calls \code{plotmap} and \code{plotvoronoi}, respectively and waits for
-(left) mouse clicks on points. Other mouse clicks end the input.
-
-Unlike \code{\link[lattice]{panel.identify}}, the indices returned by \code{map.identify} are in
-the same order as the points were clicked. Also, multiple clicks on the same point are returned
-as multiple entries with the same index.
-
-\code{map.identify} uses option \code{debuglevel} similar to \code{\link{spc.identify}}:
-\code{debuglevel == 1} will plot the tolerance window if no data point was inside (and
-additionally labels the point) while \code{debuglevel == 2} will always plot the tolerance
-window.
-
-The \code{map.sel.*} functions offer further interactive selection, see
-\code{\link{map.sel.poly}}.
-
-}
 \alias{plotmap}
 \alias{plotvoronoi}
-\alias{levelplot,formula,hyperSpec-method}
-\alias{levelplot,hyperSpec,missing-method}
-\alias{map.identify}
-\value{\code{plotmap}: \code{map.identify} returns a vector of row indices into
-\code{object} of the clicked points.
+\title{Plot a Map and Identify/Select Spectra in the Map
+\code{\link[lattice]{levelplot}} functions for hyperSpec objects.  An image or map of a summary
+value of each spectrum is plotted. Spectra may be identified by mouse click.}
+\usage{
+  plotmap(object, model = spc ~ x * y, func = mean,
+    func.args = list(), ...)
 
-The other functions return a lattice object.
+  \S4method{levelplot}{formula,hyperSpec}(x, data,
+    transform.factor = TRUE, ..., contour = FALSE,
+    useRaster = !contour)
 
+  \S4method{levelplot}{hyperSpec,missing}(x, data, ...)
+
+  map.identify(object, model = spc ~ x * y,
+    voronoi = FALSE, ..., tol = 0.02, warn = TRUE)
+
+  plotvoronoi(object, model = spc ~ x * y,
+    use.tripack = FALSE, mix = FALSE, ...)
 }
-\author{C. Beleites}
-\keyword{hplot}
+\arguments{
+  \item{object,data}{the \code{hyperSpec} object}
+
+  \item{model,x}{formula specifying the columns of object
+  that are to be displayed by
+  \code{\link[lattice]{levelplot}}}
+
+  \item{func,func.args}{Before plotting, \code{plotmap}
+  applies function \code{func} with the arguments given in
+  the list \code{func.args} to each of the spectra. Thus a
+  single summary value is displayed for each of the
+  spectra.
+
+  This can be suppressed manually by setting \code{func} to
+  NULL. It is automatically suppressed if
+  \code{.wavelength} appears in the formula.}
+
+  \item{voronoi}{Should the plot for identifying spectra by
+  mouse click be produced by \code{plotmap} (default) or
+  \code{plotvoronoi}?}
+
+  \item{\dots}{further arguments are passed down the call
+  chain, and finally to \code{\link[lattice]{levelplot}}}
+
+  \item{transform.factor}{If the color-coded variable is a
+  factor, should \code{\link{trellis.factor.key}} be used
+  to compute the color coding and legend?}
+
+  \item{contour,useRaster}{see
+  \code{\link[lattice]{levelplot}}}
+
+  \item{tol}{tolerance for \code{map.identify} as fraction
+  of the viewport (i.e. in "npc" \link[grid]{unit}s)}
+
+  \item{warn}{should a warning be issued if no point is
+  within the specified tolerance? See also details.}
+
+  \item{use.tripack}{Whether package tripack should be used
+  for calculating the voronoi polygons. If \code{FALSE},
+  package deldir is used instead.  See details.}
+
+  \item{mix}{For Voronoi plots using package tripack, I
+  experienced errors if the data was spatially ordered.
+  Randomly rearrangig the rows of the hyperSpec object
+  circumvents this problem.}
+}
+\value{
+  \code{map.identify} returns a vector of row indices into
+  \code{object} of the clicked points.
+
+  The other functions return a lattice object.
+}
+\description{
+  The \code{model} can contain the special column name
+  \code{.wavelength} to specify the wavelength axis.
+}
+\details{
+  \code{plotmap}, \code{map.identify}, and the
+  \code{levelplot} methods internally use the same gateway
+  function to \code{\link[lattice]{levelplot}}. Thus
+  \code{transform.factor} can be used with all of them and
+  the panel function defaults to
+  \code{\link[lattice]{panel.levelplot.raster}} for all
+  three. Two special column names, \code{.rownames} and
+  \code{.wavelength} may be used.
+
+  \code{levelplot} plots the spectra matrix.
+
+  \code{plotvoronoi} calls \code{plotmap} with different
+  default settings, namely the panel function defaults to
+  \code{\link[latticeExtra]{panel.voronoi}}.
+  \code{\link[latticeExtra]{panel.voronoi}} depends on
+  either of the packages 'tripack' or 'deldir' being
+  installed. For further information, please consult the
+  help page of \code{\link[latticeExtra]{panel.voronoi}}.
+  On the \code{\link{chondro}} data set, \code{plotmap} is
+  roughly 5 times faster than \code{plotvoronoi} using
+  tripack, and ca. 15 times faster than \code{plotvoronoi}
+  using deldir. Package tripack, however, is free only for
+  non-commercial use. Also, it seems that tripack version
+  hang (R running at full CPU power, but not responding nor
+  finishing the calculation) for certain data sets. In this
+  case, \code{mix = TRUE} may help.
+
+  \code{map.identify} calls \code{plotmap} and
+  \code{plotvoronoi}, respectively and waits for (left)
+  mouse clicks on points. Other mouse clicks end the input.
+
+  Unlike \code{\link[lattice]{panel.identify}}, the indices
+  returned by \code{map.identify} are in the same order as
+  the points were clicked. Also, multiple clicks on the
+  same point are returned as multiple entries with the same
+  index.
+
+  \code{map.identify} uses option \code{debuglevel} similar
+  to \code{\link{spc.identify}}: \code{debuglevel == 1}
+  will plot the tolerance window if no data point was
+  inside (and additionally labels the point) while
+  \code{debuglevel == 2} will always plot the tolerance
+  window.
+
+  The \code{map.sel.*} functions offer further interactive
+  selection, see \code{\link{map.sel.poly}}.
+}
 \examples{
 \dontrun{
 vignette (plotting)
@@ -127,16 +148,35 @@ plotmap (chondro, func = max, col.regions = gray (seq (0, 1, 0.05)))
 
 plotmap (chondro, clusters ~ x * y)
 plotmap (chondro, clusters ~ x * y, transform.factor = FALSE)
-plotmap (chondro, clusters ~ x * y, col.regions = gray (seq (0, 1, 0.05))) 
+plotmap (chondro, clusters ~ x * y, col.regions = gray (seq (0, 1, 0.05)))
 
 # Voronoi plots
 smpl <- sample (chondro, 300)
 plotmap (smpl, clusters ~ x * y)
-if (require (tripack)) 
-plotvoronoi (smpl, clusters ~ x * y)
-if (require (deldir)) 
-plotvoronoi (smpl, clusters ~ x * y,
-use.tripack = FALSE)
+if (require (tripack))
+    plotvoronoi (smpl, clusters ~ x * y)
+if (require (deldir))
+    plotvoronoi (smpl, clusters ~ x * y,
+                 use.tripack = FALSE)
 }
-\alias{plotvoronoi}
+\author{
+  C. Beleites
+}
+\seealso{
+  \code{vignette (plotting)}, \code{vignette
+  (introduction)}
+
+  \code{\link{plot}}
+
+  \code{\link[lattice]{levelplot}}
+
+  \code{\link{trellis.factor.key}} for improved color
+  coding of factors
+
+  \code{\link[hyperSpec:options]{hyperSpec options}}
+  \code{\link{spc.identify}} \code{\link{map.sel.poly}}
+
+  \code{\link[latticeExtra]{panel.voronoi}}
+}
+\keyword{hplot}
 

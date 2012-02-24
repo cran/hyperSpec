@@ -4,7 +4,7 @@
 ##' \code{\link[grid]{grid.locator}}).
 ##' @param pch symbol to display the points of the polygon
 ##' @param size size for polygon point symbol
-##' @param ... further arguments for \code{\link[grid]{grid.points}} and
+##' @param \dots further arguments for \code{\link[grid]{grid.points}} and
 ##' \code{\link[grid]{grid.lines}}
 ##' @return n x 2 matrix with the points of the open polygon
 ##' @author Claudia Beleites

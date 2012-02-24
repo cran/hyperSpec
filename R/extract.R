@@ -4,7 +4,7 @@
 ###
 
 ##' @include wl2i.R
-##' @nord
+##' @noRd
 .extract <- function (x, i, j, l,
                       ...,
                       wl.index = FALSE
@@ -91,9 +91,7 @@
 ##' \code{$..<-} is again an abbreviation for the data.frame without the
 ##' spectra matrix.
 ##'
-##' @usage \S4method{[}{hyperSpec}(x, i, j, l, \dots, wl.index = FALSE,
-##'    short = "[]", date = NULL, user = NULL, drop = FALSE)
-##' 
+
 ##' @title Extract and Replace parts of hyperSpec objects
 ##' @rdname extractreplace
 ##' @docType methods
@@ -199,7 +197,7 @@
 setMethod ("[", signature = signature (x = "hyperSpec"),
            function (x, i, j, l, ..., 
                      wl.index = FALSE, 
-                     short = "[]", date = NULL, user = NULL,
+                     short = "[", date = NULL, user = NULL,
                      drop = FALSE  # drop has to be at end
                      ){
   validObject (x)
@@ -207,7 +205,11 @@ setMethod ("[", signature = signature (x = "hyperSpec"),
   if (drop)
     warning ("Ignoring drop = TRUE.")
 
-  x <- .extract (x, i, j, l, ..., wl.index = wl.index)
+  dots <- list (...)
+  if (length (dots) > 0L)
+    warning ("Ignoring additional parameters: ", .pastenames (dots))
+  
+  x <- .extract (x, i, j, l, wl.index = wl.index)
 
   if (is.null (x@data$spc)){
     x@data$spc <- matrix (NA, nrow (x@data), 0)
@@ -220,10 +222,6 @@ setMethod ("[", signature = signature (x = "hyperSpec"),
 })
 
 ##' @rdname extractreplace
-##' @usage
-##'
-##' \S4method{[[}{hyperSpec}(x, i, j, l, \dots, wl.index = FALSE, drop = FALSE)
-##' 
 ##' @export "[["
 ##' @name [[
 setMethod ("[[", signature = signature (x = "hyperSpec"),
@@ -231,6 +229,10 @@ setMethod ("[[", signature = signature (x = "hyperSpec"),
                      wl.index = FALSE,
                      drop = FALSE){
   validObject (x)
+
+  dots <- list (...)
+  if (length (dots) > 0L)
+    warning ("Ignoring additional parameters: ", .pastenames (dots))
 
   ## check wheter a index matrix is used
   if (! missing (i) && is.matrix (i)){
@@ -244,7 +246,7 @@ setMethod ("[[", signature = signature (x = "hyperSpec"),
     x@data$spc [i]                      # return value
     
   } else {                              # index by row and columns
-    x <- .extract (x, i, j, l, ..., wl.index = wl.index)
+    x <- .extract (x, i, j, l, wl.index = wl.index)
     if (missing (j))
       unclass (x@data$spc[,, drop = drop]) # retrun value; removes the "AsIs"
     else {
@@ -254,10 +256,6 @@ setMethod ("[[", signature = signature (x = "hyperSpec"),
 })
 
 ##' @rdname extractreplace
-##' @usage
-##' 
-##' \S4method{$}{hyperSpec}(x, name)
-##'
 ##' @param name name of the data column to extract. \code{$spc} yields the spectra matrix.
 ##' @export "$"
 setMethod ("$", signature = signature (x = "hyperSpec"),

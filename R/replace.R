@@ -4,6 +4,7 @@
 ##' 
 ##' \S4method{[}{hyperSpec}(x, i, j, short = "[<-", date = NULL, user = NULL, \dots) <- value
 ##' 
+##' @aliases [<-,hyperSpec-method
 ##' @param value the replacement value
 ##' @include wl2i.R
 ##' @include paste.row.R
@@ -56,6 +57,7 @@ setReplaceMethod("[", signature = signature (x = "hyperSpec"),
 ##' 
 ##' \S4method{[[}{hyperSpec}(x, i, j, l, wl.index = FALSE, short = "[<-", date = NULL, user = NULL, \dots) <- value
 ##' 
+##' @aliases [[<-,hyperSpec-method
 ##' @name [[<-
 ##' @export "[[<-"
 ##' @examples
@@ -139,6 +141,7 @@ setReplaceMethod ("[[", signature = signature (x = "hyperSpec"),
 ##' 
 ##' \S4method{$}{hyperSpec}(x, name) <- value
 ##' 
+##' @aliases $<-,hyperSpec-method
 ##' @name $<-
 ##' @export "$<-"
 ##' @examples

@@ -20,7 +20,7 @@
 ##' 
 ##' if \code{2}, the binning is done using \code{na.rm = FALSE}, and resulting \code{NA}s are
 ##' corrected with \code{mean(\dots{}, na.rm = TRUE)}.
-##' @param ... ignored
+##' @param \dots ignored
 ##' @param short,user,date handed to \code{\link[hyperSpec]{logentry}}.
 ##' @return A \code{hyperSpec} object with \code{ceiling (nwl (spc) / by)} data points per spectrum.
 ##' @rdname spc-bin

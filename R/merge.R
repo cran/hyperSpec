@@ -50,7 +50,7 @@
 ##' merged$.
 ##' 
 ##' 
-setMethod ("merge", signature = c (x = "hyperSpec", y = "hyperSpec"),
+setMethod ("merge", signature = signature (x = "hyperSpec", y = "hyperSpec"),
            function (x, y, ..., short = "merge", user = NULL, date = NULL){
              validObject (x)
              validObject (y)

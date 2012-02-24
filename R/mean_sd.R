@@ -37,8 +37,8 @@ setMethod ("mean_sd", signature = signature (x = "numeric"),
 ##' mean_sd (flu$spc)
 setMethod ("mean_sd", signature = signature (x = "matrix"),
            function (x, na.rm = TRUE, ...) {
-             m <- colMeans (x)
-             s <- sd       (x)
+             m <- colMeans (x, na.rm = na.rm)
+             s <- apply (x, 2, sd, na.rm = na.rm)
              rbind (mean = m, sd = s)
            })
 
@@ -84,8 +84,8 @@ setMethod ("mean_pm_sd", signature = signature (x = "numeric"),
 ##' mean_pm_sd (flu$spc)
 setMethod ("mean_pm_sd", signature = signature (x = "matrix"),
            function (x, na.rm = TRUE, ...) {
-             m <- colMeans (x)
-             s <- sd       (x)
+             m <- colMeans (x, na.rm = na.rm)
+             s <- apply    (x, 2, sd, na.rm = na.rm)
              rbind ("mean - sd" = m - s, mean = m, "mean + sd"= m + s)
            })
 

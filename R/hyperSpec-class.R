@@ -26,7 +26,8 @@
 ##'   from a spectroscopic point of view.
 ##' @keywords classes
 ##' @export
-##' @nord
+##' @noRd
+##' @include validate.R
 ##' @examples
 ##' 
 ##' showClass("hyperSpec")

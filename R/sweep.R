@@ -60,7 +60,7 @@
 ##' ## checking
 ##' stopifnot (all (mm.corrected2 == mm.corrected))
 ##' 
-setMethod ("sweep", signature = c ("hyperSpec"), function (x, MARGIN, STATS, FUN = "-",
+setMethod ("sweep", signature = signature (x = "hyperSpec"), function (x, MARGIN, STATS, FUN = "-",
                                            check.margin = TRUE, ...,
                                            short = "sweep", user = NULL, date = NULL){
   validObject (x)

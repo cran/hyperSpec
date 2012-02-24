@@ -37,7 +37,7 @@ setMethod ("as.data.frame",
 ##' @seealso and \code{\link[base]{as.matrix}}
 ##' 
 ##' \code{\link[hyperSpec:extractreplace]{[}} for a shortcut to \code{as.matrix}
-setMethod ("as.matrix", signature = c ("hyperSpec"), function (x, ...){
+setMethod ("as.matrix", signature = signature (x = "hyperSpec"), function (x, ...){
   validObject (x)
 
   unclass (x@data$spc)                  # remove the AsIs

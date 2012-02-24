@@ -27,7 +27,7 @@
 ##' directly or \code{\link[hyperSpec]{as.data.frame} (x)}.
 ##' @author C. Beleites
 ##' 
-##' @nord
+##' @noRd
 ##' @param e1,e2 or
 ##' @param x,y either two \code{hyperSpec} objects or one \code{hyperSpec} object and  matrix of same
 ##' size as \code{hyperSpec[[]]} or a scalar (numeric of length 1).
@@ -89,11 +89,11 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
                long = list (e2 = .paste.row (e2, val = TRUE)))
   }
 }
-##' @nord
+##' @noRd
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "numeric"), .arithx)
-##' @nord
+##' @noRd
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "matrix"), .arithx)
-##' @nord
+##' @noRd
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "missing"), .arithx)
 
 .arithy <- function (e1, e2){
@@ -101,12 +101,12 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "missing"), .arithx)
   e2  [[]] <- callGeneric (e1, e2 [[]])
   .logentry (e2, short = .Generic, long = list (e1 = .paste.row (e1, val = TRUE)))
 }
-##' @nord
+##' @noRd
 setMethod ("Arith", signature (e1 = "numeric", e2 = "hyperSpec"), .arithy)
-##' @nord
+##' @noRd
 setMethod ("Arith", signature (e1 = "matrix", e2 = "hyperSpec"), .arithy)
 
-##' @nord
+##' @noRd
 ##' @concept hyperSpec matrix multiplication
 ##' @aliases \%*\% \%*\%,hyperSpec,hyperSpec-method \%*\%,matrix,hyperSpec-method
 ##' \%*\%,hyperSpec,matrix-method
@@ -129,7 +129,7 @@ setMethod ("%*%", signature (x = "hyperSpec", y = "hyperSpec"),
            }
            )
 
-##' @nord
+##' @noRd
 setMethod ("%*%", signature (x = "hyperSpec", y = "matrix"),
            function (x, y){
              validObject (x)
@@ -140,7 +140,7 @@ setMethod ("%*%", signature (x = "hyperSpec", y = "matrix"),
            }
            )
 
-##' @nord
+##' @noRd
 setMethod ("%*%", signature (x = "matrix", y = "hyperSpec"),
            function (x, y){
              validObject (y)

@@ -117,9 +117,10 @@
 ##' ## whereas MARGIN = 1 : 2 leads to FUN being called for each element separately
 ##' apply (flu [,,405:407], 1 : 2, print) [[]]
 ##' 
-setMethod ("apply", signature = c ("hyperSpec"), function (X, MARGIN, FUN, ...,
-                                           label.wl = NULL, label.spc = NULL, new.wavelength = NULL,
-                                           short = "apply", long = NULL, user = NULL, date = NULL){
+setMethod ("apply", signature = signature (X = "hyperSpec"),
+           function (X, MARGIN, FUN, ...,
+                     label.wl = NULL, label.spc = NULL, new.wavelength = NULL,
+                     short = "apply", long = NULL, user = NULL, date = NULL){
   validObject (X)
 
   if (is.null (long))

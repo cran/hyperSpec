@@ -1,13 +1,14 @@
+\docType{data}
 \name{barbiturates}
 \alias{barbiturates}
-\alias{barbiturates}
-\title{Barbiturates Spectra from...}
-\description{Barbiturates Spectra from .spc example files
+\title{Barbiturates Spectra from .spc example files
 A time series of mass spectra in a list of hyperSpec objects.}
-\docType{data}
-\author{C. Beleites and Thermo Galactic}
-\references{The raw data is available at \url{http://hyperspec.r-forge.r-project.org/fileio.zip}}
-\keyword{datasets}
+\format{The data sets consists of 286 spectra. They are the result of importing the
+BARBITUATES.SPC example data from Thermo Galactic's spc file format specification.}
+\description{
+  Barbiturates Spectra from .spc example files A time
+  series of mass spectra in a list of hyperSpec objects.
+}
 \examples{
 barbiturates [1:3]
 length (barbiturates)
@@ -16,15 +17,23 @@ barb <- collapse (barbiturates)
 barb <- orderwl (barb)
 
 plot (barb [1:3], lines.args = list (type = "h"),
-col = matlab.dark.palette (3), stacked = TRUE,
-stacked.args = list (add.factor = .2))
+      col = matlab.dark.palette (3), stacked = TRUE,
+      stacked.args = list (add.factor = .2))
 
 if (require (latticeExtra)){
 plot (log (barb), "mat", panel = panel.levelplot.points, cex = 0.3,
-col = "#00000000", col.regions = matlab.palette (20))
+      col = "#00000000", col.regions = matlab.palette (20))
 }
 
 plotc (apply (barb [,, 42.9~43.2], 1, sum, na.rm = TRUE), spc ~ z,
-panel = panel.lines, ylab = expression (I[m/z == 43] / "a.u."))
+       panel = panel.lines, ylab = expression (I[m/z == 43] / "a.u."))
 }
+\author{
+  C. Beleites and Thermo Galactic
+}
+\references{
+  The raw data is available at
+  \url{http://hyperspec.r-forge.r-project.org/fileio.zip}
+}
+\keyword{datasets}
 

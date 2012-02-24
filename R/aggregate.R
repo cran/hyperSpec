@@ -15,7 +15,7 @@
 ##' If the initially preallocated \code{data.frame} turns out to be too small,
 ##' more rows are appended and a warning is issued.
 ##'
-##' @include hyperSpec-class.R
+##' @include hyperspec-class.R
 ##' @name aggregate
 ##' @title aggregate hyperSpec objects
 ##' @aliases aggregate,hyperSpec-method ave,hyperSpec-method
@@ -36,7 +36,7 @@
 ##'   contain the row indices of the groups? If \code{FALSE}, the list in
 ##'   \code{by} is computed first (as in \code{\link[stats]{aggregate}}).
 ##' @param \dots further arguments passed to \code{FUN}
-##' @param short,date,user aguments passed to \code{logentry}
+##' @param short,date,user aguments passed to \code{\link[hyperSpec]{logentry}}
 ##' @return A \code{hyperSpec} object with an additional column
 ##'   \code{@@data$.aggregate} tracing which group the rows belong to.
 ##' @author C. Beleites
@@ -46,6 +46,7 @@
 ##' @rdname aggregate
 ##' @export
 ##' @import stats
+##' @include hyperspec-class.R
 ##' @examples
 ##' cluster.means <- aggregate (chondro, chondro$clusters, mean_pm_sd)
 ##' plot(cluster.means, stacked = ".aggregate", fill = ".aggregate",

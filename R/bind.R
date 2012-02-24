@@ -122,7 +122,6 @@ cbind.hyperSpec <- function (..., short = "cbind", deparse.level) bind ("c", ...
 rbind.hyperSpec <- function (..., short = "rbind", deparse.level) bind ("r", ..., short = "rbind")
 
 ##' @rdname bind
-##' @param x,y \code{hyperSpec} objects
 ##' @export 
 ##' @aliases cbind2,hyperSpec,hyperSpec-method
 setMethod ("cbind2", signature = signature (x = "hyperSpec", y = "hyperSpec"),

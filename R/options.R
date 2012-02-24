@@ -42,7 +42,9 @@ hy.getOptions <- function (...){
   else
   .options [dots]
 }
-test (hy.getOptions) <- function (){
+
+##' @include hyperspec-package.R
+.test (hy.getOptions) <- function (){
   checkEquals (hy.getOptions (), .options)
 
   checkEquals (hy.getOptions (tail (names (.options), 1)),
