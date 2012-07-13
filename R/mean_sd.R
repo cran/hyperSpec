@@ -1,5 +1,7 @@
 ## make generic functions without default
+##' @noRd
 setGeneric ("mean_sd", function (x, na.rm = TRUE, ...) standardGeneric ("mean_sd"))
+##' @noRd
 setGeneric ("mean_pm_sd", function (x, na.rm = TRUE, ...) standardGeneric ("mean_pm_sd"))
 
 ##' Mean and Standard Deviation
@@ -8,6 +10,7 @@ setGeneric ("mean_pm_sd", function (x, na.rm = TRUE, ...) standardGeneric ("mean
 ##' 
 ##' These functions are provided for convenience.
 ##' 
+##' @aliases mean_sd
 ##' @rdname mean_sd
 ##' @param x a numeric vector
 ##' @param na.rm handed to \code{\link[base]{mean}} and \code{\link[stats]{sd}}
@@ -30,7 +33,6 @@ setMethod ("mean_sd", signature = signature (x = "numeric"),
 
 ##' @rdname mean_sd
 ##' @return \code{mean_sd (matrix)} returns a matrix with the mean spectrum in the first row and the standard deviation in the 2nd.
-##' @keywords multivar
 ##' @export
 ##' @examples
 ##' 

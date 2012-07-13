@@ -45,13 +45,16 @@ collapse <- function (..., short.log = TRUE, short = "collapse", user = NULL, da
 
   logs <- list()
 
-  ## prepare log
-  if (short.log)
-    logs <- paste ("hyperSpec [",
-                   unlist (lapply (dots, function (x) paste (dim (x), collapse = " x "))),
-                   "]", sep = "")
-  else
-    logs <- unlist (lapply (dots, function (x) paste (as.character (x, range = FALSE), "\n", collapse = "")))
+  ## prepare log ?
+  if (hy.getOption ("log")){
+
+    if (short.log)
+      logs <- paste ("hyperSpec [",
+                     unlist (lapply (dots, function (x) paste (dim (x), collapse = " x "))),
+                     "]", sep = "")
+    else
+      logs <- unlist (lapply (dots, function (x) paste (as.character (x, range = FALSE), "\n", collapse = "")))
+  }
 
   ## prepare new labels
   labels <- unlist (lapply (dots, slot, "label"))

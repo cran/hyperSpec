@@ -705,6 +705,9 @@ argument followed by the objects to bind either in separate arguments or in a li
 As usual for \Rfunction{rbind} and \Rfunction{cbind}, the objects that should be bound together must
 have the same rows and columns, respectively.
 
+For binding row-wise (\Rfunction{rbind}), \Rfunction{collapse}\mFun{\Rfunction{collapse}} is 
+more flexible but also faster.
+
 \subsection{Binding Objects that do not Share the Same Extra Data and/or Wavelength Axis}
 \label{sec:collapse}
 
@@ -770,7 +773,7 @@ print (levelplot (spc ~ x * y | as.factor (paste (.wavelength, "  1/cm")),
 \subfloat[\label{fig-merge-mat}]{
 <<echo = FALSE, results = hide>>=
 png ("introduction-fig--merged.png", width = 500, height = 425, res=100)
-print (plot (chondro.merged [1 : 100], "mat", col.regions = matlab.dark.palette ()))
+plot (chondro.merged [1 : 100], "mat")
 dev.off()
 rm (chondro)
 @ 
@@ -1623,6 +1626,8 @@ make.fn.table()
 make.bib (c ("baseline", "compiler", "Rcpp", "inline"), file = "introduction-pkg.bib")
 print (as.matrix(Sys.info()))
 <<cleanup>>
+#for (f in Sys.glob ("fig/*.pdf")) 
+#  compactPDF ('$@', qpdf = '', gs_quality = 'screen', gs_extras = '-dDownsampleColorImages=false') 
 @
 %
 \end{footnotesize}

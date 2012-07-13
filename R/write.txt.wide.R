@@ -10,7 +10,7 @@
 ##' @export
 
 write.txt.wide <- function (object,
-                            file = stop ("file is required"),
+                            file = "",
                             cols = NULL,
                             quote = FALSE, sep = "\t",
                             row.names = FALSE,
@@ -59,7 +59,7 @@ write.txt.wide <- function (object,
                               cln [i > col.spc]), nrow = 1),
                    file = file, append = append, quote = quote, sep = sep,
                    row.names = FALSE, col.names = FALSE)
-      append = TRUE
+      append = TRUE 
       ## 2nd line
       write.table (matrix (c (if (row.names) (if (col.labels) as.character (object@label$.wavelength)
       else "wavelength")
@@ -77,6 +77,10 @@ write.txt.wide <- function (object,
 
   }
 
+  # no AsIs columns!
+  for (c in which (sapply (object@data, class) == "AsIs"))
+    class (object@data [[c]]) <- NULL
+   
   write.table (object@data, file = file, append = append, quote = quote, sep = sep,
                row.names = row.names, col.names = FALSE, ...)
 }

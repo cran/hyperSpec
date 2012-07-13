@@ -198,7 +198,7 @@ aspect3d (c(1, 1, 0.25))
 axes3d (c ('x+-', 'y--', 'z--'))
 axes3d ('y--', nticks = 25, labels= FALSE)
 mtext3d ("t / h",    'x+-', line = 2.5)
-mtext3d ("λ / nm",   'y--', line = 2.5)
+mtext3d ("lambda / nm",   'y--', line = 2.5)
 mtext3d ("I / a.u.", 'z--', line = 2.5)
 @ 
 <<rgl-do, echo = FALSE, results = hide>>=

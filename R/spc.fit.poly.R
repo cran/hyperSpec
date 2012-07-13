@@ -119,7 +119,7 @@ spc.fit.poly.below <- function (fit.to, apply.to = fit.to, poly.order = 1,
       bl <- vdm %*% p [i,]
       use.old <- use
       use <- y[, i] < bl + noise [i]
-      if ((sum (use) < npts.min) || all (use == use.old))
+      if ((sum (use, na.rm=TRUE) < npts.min) || all (use == use.old, na.rm = TRUE))
         break
     }
   }

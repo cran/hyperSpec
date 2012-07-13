@@ -109,8 +109,9 @@ decomposition <- function (object, x, wavelength = seq_len (ncol (x)),
     ## (e.g. for the independent variate of PLS) will cause an error 
 
     cols <- rep (TRUE, ncol (object@data))
+
     for (i in seq_len (ncol (object@data)) [-spc]) {
-      tmp <- t (apply (object@data[, i, drop = FALSE], 2, .na.if.different))
+      tmp <- as.data.frame (lapply (object@data[, i, drop = FALSE], .na.if.different))
       object@data [1, i] <- tmp
       if (all (is.na (tmp)))
         cols [i] <- FALSE
@@ -133,4 +134,17 @@ decomposition <- function (object, x, wavelength = seq_len (ncol (x)),
   validObject (object)
 
   .logentry (object, short = short,  user = user, date = date)
+}
+
+.test (decomposition) <- function (){
+  rm (flu)
+    ## POSIXct
+  flu$ct <- as.POSIXct(Sys.time()) 
+  checkEquals (decomposition (flu, flu [[]], scores = FALSE)$ct, flu$ct)
+
+  ## POSIXlt
+  flu$lt <- as.POSIXlt(Sys.time()) 
+  checkEquals (decomposition (flu, flu [[]], scores = FALSE)$lt, flu$lt)
+
+  rm (flu)
 }

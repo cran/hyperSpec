@@ -53,12 +53,14 @@
 )
 
 .spc.xlab <- function (x) {
-	## x = 255 is for double interferogram and supposed not to have a label.
-	## Thus, returning NA is appropriate
-	if (x <= length (.spc.FXTYPE) + 1)
-		.spc.FXTYPE [x + 1]
+   if (is.character (x))
+     x
+   else if (x <= length (.spc.FXTYPE) + 1)
+     .spc.FXTYPE [x + 1]
 	else
-		NA
+     ## x = 255 is for double interferogram and supposed not to have a label.
+     ## Thus, returning NA is appropriate
+     NA
 }
 
 ## y-axis units .....................................................................................
@@ -96,7 +98,9 @@
 		expression (`/` (I[Emission], 'a. u.'))
 )
 .spc.ylab <- function(x){
-	if (x <= 26)
+   if (is.character (x))
+     x
+   else if (x <= 26)
 		.spc.FYTYPE [x + 2]
 	else if (x %in% 128 : 131)
 		.spc.FYTYPE [x - 99]
@@ -106,7 +110,7 @@
 
 ## helper functions ---------------------------------------------------------------------------------
 ### raw.split.nul - rawToChar conversion, splitting at \0
-raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
+raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste.collapse = NULL) {
 	# todo make better truncation
 	trunc <- rep (trunc, length.out = 2)
 	
@@ -128,9 +132,14 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 		if (tmp [i] + 1 < tmp [i + 1] - 1)
 			out [i] <- rawToChar (raw [(tmp [i] + 1)  : (tmp [i + 1] - 1)])
 	
-	if (length (out) > 1L & firstonly){
-		warning ("multiple strings encountered: ", paste (out, collapse = ", "), " but using only the first one.")
-		out <- out [1]
+	if (length (out) > 1L){
+     if (firstonly){
+       warning ("multiple strings encountered: ", paste (out, collapse = ", "), " but using only the first one.")
+       out <- out [1]
+     } else if (! is.null (paste.collapse)){
+       warning ("multiple strings encountered: ", paste (out, collapse = ", "), " => pasting.")
+       out <- paste (out, collapse = paste.collapse)
+     }
 	}
 	
 	out
@@ -164,11 +173,11 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 			fztype   = readBin       (raw.data [       31], "integer", 1, 1, signed = FALSE),
 			fpost    = readBin       (raw.data [       32], "integer", 1, 1, signed = TRUE ),
 			fdate    = readBin       (raw.data [ 33 :  36], "integer", 1, 4                ),
-			fres     = raw.split.nul (raw.data [ 37 :  45], firstonly = TRUE),
-			fsource  = raw.split.nul (raw.data [ 46 :  54], firstonly = TRUE),
+			fres     = raw.split.nul (raw.data [ 37 :  45], paste.collapse = "\r\n"),
+			fsource  = raw.split.nul (raw.data [ 46 :  54], paste.collapse = "\r\n"),
 			fpeakpt  = readBin       (raw.data [ 55 :  56], "integer", 1, 2, signed = FALSE),
 			fspare   = readBin       (raw.data [ 57 :  88], "numeric", 8, 4                ),
-			fcmnt    = raw.split.nul (raw.data [ 89 : 218], firstonly = TRUE),
+			fcmnt    = raw.split.nul (raw.data [ 89 : 218], paste.collapse = "\r\n"),
 			fcatxt   = raw.split.nul (raw.data [219 : 248], trunc = c (FALSE, TRUE)        ),                
 			flogoff  = readBin       (raw.data [249 : 252], "integer", 1, 4), #, signed = FALSE),
 			fmods    = readBin       (raw.data [253 : 256], "integer", 1, 4), #, signed = FALSE),
@@ -228,12 +237,13 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 		if (tmp [2] > 0) hdr$fytype <- hdr$fcatxt[2]
 		if (tmp [3] > 0) hdr$fztype <- hdr$fcatxt[3]
 		if (tmp [4] > 0) hdr$fwtype <- hdr$fcatxt[4]
-	}			
-	hdr$fxtype <- .spc.xlab (hdr$fxtype)
-	hdr$fytype <- .spc.ylab (hdr$fytype)
-	hdr$fztype <- .spc.xlab (hdr$fztype)
-	hdr$fwtype <- .spc.xlab (hdr$fwtype)
-	
+	} 
+   hdr$fxtype <- .spc.xlab (hdr$fxtype)
+   hdr$fytype <- .spc.ylab (hdr$fytype)
+   hdr$fztype <- .spc.xlab (hdr$fztype)
+   hdr$fwtype <- .spc.xlab (hdr$fwtype)
+ 
+   
 	## File with subfiles with individual x axes? 
 	## Then there should be a subfile directory:
 	if (hdr$ftflgs ['TXYXYS'] && hdr$ftflgs ['TMULTI']){ 
@@ -304,7 +314,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 
 .spc.subhdr <- function (raw.data, pos, hdr) {
 	subhdr <- list (subflgs   =          raw.data [pos + (      1)],
-			subexp    = readBin (raw.data [pos + (      2)], "integer", 1, 1, signed = FALSE),
+			subexp    = readBin (raw.data [pos + (      2)], "integer", 1, 1, signed = TRUE),
 			subindx   = readBin (raw.data [pos + ( 3 :  4)], "integer", 1, 2, signed = FALSE),
 			subtime   = readBin (raw.data [pos + ( 5 :  8)], "numeric", 1, 4),
 			subnext   = readBin (raw.data [pos + ( 9 : 12)], "numeric", 1, 4),
@@ -458,7 +468,8 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 #		log.txt <- paste (rawToChar (log.txt, multiple = TRUE), collapse = "")
 		log.txt <- split.string (log.txt, "\r\n") ## spc file spec says \r\n regardless of OS
 		log.txt <- split.line (log.txt, "=")
-		
+		## lapply (keys, function (x)
+      ##         gsub (sprintf ("^.*\r\n%s\\s*=([^\r\n]+)\r\n.*$", x), "\\1", log.txt))
 		data <- getbynames (log.txt, keys.log2data)
 		log <- c (log, getbynames (log.txt, keys.log2log))
 	}
@@ -608,12 +619,12 @@ read.spc <- function (filename,
 			wavelength <- seq (hdr$ffirst, hdr$flast, length.out = hdr$fnpts)
 		} else {
 			## spectra with common unevenly spaced wavelength axis
-			if (! hdr$ftflgs ['TMULTI']) {
+		#	if (! hdr$ftflgs ['TMULTI']) { # also for multifile with common wavelength axis
 				tmp <- .spc.read.x (f, fpos, hdr$fnpts)
 				wavelength <- tmp$x
 				fpos <- tmp$.last.read
 			}
-		}
+		#}
 	}
 	
 	## otherwise (TXYXYS set) hdr$fnpts gives offset to subfile directory if that exists

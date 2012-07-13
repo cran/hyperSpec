@@ -22,8 +22,8 @@
 ##'       stacked.args = list (add.factor = .2))
 ##' 
 ##' if (require (latticeExtra)){
-##' plot (log (barb), "mat", panel = panel.levelplot.points, cex = 0.3,
-##'       col = "#00000000", col.regions = matlab.palette (20))
+##' levelplot (spc ~ .wavelength * z, log (barb), panel = panel.levelplot.points,
+##'    cex = 0.3, col = "#00000000", col.regions = matlab.palette (20))
 ##' }
 ##' 
 ##' plotc (apply (barb [,, 42.9~43.2], 1, sum, na.rm = TRUE), spc ~ z,

@@ -30,14 +30,13 @@
     }  else {
       nrow <- nrow (spc)
 
-      data <- data[rep (1, nrow), , drop = FALSE]
-
       cols <- colnames (data)
       cols <- which (cols != "spc")
       if (length (cols) > 0) {
-        colvals <- apply (data [,cols,drop = FALSE], 2, .na.if.different)
-        data [,cols] <- rep (colvals, each = nrow)
+        data [1,cols] <- lapply (data [,cols,drop = FALSE], .na.if.different)
       }
+
+      data <- data [rep (1, nrow), , drop = FALSE]
 
       data$spc <- I (spc)
       rownames (data) <- rownames (spc)
@@ -192,3 +191,25 @@ setMethod ("apply", signature = signature (X = "hyperSpec"),
 
 
 
+.test (apply) <- function (){
+  ## check whether .na.if.different is working correctly
+  rm (flu)
+  flu$equal <- 1
+  tmp <- apply (flu, 2, mean)$..
+  checkEquals (is.na (tmp),
+               structure(c (TRUE, TRUE, FALSE),
+                         .Dim = c(1L, 3L),
+                         .Dimnames = list (NULL, c("file", "c", "equal")))
+               )
+  checkEquals (tmp$equal, 1)
+
+  ## POSIXct
+  flu$ct <- as.POSIXct(Sys.time()) 
+  checkEquals (apply (flu, 2, mean)$ct, flu$ct [1])
+
+  ## POSIXlt
+  flu$lt <- as.POSIXlt(Sys.time()) 
+  checkEquals (apply (flu, 2, mean)$lt, flu$lt [1])
+
+  rm (flu)
+}

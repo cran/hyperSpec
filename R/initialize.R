@@ -23,6 +23,9 @@
   ## do the small stuff first, so we need not be too careful about copies
 
   ## the wavelength axis
+  if (! is.null (wavelength) && ! is.numeric (wavelength))
+    warning ("wavelength is not numeric but", class (wavelength), ".")
+
   if (!is.null (spc)){
     if (is.null (dim (spc))){
       nwl <- length (spc)
@@ -103,6 +106,7 @@
                       dim = c (1L, length (spc)), # use spc as row vector
                       dimnames = list (NULL, names (spc))) 
   } 
+
   if (.options$gc) gc ()
 
   if (! is.null (spc)){
@@ -119,6 +123,9 @@
 
     data$spc <- spc
   }
+  if (! is.null (data$spc) && ! is.numeric (data$spc))
+    warning ("spectra matrix is not numeric but", class (wavelength), ".")
+
   rm (spc)
   if (.options$gc) gc ()
   

@@ -20,7 +20,7 @@
 ##' @rdname textio
 ##' @export
 write.txt.long <- function (object,
-                            file = stop ("file is required"),
+                            file = "",
                             order = c (".rownames", ".wavelength"),
                             na.last = TRUE, decreasing = FALSE,
                             quote = FALSE, sep = "\t",
@@ -89,7 +89,7 @@ write.txt.long <- function (object,
                  quote = quote, sep = sep, row.names = FALSE, col.names = FALSE)
     append <- TRUE
   }
-
+  
   write.table (X, file, append = append, quote = quote, sep = sep,
                row.names = FALSE, col.names = FALSE, ...)
 }

@@ -53,13 +53,17 @@
           },
           map = plotmap (x, ...),
           voronoi = plotvoronoi (x, ...),
-          mat = .levelplot (spc ~ .wavelength * .row, x, ...),
+          mat = plotmat (x, ...),
           c = plotc (x, ...),
           ts = plotc (x, spc ~ t, ...),
           depth = plotc (x, spc ~ z, ...),
           stop (paste ("y = ", y, "unknown.", collapse = " "))
           )
 }
+
+##' @noRd
+##' @export
+setGeneric ('plot')
 
 ##' Plotting hyperSpec Objects
 ##' 
@@ -141,5 +145,6 @@ setMethod ("plot",
 
 ### allow choice of spectral or map plot by second argument
 ##' @rdname plot
+##' @export
 setMethod ("plot",
            signature (x = "hyperSpec", y = "character"), .plot)

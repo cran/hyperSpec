@@ -83,12 +83,15 @@
 ##' 
 ##' levelplot (chondro)                     # throws warning: only first wl is used
 ##' levelplot (spc ~ y * x, chondro [,,1003]) # properly rotated
-##' levelplot (chondro [,,1003], aspect = "iso")
+##' levelplot (spc ~ y * x, chondro [,,1003], aspect = "iso")
 ##' plotmap (chondro [,,1003])
 ##' 
 ##' # plot spectra matrix
 ##' levelplot (spc ~ .wavelength * t, laser, contour = TRUE, col = "#00000080")
-##' plot (flu, "mat")
+##' levelplot (laser, contour = TRUE, col = "#00000080")
+##' plot (flu, "mat") # use base graphics
+##' plotmat (flu)
+##' plotmat (flu, contour = TRUE, add = TRUE) 
 ##' 
 ##' # applying a function before plotting
 ##' plotmap (chondro, func = max, col.regions = gray (seq (0, 1, 0.05)))
