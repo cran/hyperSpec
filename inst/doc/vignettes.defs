@@ -93,8 +93,14 @@
 
 \newcommand{\R}{\texorpdfstring{\texttt{R}}{R}\xspace}
 
-\author{Claudia Beleites \url{<cbeleites@units.it>}\\
-CENMAT and DI3, University of Trieste}
+\author{%
+\Sexpr{sub ("[<].*$", "", packageDescription ("hyperSpec")$Maintainer)}%
+  \url{%
+\Sexpr{sub ("^.*[<]", "<", packageDescription ("hyperSpec")$Maintainer)}%
+}\\
+CENMAT and DI3, University of Trieste\\
+Spectroscopy $\cdot$ Imaging, IPHT Jena e.V.%
+}
 
 \SweaveOpts{pgf = FALSE, eps = FALSE, external = FALSE, pdf = TRUE, ps = FALSE}
 \SweaveOpts{width=6,height=3}

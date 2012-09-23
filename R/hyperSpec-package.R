@@ -16,7 +16,7 @@
 ##' @docType package
 ##' @author C. Beleites
 ##' 
-##' Maintainer: Claudia Beleites <cbeleites@@units.it>
+##' Maintainer: Claudia Beleites <chemometrie@@beleites.de>
 ##' @seealso \code{citation ("hyperSpec")} produces the correct citation.
 ##' 
 ##' \code{package?hyperSpec} for information about the package
@@ -25,12 +25,13 @@
 ##'   package.
 ##' @rdname hyperSpec-package
 ##' @keywords package
-if (!require (svUnit, quietly = TRUE))
+if (!require ("svUnit", quietly = TRUE)){
   `.test<-` <- function (f, value) {
+      class (value) <-  c ("svTest", "function")
     attr (f, "test") <- value
     f
- } else {
+  }
+} else {
  `.test<-` <- svUnit::`test<-`
- }
-
+}
 

@@ -42,7 +42,7 @@ qplotspc <- function (x,
   if (!missing (wl.range))
     x <- x [,, wl.range]
 
-  df <- as.long.df (x, rownames = TRUE)
+  df <- as.long.df (x, rownames = TRUE, na.rm = FALSE) # with na.rm trouble with wl.range
 
   # different spectral ranges go into facets
   if (!missing (wl.range)){
@@ -55,6 +55,8 @@ qplotspc <- function (x,
     df$.wl.range <- rep (ranges, each = nrow (x))
   }
 
+  df <- df [! is.na (df$spc),, drop = FALSE]
+  
   p <- ggplot (df, mapping = mapping) +
     xlab (labels (x, ".wavelength")) +
     ylab (labels (x, "spc")) +
@@ -64,7 +66,7 @@ qplotspc <- function (x,
       p <- p + facet_grid (. ~ .wl.range,
                            labeller = function (...) "",
                            scales = "free", space = "free") +
-           opts (strip.text.x = theme_text (size = 0))
+           theme (strip.text.x = element_text (size = 0))
 
   p
 }

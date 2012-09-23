@@ -22,7 +22,7 @@
 \author{
   C. Beleites
 
-  Maintainer: Claudia Beleites <cbeleites@units.it>
+  Maintainer: Claudia Beleites <chemometrie@beleites.de>
 }
 \seealso{
   \code{citation ("hyperSpec")} produces the correct

@@ -12,6 +12,7 @@
 % \VignetteIndexEntry{hyperSpec Introduction}
 % \VignetteKeywords{hyperspec}
 % \VignettePackage{hyperSpec}
+% \VignetteDepends{MASS}
 \usepackage{makeidx} 
 \makeindex
 
@@ -320,11 +321,52 @@ The most frequently needed arguments are:
   \Rcode{\$.wavelength} and the spectral intensity axis label in \Rcode{\$spc}.
 \end{labeling}
 
+\subsection{Creating Random Spectra}
+If \Rpackage{mvtnorm} is available, multivariate normally distributed spectra can be generated from
+mean and covariance matrix using \Rfunction{rmmvnorm}\mFun{rmmvnorm} (fig.~\ref{fig:sim:spc}). Note
+that the \phy function's name has an additional ``m'': it already takes care of multiple groups.
+Mean spectra and pooled covariance matrix can be calculated using
+\Rfunction{pooled.cov}\mFun{pooled.cov}:
+
+<<>>=
+pcov <- pooled.cov (chondro, chondro$clusters)
+rnd <- rmmvnorm (rep (10, 3), mean = pcov$mean, sigma = pcov$COV)
+@ 
+<<simspc, fig = TRUE, width = 10, height = 5, include=FALSE>>=
+cluster.cols <- c ("dark blue", "orange", "#C02020")
+plot (rnd, col = cluster.cols [rnd$.group])
+@ 
+\begin{figure}[t]
+\subfloat[\label{fig:sim:spc} \Rfunction{rmmvnorm}]{\includegraphics[width=.66\linewidth]{introduction-fig--simspc}}
+\subfloat[\label{fig:sim:lda} LDA of simulated spectra. Crosses mark real spectra.]{\includegraphics[width=.33\linewidth]{introduction-fig--simlda}}
+  \caption{Multivariate normally distributed random spectra.}
+  \label{fig:sim}
+\end{figure}
+
+fig.~\ref{fig:sim:lda} shows the linear discriminant analysis (LDA) scores of such  simulated specta in comparison to the real spectra in the \Robject{chondro} object:
+@
+<<lda>>=
+require ("MASS")
+rnd <- rmmvnorm (rep (200, 3), mean = pcov$mean, sigma = pcov$COV)
+lda <- lda (clusters ~ spc, rnd)
+ 
+pred.chondro <- predict (lda, chondro)
+pred.sim     <- predict (lda)
+@ 
+<<simlda, fig = TRUE, pnr  width = 5, height = 5, include=FALSE>>=
+colors <- c("#00008040", "#FFA50040", "#C0202040")
+plot (pred.chondro$x, col = colors [chondro$clusters], pch = 3)
+points (pred.sim$x, col = colors [rnd$clusters], pch = 20, cex = 0.5)
+@
+
+If individual covariance matrices should be used for each group, \Rfunarg{sigma} should be an array
+with the 3rd dimension corresponding to the group.
 \section{The Logbook}
 \label{sec:logbook}
-Slot \Rcode{@log} of \chy objects is intended to keep track of the history of the object.  This
-logbook part of the output of the \Rfunction{summary}, and can also be retrieved by
-\Rfunction{logbook}.
+\warnbox{Deprecated}{The logbook is now DEPRECATED and the functionality will be removed in the future.\\
+  This feature has never seen much use, but slows down \phy considerably.}  Slot \Rcode{@log} of \chy
+objects is intended to keep track of the history of the object.  This logbook part of the output of
+the \Rfunction{summary}, and can also be retrieved by \Rfunction{logbook}.
 <<logbook>>=
 logbook (flu)
 @
@@ -1353,6 +1395,13 @@ a \df. The column names can then be used in the formula:
 pca <- prcomp (~ spc, data = chondro$., center = FALSE)
 @
 
+Many modeling functions call \Rcode{as.data.frame} on their \Rfunarg{data} argument. In that case, the conversion is done automatically:
+
+<<pca-auto>>=
+pca <- prcomp (~ spc, data = chondro, center = FALSE)
+@
+
+
 Results of such a \mFun{\Rfunction{decomposition}} decomposition can be put again into
 \Rclass{hyperSpec} objects. This allows to plot \eg the loading like spectra, or score maps, see
 figure~\ref{fig:pca}.
@@ -1447,8 +1496,16 @@ if (require (ggplot2)){
 \subsection{Data Analysis Methods using a matrix \\
 \eg Hierarchical Cluster Analysis}
 \label{HCA}\mFun{\Rfunction{[{}[{}]{}]}}
+Some functions expect their input data in a matrix, so either \Rcode{as.matrix (object)} or the
+abbreviation \Rcode{object [[]]} can be used:
 <<hca>>=
 dist <- pearson.dist (chondro [[]])
+@ 
+
+Again, many such functions coerce the data to a matrix automatically, so the \chy object can be
+handed over: 
+<<hca-asmatrix>>= 
+dist <- pearson.dist (chondro) 
 dendrogram <- hclust (dist, method = "ward")
 @
 <<dend, fig = TRUE, width = 5, height = 5, include = FALSE>>=
@@ -1468,7 +1525,6 @@ levels (chondro$clusters) <- c ("matrix", "lacuna", "cell")
 @
 Then the result may be plotted (figure~\ref{fig:clust:map}):
 <<clustmap, fig = TRUE, width = 7.5, height = 5, include = FALSE, echo = FALSE>>=
-cluster.cols <- c ("dark blue", "orange", "#C02020")
 plotmap (chondro, clusters ~ x * y, col.regions = cluster.cols)
 @
 \begin{figure}
@@ -1525,10 +1581,12 @@ system.time ({
 })
 @ 
 
-\index{options!log} A first possibility to speed up is switching of the automatic logging of how the
-objects are transformed. Logging involves appending rows to the \df in slot \Rcode{@log}.  While the
-absolute amount of time needed to add a logbook entry is small, it may be executed very often
-(e.g. during each call of \Rfunction{[}).
+\index{options!log} A first possibility is switching of the automatic logging of how the objects are
+transformed. This is now the default setting of the option as the logbook will 
+
+Logging involves appending rows to the \df in slot \Rcode{@log}.  While the absolute
+amount of time needed to add a logbook entry is small, it may be executed very often (e.g. during
+each call of \Rfunction{[}). 
 <<speed2>>=
 hy.setOptions (log = FALSE)
 tmp <- chondro [1 : 50]

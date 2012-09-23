@@ -28,13 +28,13 @@ Functions to access and set hyperSpec's options.}
 \description{
   Currently, the following options are defined:
   \tabular{llll}{ \bold{Name} \tab \bold{Default Value
-  (range)} \tab \bold{Description} \tab \bold{Used by}\cr
-  debuglevel \tab 0 (1L 2L) \tab amount of debugging
+  (range)} \tab \bold{Description} \ tab \bold{Used by}\cr
+  debuglevel \ tab 0 (1L 2L) \ tab amount of debugging
   information produced \tab \code{\link{spc.identify}}
-  \code{\link{map.identify}}\cr gc \tab FALSE \tab triggers
-  frequent calling of gc () \tab \code{\link{read.ENVI}},
-  \code{new ("hyperSpec")}\cr log \tab TRUE \tab
-  automatically create entries \tab
+  \code{\link{map.identify}}\cr gc \ tab FALSE \ tab
+  triggers frequent calling of gc () \ tab
+  \code{\link{read.ENVI}}, \code{new ("hyperSpec")}\cr log
+  \ tab FALSE \ tab automatically create entries \ tab
   \code{\link{logbook}}\cr }
 }
 \details{

@@ -2,8 +2,8 @@ Package: hyperSpec
 Type: Package
 Title: Interface for hyperspectral data, i.e. spectra + meta info
         (spatial, time, concentration, ...)
-Version: 0.98-20120713
-Date: 2012-07-13
+Version: 0.98-20120923
+Date: 2012-09-23
 Author: Claudia Beleites
 Maintainer: Claudia Beleites <chemometrie@beleites.de>
 Description: This package is an interface to handle hyperspectral data
@@ -17,10 +17,10 @@ Description: This package is an interface to handle hyperspectral data
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
-Depends: R (>= 2.11), methods, utils, lattice, grid
+Depends: R (>= 2.11), methods, utils, lattice, grid, mvtnorm
 Suggests: R.matlab, latticeExtra, tripack, deldir, rgl, plotrix,
-        testthat, ggplot2, pls, playwith, latticist, svUnit, sp,
-        baseline, compiler, inline, Rcpp
+        testthat, ggplot2 (>= 0.9.2), pls, playwith, latticist, svUnit,
+        sp, baseline, compiler, inline, Rcpp, MASS
 URL: http://hyperSpec.r-forge.r-project.org/
 Collate: 'hyperspec-package.R' 'validate.R' 'hyperspec-class.R'
         'aggregate.R' 'all.equal.R' 'apply.R' 'paste.row.R' 'Arith.R'
@@ -42,9 +42,10 @@ Collate: 'hyperspec-package.R' 'validate.R' 'hyperspec-class.R'
         'spc.NA.approx.R' 'splitdots.R' 'split.R' 'split.string.R'
         'Summary.R' 'sweep.R' 'trellis.factor.key.R' 'unittest.R'
         'wc.R' 'wl.R' 'write.txt.long.R' 'write.txt.wide.R' 'zzz.R'
-        'units.R' 'colMeans.R' 'cov.R' 'makeraster.R' 'plotmat.R'
-        'read.jdx.Shimadzu.R' 'read.txt.Shimadzu.R' 'subset.R'
-        'vandermonde.R' 'y-pastenames.R'
-Packaged: 2012-07-13 20:21:36 UTC; cb
+        'units.R' 'colMeans.R' 'cov.R' 'makeraster.R' 'mvtnorm.R'
+        'normalize01.R' 'plotmat.R' 'read.jdx.Shimadzu.R'
+        'read.txt.Shimadzu.R' 'subset.R' 'vandermonde.R' 'wleval.R'
+        'y-pastenames.R'
+Packaged: 2012-09-23 17:57:49 UTC; cb
 Repository: CRAN
-Date/Publication: 2012-07-14 21:24:48
+Date/Publication: 2012-09-23 22:17:41

@@ -21,6 +21,7 @@
 }
 \examples{
 dist <- pearson.dist (flu[[]])
+dist <- pearson.dist (flu)
 }
 \author{
   C. Beleites

@@ -47,6 +47,8 @@
 
 \subsection{Bug fixes}{
   \itemize{
+	 \item 0.98-20120923: adapt \code{qplotspc} and \code{qplotmixmap} to
+	 changes in ggplot2 0.9.2
 
 	 \item \code{apply (MARGIN = 2)} reported the first row without
 	 setting differing columns to \code{NA}. fixed 2012-05-13.
@@ -64,6 +66,7 @@
 	 \item bugfix for unsigned long int in .spc files 
 
 	 \item stacked spectra plots label positions
+
 }
 }
 \subsection{Internal changes}{

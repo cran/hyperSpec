@@ -6,7 +6,7 @@
   vanderMonde(x, order, ...)
 
   \S4method{vanderMonde}{hyperSpec}(x, order, ...,
-    normalize.wl = I)
+    normalize.wl = normalize01)
 }
 \arguments{
   \item{x}{vector with values to evaluate the polynomial on
@@ -16,9 +16,10 @@
   \item{order}{of the polynomial}
 
   \item{normalize.wl}{function to transorm the wavelengths
-  before evaluating the polynomial (or other function). Use
-  \code{\link[hyperSpec]{normalize01}} to map the
-  wavelength range to the interval [0, 1].}
+  before evaluating the polynomial (or other function).
+  \code{\link[hyperSpec]{normalize01}} maps the wavelength
+  range to the interval [0, 1]. Use \code{\link[base]{I}}
+  to turn off.}
 
   \item{\dots}{hyperSpec method: further arguments to
   \code{\link{decomposition}}}
@@ -42,7 +43,7 @@
 }
 \examples{
 plot (vanderMonde (flu, 2))
-plot (vanderMonde (flu, 2, normalize.wl = normalize01))
+plot (vanderMonde (flu, 2, normalize.wl = I))
 }
 \author{
   C. Beleites
@@ -51,7 +52,6 @@ plot (vanderMonde (flu, 2, normalize.wl = normalize01))
   \code{\link[hyperSpec]{wl.eval}} for calculating
   arbitrary functions of the wavelength,
 
-  \code{\link[hyperSpec]{normalize01}} to normalize the
-  wavnumbers before evaluating the function
+  \code{\link[hyperSpec]{normalize01}}
 }
 

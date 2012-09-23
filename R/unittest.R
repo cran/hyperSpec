@@ -18,21 +18,26 @@
 ##' }
 ##' 
 hy.unittest <- function (){
-  if (! require (svUnit)){
+  if (! require ("svUnit", quietly = TRUE)){
     warning ("svUnit required to run the unit tests.")
     return (NA)
   }
 
   tests <- unlist (eapply (env = getNamespace ("hyperSpec"), FUN = is.test, all.names = TRUE))
   tests <- names (tests [tests])
-
   tests <- sapply (tests, get, envir = getNamespace ("hyperSpec"))
 
   clearLog ()
-  for (t in seq_along (tests)) {
+  warnlevel <- options()$warn
+  options (warn = 0)
+  for (t in seq_along (tests))
     runTest (tests [[t]], names (tests) [t])
-  }
-  print (stats (Log()))
+  options (warn = warnlevel)
+
+  if (interactive ())
+    print (stats (Log()))
+  else
+    print (stats (Log ())[,c ("kind", "msg")])
 
   errorLog (summarize = FALSE)
   invisible (TRUE)

@@ -75,7 +75,7 @@ qmixtile <- function (object,
   
   p <- ggplot (object, mapping = mapping) +
     geom_tile () + scale_fill_identity () +
-    opts (legend.position = "none")  
+    theme (legend.position = "none")  
       
   p
 }
@@ -190,7 +190,7 @@ qmixlegend <- function (x, purecol, dx = 0.33, ny = 100, labels = names (purecol
   l <- l + geom_rect (aes_string (xmin = "xmin", xmax = "xmax", ymin = "ymin", ymax = "ymax",
                            fill = "col",  colour = "col"))
 
-  l <- l + opts (plot.margin = unit(c(0.5, 0, 0 ,0), "lines"), legend.position = "none") +
+  l <- l + theme (plot.margin = unit(c(0.5, 0, 0 ,0), "lines"), legend.position = "none") +
        scale_fill_identity () + scale_colour_identity () 
 
   l

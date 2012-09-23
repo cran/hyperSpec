@@ -1,26 +1,22 @@
 \docType{methods}
 \name{as.data.frame}
 \alias{as.data.frame}
+\alias{as.data.frame.hyperSpec}
 \alias{as.data.frame,hyperSpec-method}
-\alias{as.data.frame,hyperSpec,missing,missing-method}
-\alias{as.data.frame-methods}
 \alias{as.long.df}
 \alias{as.matrix}
-\alias{as.matrix,ANY-method}
+\alias{as.matrix.hyperSpec}
 \alias{as.matrix,hyperSpec-method}
-\alias{as.matrix-methods}
 \alias{as.t.df}
 \alias{as.wide.df}
 \title{Conversion of a hyperSpec object into a data.frame or matrix
 \code{as.data.frame} returns \code{x@data} (as data.frame) \code{as.matrix}
 returns the spectra matrix \code{x@data$spc} as matrix}
 \usage{
-  \S4method{as.data.frame}{hyperSpec,missing,missing}(x,
-    row.names = stop("hyperSpec method does not support row.names"),
-    optional = stop("hyperSpec method does not support row.names"),
-    ...)
+  \method{as.data.frame}{hyperSpec} (x, row.names = TRUE,
+    optional = NULL, ...)
 
-  \S4method{as.matrix}{hyperSpec}(x, ...)
+  \method{as.matrix}{hyperSpec} (x, ...)
 
   as.wide.df(x)
 
@@ -32,8 +28,12 @@ returns the spectra matrix \code{x@data$spc} as matrix}
 \arguments{
   \item{x}{a \code{hyperSpec} object}
 
-  \item{row.names,optional}{must be missing: they are not
-  supported for hyperSpec objects.}
+  \item{row.names}{if \code{TRUE}, a column \code{.row} is
+  created containing row names or row indices if no
+  rownames are set. If character vector, the rownames are
+  set accordingly.}
+
+  \item{optional}{ignored}
 
   \item{\dots}{ignored}
 
@@ -85,8 +85,9 @@ returns the spectra matrix \code{x@data$spc} as matrix}
   columns containing the spectra.
 }
 \examples{
-as.data.frame (chondro [1:3,, 600:620])
-as.matrix (chondro [1:3,, 600:620])
+as.data.frame (chondro [1:3,, 600 ~ 620])
+as.matrix (chondro [1:3,, 600 ~ 620])
+lm (c ~ spc, data = flu [,,450])
 as.wide.df (chondro [1:5,, 600 ~ 610])
 summary (as.wide.df (chondro [1:5,, 600 ~ 610]))
 as.long.df (flu [,, 405 ~ 410])

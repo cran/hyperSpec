@@ -17,7 +17,7 @@
 ##' @examples
 ##' 
 ##' dist <- pearson.dist (flu[[]])
-##' 
+##' dist <- pearson.dist (flu)
 pearson.dist <- function (x) {
-  as.dist (0.5 - cor (t(x)) / 2)
+  as.dist (0.5 - cor (t (as.matrix (x))) / 2)
 }

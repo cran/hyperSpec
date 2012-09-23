@@ -4,44 +4,55 @@
 ##'
 ##' @rdname asdataframe
 ##' @name as.data.frame
-##' @aliases as.data.frame as.data.frame-methods
-##'   as.data.frame,hyperSpec,missing,missing-method
-##'   as.data.frame,hyperSpec-method 
+##' @aliases as.data.frame as.data.frame,hyperSpec-method as.data.frame.hyperSpec
 ##' @docType methods
 ##' @param x a \code{hyperSpec} object
-##' @param row.names,optional must be missing: they are not supported for hyperSpec objects.
+##' @param row.names if \code{TRUE}, a column \code{.row} is created containing row names or row
+##' indices if no rownames are set. If character vector, the rownames are set accordingly.
+##' @param optional ignored
 ##' @return \code{x@@data} and \code{x@@data$spc} (== \code{x$spc} == \code{x [[]]}), respectively.
 ##' @author C. Beleites
+##' @method as.data.frame hyperSpec
+##' @S3method as.data.frame hyperSpec
 ##' @export
 ##' @seealso \code{\link[base]{as.data.frame}} 
 ##' @keywords methods
 ##' @examples
 ##' 
-##' as.data.frame (chondro [1:3,, 600:620])
-##' as.matrix (chondro [1:3,, 600:620])
+##' as.data.frame (chondro [1:3,, 600 ~ 620])
+##' as.matrix (chondro [1:3,, 600 ~ 620])
+##' lm (c ~ spc, data = flu [,,450])
 
-setMethod ("as.data.frame",
-           signature = signature (x = "hyperSpec", row.names = "missing", optional = "missing"),
-           function (x,
-                     row.names = stop ("hyperSpec method does not support row.names"),
-                     optional =  stop ("hyperSpec method does not support row.names"),
-                     ...){
-             validObject (x)
+as.data.frame.hyperSpec <- function (x, row.names = TRUE, optional =  NULL, ...){
+  validObject (x)
 
-             x@data
-           })
+  x <- x@data
+  
+  if (!is.null (row.names))
+    if (isTRUE (row.names)){
+      if (is.null (rownames (x)))
+        x$.row <- seq_len (nrow (x))
+      else
+        x$.row <- rownames (x)
+    } else
+      rownames (x) <- row.names
+  
+  x
+}
+##' @method as.matrix hyperSpec
+##' @S3method as.matrix hyperSpec
 ##' @rdname asdataframe
 ##' @param \dots ignored 
-##' @aliases as.matrix as.matrix-methods  as.matrix,ANY-method as.matrix,hyperSpec-method
+##' @aliases as.matrix as.matrix,hyperSpec-method
 ##' @export
 ##' @seealso and \code{\link[base]{as.matrix}}
 ##' 
 ##' \code{\link[hyperSpec:extractreplace]{[}} for a shortcut to \code{as.matrix}
-setMethod ("as.matrix", signature = signature (x = "hyperSpec"), function (x, ...){
+as.matrix.hyperSpec <- function (x, ...){
   validObject (x)
 
   unclass (x@data$spc)                  # remove the AsIs
-})
+}
 
 
 ##' \code{as.wide.df} converts the spectra matrix to a data.frame. The extra

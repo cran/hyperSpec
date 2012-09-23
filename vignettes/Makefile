@@ -24,7 +24,7 @@ baseline.pdf: baseline.Rnw
 	rm -f $(basename $(<F)).tex
 	rm -f $(basename $(<F)).rda
 	rm -f $(basename $(<F))-fig-*.*	
-	rm -f Rplots.pdf
+#	rm -f Rplots.pdf
 
 flu.pdf: flu.Rnw
 	$(R_HOME)/bin/R CMD Sweave --pdf --encoding=utf8 $< 
@@ -35,7 +35,7 @@ flu.pdf: flu.Rnw
 	rm -f $(basename $(<F)).tex
 	rm -f $(basename $(<F)).rda
 	rm -f $(basename $(<F))-fig-*.*	
-	rm -f Rplots.pdf
+#	rm -f Rplots.pdf
 
 %.pdf: %.tex
 #	$(R_HOME)/bin/R CMD Sweave --pdf --encoding=utf8 $< 
@@ -48,7 +48,7 @@ flu.pdf: flu.Rnw
 	rm -f $(basename $(<F)).tex
 	rm -f $(basename $(<F)).rda
 	rm -f $(basename $(<F))-fig-*.*	
-	rm -f Rplots.pdf
+#	rm -f Rplots.pdf
 
 %.pdf: %.Rnw
 	$(R_HOME)/bin/R CMD Sweave --pdf --encoding=utf8 $< 
@@ -56,4 +56,4 @@ flu.pdf: flu.Rnw
 	rm -f $(basename $(<F)).tex
 	rm -f $(basename $(<F)).rda
 	rm -f $(basename $(<F))-fig-*.*	
-	rm -f Rplots.pdf
+#	rm -f Rplots.pdf
