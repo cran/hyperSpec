@@ -11,10 +11,7 @@
   object. Instead of giving several arguments, a list with
   all objects to be collapsed may be given.}
 
-  \item{short.log}{if \code{TRUE}, only the dimensions of
-  the hyperSpec objects are logged by \code{collapse}.}
-
-  \item{short,user,date}{handed over to \code{logentry}}
+  \item{short.log,short,user,date}{deprecated}
 }
 \value{
   a hyperSpec object

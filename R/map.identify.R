@@ -10,7 +10,6 @@
 ##'   tolerance? See also details.
 map.identify <- function (object, model = spc ~ x * y, voronoi = FALSE, ...,
                           tol = .02, warn = TRUE){
-  require (grid)
   chk.hy (object)
   validObject (object)
 

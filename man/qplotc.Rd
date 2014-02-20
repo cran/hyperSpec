@@ -3,7 +3,8 @@
 \title{Spectra plotting with ggplot2}
 \usage{
   qplotc(object, mapping = aes_string(x = "c", y = "spc"),
-    ..., func = NULL, func.args = list())
+    ..., func = NULL, func.args = list(),
+    map.pointonly = FALSE)
 }
 \arguments{
   \item{object}{hyperSpec object}
@@ -16,6 +17,10 @@
   \code{NULL}, only the first wavelength is used}
 
   \item{func.args}{arguments to \code{func}}
+
+  \item{map.pointonly}{if \code{TRUE}, \code{mapping} will
+  be handed to \code{\link[ggplot2]{geom_point}} instead of
+  \code{\link[ggplot2]{ggplot}}.}
 }
 \value{
   a \code{\link[ggplot2]{ggplot}} object

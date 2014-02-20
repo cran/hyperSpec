@@ -29,7 +29,7 @@ import Raman measurements from Renishaw (possibly compressed) .txt file.}
 
   \item{\dots}{Arguments for \code{scan.txt.Renishaw}}
 
-  \item{short,user,date}{passed to logentry}
+  \item{short,user,date}{deprecated}
 
   \item{txt.file}{name of the .txt file in the .zip
   archive. Defaults to zip file's name with suffix .txt

@@ -11,7 +11,7 @@ Spectra can be smoothed and interpolated on a new wavelength axis using
 \arguments{
   \item{spc}{the \code{hyperSpec} object}
 
-  \item{newx}{wavelengh axis tointrpolate on}
+  \item{newx}{wavelengh axis to interpolate on}
 
   \item{enp.target,surface,\dots}{parameters for
   \code{\link[stats]{loess}} and

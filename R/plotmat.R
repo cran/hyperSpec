@@ -13,7 +13,7 @@
 ##' @param contour should \code{\link[graphics]{contour}} be called instead of
 ##' \code{\link[graphics]{image}}?
 ##' @author Claudia Beleites
-##' @seealso  \code{\link[graphics]{image}}, \code{\link[graphics]{contour}}
+##' @seealso  \code{\link[graphics]{image}}, \code{\link[graphics]{contour}}, \code{\link[hyperSpec]{levelplot}}
 ##' @export 
 ##' @examples
 ##' plotmat (laser, col = alois.palette (100))

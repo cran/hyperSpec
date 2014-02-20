@@ -20,9 +20,9 @@
 \title{Comparison of hyperSpec objects}
 \usage{
   \S4method{all.equal}{hyperSpec,hyperSpec}(target,
-    current, check.attributes = FALSE, check.names = FALSE,
-    ..., check.column.order = FALSE, check.label = FALSE,
-    check.log = FALSE)
+    current, ..., check.attributes = FALSE,
+    check.names = FALSE, check.column.order = FALSE,
+    check.label = FALSE, check.log = FALSE)
 
   \S4method{Compare}{hyperSpec,hyperSpec}(e1, e2)
 

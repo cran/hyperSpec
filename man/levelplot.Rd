@@ -12,11 +12,11 @@ value of each spectrum is plotted. Spectra may be identified by mouse click.}
   plotmap(object, model = spc ~ x * y, func = mean,
     func.args = list(), ...)
 
+  \S4method{levelplot}{hyperSpec,missing}(x, data, ...)
+
   \S4method{levelplot}{formula,hyperSpec}(x, data,
     transform.factor = TRUE, ..., contour = FALSE,
     useRaster = !contour)
-
-  \S4method{levelplot}{hyperSpec,missing}(x, data, ...)
 
   map.identify(object, model = spc ~ x * y,
     voronoi = FALSE, ..., tol = 0.02, warn = TRUE)
@@ -134,24 +134,14 @@ vignette (plotting)
 vignette (introduction)
 }
 
-levelplot (chondro)                     # throws warning: only first wl is used
 levelplot (spc ~ y * x, chondro [,,1003]) # properly rotated
-levelplot (spc ~ y * x, chondro [,,1003], aspect = "iso")
 plotmap (chondro [,,1003])
 
 # plot spectra matrix
 levelplot (spc ~ .wavelength * t, laser, contour = TRUE, col = "#00000080")
-levelplot (laser, contour = TRUE, col = "#00000080")
-plot (flu, "mat") # use base graphics
-plotmat (flu)
-plotmat (flu, contour = TRUE, add = TRUE)
-
-# applying a function before plotting
-plotmap (chondro, func = max, col.regions = gray (seq (0, 1, 0.05)))
+# see also plotmat
 
 plotmap (chondro, clusters ~ x * y)
-plotmap (chondro, clusters ~ x * y, transform.factor = FALSE)
-plotmap (chondro, clusters ~ x * y, col.regions = gray (seq (0, 1, 0.05)))
 
 # Voronoi plots
 smpl <- sample (chondro, 300)

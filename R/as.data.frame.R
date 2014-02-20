@@ -115,8 +115,8 @@ as.wide.df <- function (x) {
 ##'   wavelengths are in column \code{.wavelength}.
 ##' @seealso
 ##'  
-##' \code{\link[utils]{stack}} and \code{\link[reshape]{melt}} for other
-##'   functions producing long-format data.frames.
+##' \code{\link[utils]{stack}} and \code{\link[reshape]{melt}} or \code{\link[reshape2]{melt}} for
+##' other functions producing long-format data.frames.
 ##' @examples
 ##' 
 ##' as.long.df (flu [,, 405 ~ 410])

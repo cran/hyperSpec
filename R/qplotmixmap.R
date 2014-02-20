@@ -19,6 +19,9 @@
 ##' qplotmixmap (chondro [,,c (940, 1002, 1440)],
 ##'              purecol = c (colg = "red", Phe = "green", Lipid = "blue"))
 ##' 
+##' qplotmixmap (chondro [,,c (940, 1002, 1440)],
+##'              purecol = c (colg = "red", Phe = "green", Lipid = "blue"))
+##' 
 qplotmixmap <- function (object, ...){
   require (ggplot2)
 
@@ -38,7 +41,8 @@ qplotmixmap <- function (object, ...){
 
 ##' Plot multivariate data into colour channels
 ##'
-##' plot graph with legend right of it 
+##' plot graph with legend right of it
+##'
 ##' @rdname qplotmix
 ##' @param p plot object
 ##' @param l legend object
@@ -63,21 +67,26 @@ legendright <- function (p, l, legend.width = 8, legend.unit = "lines") {
 ##' @param purecol pure component colours, names determine legend labels
 ##' @param mapping see \code{\link[ggplot2]{geom_tile}}
 ##' @param \dots \code{qmixtile}: handed to \code{colmix.rgb}
+##' @param map.tileonly if \code{TRUE}, \code{mapping} will be handed to
+##' \code{\link[ggplot2]{geom_tile}} instead of \code{\link[ggplot2]{ggplot}}.
+##' 
 qmixtile <- function (object,
                       purecol = stop ("pure component colors needed."),
                       mapping = aes_string (x = "x", y = "y", fill = "spc"),
-                      ...) {
+                      ...,
+                      map.tileonly = FALSE) {
   require (ggplot2)
 
   ## calculate fill colours
   fill <- colmix.rgb (object  [[as.character (mapping$fill)]], purecol, ...)
   object [[as.character (mapping$fill)]] <- fill
-  
-  p <- ggplot (object, mapping = mapping) +
-    geom_tile () + scale_fill_identity () +
-    theme (legend.position = "none")  
-      
-  p
+
+  if (map.tileonly)
+      p <- ggplot (object) + geom_tile (mapping = mapping, data = object)
+  else
+      p <- ggplot (object, mapping = mapping) + geom_tile ()
+
+  p + scale_fill_identity () + theme (legend.position = "none")  
 }
 
 ##' \code{normalize.colrange} normalizes the range of each column to [0, 1]

@@ -67,12 +67,15 @@
 ##' all((chondro + chondro - 2 * chondro)[[]] == 0)
 ##' -flu
 
+
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
            function (e1, e2){
              validObject (e1)
              validObject (e2)
-             if (.Generic %in% c ("*", "^", "%%", "%/%", "/"))
-               warning (paste ("Do you really want to use", .Generic, "on 2 hyperSpec objects?"))
+
+             e1 <- .expand (e1, dim (e2) [c (1, 3)])
+             e2 <- .expand (e2, dim (e1) [c (1, 3)])
+             
              e1 [[]] <- callGeneric (e1[[]], e2[[]])
              .logentry (e1, short = .Generic, long = as.character (e2))
            }
@@ -80,10 +83,17 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
 
 .arithx <- function (e1, e2){
   validObject (e1)
+
   if (missing (e2)){
     e1  [[]] <- callGeneric (e1 [[]])
     .logentry (e1, short = .Generic, long = list ())
   } else {
+    e2 <- as.matrix (e2)
+
+    ## called /only/ with e1 hyperSpec but e2 matrix-like
+    e1 <- .expand (e1, dim (e2))
+    e2 <- .expand (e2, dim (e1) [c (1, 3)])
+    
     e1  [[]] <- callGeneric (e1 [[]], e2)
     .logentry (e1, short = .Generic,
                long = list (e2 = .paste.row (e2, val = TRUE)))
@@ -97,7 +107,13 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "matrix"), .arithx)
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "missing"), .arithx)
 
 .arithy <- function (e1, e2){
+  e1 <- as.matrix (e1)
   validObject (e2)
+  
+  ## called /only/ with e2 hyperSpec but e1 matrix-like
+  e1 <- .expand (e1, dim (e2) [c (1, 3)])
+  e2 <- .expand (e2, dim (e1))
+    
   e2  [[]] <- callGeneric (e1, e2 [[]])
   .logentry (e2, short = .Generic, long = list (e1 = .paste.row (e1, val = TRUE)))
 }
@@ -105,6 +121,27 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "missing"), .arithx)
 setMethod ("Arith", signature (e1 = "numeric", e2 = "hyperSpec"), .arithy)
 ##' @noRd
 setMethod ("Arith", signature (e1 = "matrix", e2 = "hyperSpec"), .arithy)
+
+##' @param m matrix
+##' @param target.dim target size to expand the 
+##' @noRd
+.expand <- function (m, target.dim) {
+  m.dim = dim (m)
+   
+  if (m.dim [1]  == 1L & target.dim [1] > 1L)
+      m <- m [rep (1, target.dim [1]),, drop = FALSE]
+
+  if (is (m, "hyperSpec")) {
+    if (m.dim [3] == 1L & target.dim [2] > 1L)
+        m <- m [,, rep (1, target.dim [2]), wl.index = TRUE]
+  } else {
+    if (m.dim [2] == 1L & target.dim [2] > 1L)
+        m <- m [, rep (1, target.dim [2]), drop = FALSE]
+  }
+  
+  m
+}
+
 
 ##' @noRd
 ##' @concept hyperSpec matrix multiplication
@@ -157,3 +194,18 @@ setMethod ("%*%", signature (x = "matrix", y = "hyperSpec"),
              .logentry (y, short = "%*%", long = list (x = .paste.row (x, val = TRUE)))
            }
            )
+
+.test (Arith) <- function (){
+  checkEqualsNumeric (as.matrix (flu - flu), rep (0, nrow (flu) * nwl (flu)))
+  checkEqualsNumeric (as.matrix (flu - flu [1]), as.matrix (sweep (flu, 2, flu [1], `-`)))
+  checkEqualsNumeric (as.matrix (flu - flu [,, 450]), as.matrix (sweep (flu, 1, flu [,, 450], `-`)))
+
+  checkEqualsNumeric (as.matrix (flu / flu), rep (1, nrow (flu) * nwl (flu)))
+  checkEqualsNumeric (as.matrix (flu / flu [1]), as.matrix (sweep (flu, 2, flu [1], `/`)))
+  checkEqualsNumeric (as.matrix (flu / flu [,, 450]), as.matrix (sweep (flu, 1, flu [,, 450], `/`)))
+
+  checkEqualsNumeric (as.matrix (flu + 1), as.matrix (flu) + 1) 
+  checkEqualsNumeric (as.matrix (1 + flu), as.matrix (flu) + 1) 
+
+  checkEqualsNumeric (as.matrix (-flu), - as.matrix (flu))
+}

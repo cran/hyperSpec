@@ -257,13 +257,12 @@ split.line <- function (x, separator, trim.blank = TRUE) {
 ##' @param wavelength,label,log lists that overwrite the respective information
 ##'   from the ENVI header file. These data is then handed to
 ##'   \code{\link[hyperSpec]{initialize}}
-##' @param keys.hdr2data,keys.hdr2log determine which fields of the header file
-##'   should be put into the extra data and which are to be stored in
-##'   \code{long.description$header} in the hyperSpec object's log. Defaults to
-##'   putting all header information into the log, and none as extra data.
+##' @param keys.hdr2data determines which fields of the header file should be put into the extra
+##' data. Defaults to none.
 ##' 
 ##' To specify certain entries, give character vectors containing the lowercase
 ##'   names of the header file entries.
+##' @param keys.hdr2log deprecated
 ##' @return a \code{hyperSpec} object
 ##' @author C. Beleites, testing for the Nicolet files C. Dicko
 ##' @seealso \code{\link[caTools]{read.ENVI}}
@@ -279,11 +278,11 @@ split.line <- function (x, separator, trim.blank = TRUE) {
 ##' @keywords IO file
 read.ENVI <- function (file = stop ("read.ENVI: file name needed"), headerfile = NULL, 
 							  header = list (), 
-							  keys.hdr2data = FALSE, keys.hdr2log = TRUE,
+							  keys.hdr2data = FALSE, keys.hdr2log = FALSE,
                        x = 0 : 1, y = x, 
                        wavelength = NULL, label = list (), log = list ()) {
-  force (y)				
-  
+  force (y)
+
   if (! file.exists (file))
 	  stop ("File not found:", file)
 
@@ -318,11 +317,15 @@ read.ENVI <- function (file = stop ("read.ENVI: file name needed"), headerfile =
   
   ## header lines => extra data columns or log entries
   extra.data <- header [keys.hdr2data]
-  
-  log <- modifyList (list (short = "read.ENVI", 
-				               long = list (call = match.call (),
-											       header = getbynames (header, keys.hdr2log))),
-							log)
+
+  if (hy.getOption ("log")){
+    log <- modifyList (list (short = "read.ENVI", 
+                             long = list (call = match.call (),
+                               header = getbynames (header, keys.hdr2log))),
+                       log)
+  } else {
+      log = NULL
+  }
 
   if (.options$gc) gc ()
   

@@ -534,17 +534,13 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 ##' \url{https://ftirsearch.com/features/converters/SPCFileFormat.htm}.
 ##' 
 ##' @param filename The complete file name of the .spc file.
-##' @param files If \code{glob = TRUE}, \code{filename} can contain wildcards.
-##'   Thus all files matching the name pattern in \code{filename} can be
-##'   specified.
-##' @param keys.hdr2data,keys.hdr2log,keys.log2data,keys.log2log character
-##'   vectors with the names of parameters in the .spc file's log block
-##'   (log2xxx) or header (hdr2xxx) that should go into the extra data
-##'   (yyy2data) or into the \code{long.description} field of the returned
-##'   hyperSpec object's log (yyy2log).
-##' 
+##' @param keys.hdr2data,keys.log2data character vectors with the names of parameters in the .spc
+##' file's log block (log2xxx) or header (hdr2xxx) that should go into the extra data (yyy2data) of
+##' the returned hyperSpec object.
+##'  
 ##' All header fields specified in the .spc file format specification (see
 ##'   below) are imported and can be referred to by their de-capitalized names.
+##' @param keys.hdr2log,keys.log2log deprecated
 ##' @param log.txt Should the text part of the .spc file's log block be read?
 ##' @param log.bin,log.disk Should the normal and on-disk binary parts of the
 ##'   .spc file's log block be read?  If so, they will be put as raw vectors
@@ -597,8 +593,8 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 ##' }
 ##' 
 read.spc <- function (filename,
-		keys.hdr2data = c('fexper', 'fres', 'fsource'), keys.hdr2log = c('fdate', 'fpeakpt'),
-		keys.log2data = FALSE, keys.log2log = TRUE,
+		keys.hdr2data = FALSE, keys.hdr2log = FALSE,
+		keys.log2data = FALSE, keys.log2log = FALSE,
 		log.txt = TRUE, log.bin = FALSE, log.disk = FALSE,
 		hdr = list (),
 		no.object = FALSE){
@@ -646,11 +642,16 @@ read.spc <- function (filename,
 	tmp <- .spc.log (f, hdr$flogoff,
 			log.bin, log.disk, log.txt,
 			keys.log2data,  keys.log2log)
-	
-	log <- list (short = "read.spc",
-					long = list (call = match.call (),
-							log = tmp$log.long,
-							header = getbynames (hdr, keys.hdr2log)))
+
+   if (hy.getOption ("log")){
+      warning ("The logbook is deprecated and will soon be removed.")
+     log <- list (short = "read.spc",
+                  long = list (call = match.call (),
+                    log = tmp$log.long,
+                    header = getbynames (hdr, keys.hdr2log)))
+   } else {
+     log <- NULL  
+   }
 
 	data <- c (data, tmp$extra.data, getbynames (hdr, keys.hdr2data))
 	
@@ -659,10 +660,20 @@ read.spc <- function (filename,
 	## if multispectra file with separate wavelength axes, prepare a list
 	if (hdr$ftflgs ['TXYXYS'] && hdr$ftflgs ['TMULTI']) {
 		spc <- list ()		
-		data <- as.data.frame (data)
+		data <- as.data.frame (data, stringsAsFactors = FALSE)
 	} else {
 		spc <- matrix (NA, nrow = hdr$fnsub, ncol = hdr$fnpts)
-		data <- as.data.frame (lapply (data, rep, hdr$fnsub))
+
+      ## the *type header elements are expressions. They need to be converted to character.
+      data <- sapply (data, function (x) {
+        if (mode (x) == "expression")
+            as.character (x)
+        else
+            x
+      })
+                       
+      
+		data <- as.data.frame (lapply (data, rep, hdr$fnsub), stringsAsFactors = FALSE)
 	}
 	
 	## read subfiles

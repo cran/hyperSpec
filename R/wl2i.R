@@ -87,6 +87,8 @@ wl2i <- function (x, wavelength = stop ("wavelengths are required.")){
   max <- max (x@wavelength)
   min <- min (x@wavelength)
 
+  envir <- attr (wavelength, ".Environment")
+
   `~` <- function (e1, e2){
     if (missing (e2))              # happens with formula ( ~ end)
       stop ("wavelength must be a both-sided formula")
@@ -112,9 +114,11 @@ wl2i <- function (x, wavelength = stop ("wavelengths are required.")){
     eval (range)
   }
 
-  if (is.list (wavelength))
+  if (is.list (wavelength)) {
     unlist (lapply (wavelength, .conv.range))
-  else (.conv.range (wavelength))
+  } else {
+    .conv.range (wavelength)
+  }
 }
 
 

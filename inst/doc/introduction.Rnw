@@ -304,7 +304,7 @@ labels as well.
 \phy comes with filters for a variety of file formats. These are discussed in detail in a separate
 vignette accessible via \verb+vignette ("fileio")+.
 
-\subsection{Creating a \Rclass{hyperSpec} Object from Spectra Matrix
+\subsection{Creating a \chy Object from Spectra Matrix
 and Wavelength Vector}
 
 If the data is in R's workspace, a \Rclass{hyperSpec} object is created by:\\
@@ -320,6 +320,8 @@ The most frequently needed arguments are:
 \item [{\Rcode{label}}] a list with the proper labels. Do not forget the wavelength axis label in
   \Rcode{\$.wavelength} and the spectral intensity axis label in \Rcode{\$spc}.
 \end{labeling}
+
+More information about converting existing data into \chy objects can be found in \Rcode{vignette ("fileio")}. 
 
 \subsection{Creating Random Spectra}
 If \Rpackage{mvtnorm} is available, multivariate normally distributed spectra can be generated from
@@ -364,9 +366,11 @@ with the 3rd dimension corresponding to the group.
 \section{The Logbook}
 \label{sec:logbook}
 \warnbox{Deprecated}{The logbook is now DEPRECATED and the functionality will be removed in the future.\\
-  This feature has never seen much use, but slows down \phy considerably.}  Slot \Rcode{@log} of \chy
-objects is intended to keep track of the history of the object.  This logbook part of the output of
-the \Rfunction{summary}, and can also be retrieved by \Rfunction{logbook}.
+  This feature has never seen much use, but slows down \phy considerably.}
+
+Slot \Rcode{@log} of \chy objects is intended to keep track of the history of the object.  This
+logbook part of the output of the \Rfunction{summary}, and can also be retrieved by
+\Rfunction{logbook}.
 <<logbook>>=
 logbook (flu)
 @
@@ -1304,15 +1308,25 @@ chondro <- sweep (chondro, 1, factors, "*")
 For minimum-maximum-normalization, first do an offset- or baseline correction, then normalize using
 \Rfunction{max}.
 
-\subsection{Centering the Data}
+\subsection{Centering and Variance Scaling the Spectra}
 
-\mFun{\Rfunction{apply} \Rfunction{sweep}} Centering means that the mean spectrum is subtracted from each of the spectra. Many data analysis techniques, like principal component analysis, partial least squares, etc., work much better on centered data.
+\mFun{\Rfunction{scale}} Centering means that the mean spectrum is subtracted from each of the
+spectra. Many data analysis techniques, like principal component analysis, partial least squares,
+etc., work much better on centered data. From a spectroscopic point of view it depends on the
+particular data set whether centering does make sense or not.
 
-However, from a spectroscopic point of view it depends on the particular data set whether centering does make sense or not.
+Variance scaling is often used in multivariate analysis to adjust the influence and scaling of the
+variates (that are typically different physical values). However, spectra already do have the same
+scale of the same physical value. Thus one has to trade off the the expected numeric benefit with the
+fact that for wavelengths with low signal the noise level will ``explode'' by variance
+scaling. Scaling usually makes sense only for centered data.
 
-To centre the \Robject{flu} data set, use:
+Both tasks are carried out by the same method in \R, \Rfunction{scale}, which will by default both
+mean center and variance scale the spectra matrix. 
+
+To center the \Robject{flu} data set, use:
 <<centre-flu, fig = TRUE, width = 10, height = 5>>=
-flu.centered <- sweep (flu, 2, mean, "-")
+flu.centered <- scale (flu, scale = FALSE)
 plot (flu.centered)
 @
 
@@ -1323,34 +1337,15 @@ it may be better to subtract the minimum spectrum (which will hopefully have alm
 on the data analysis) as it is the spectrum of that chemical composition that is underlying the whole
 sample.
 
-One more point to consider is that the actual minimum spectrum will
-pick up (negative) noise. In order to avoid that, using
-\eg the 5\textsuperscript{th} percentile spectrum is more suitable:
+One more point to consider is that the actual minimum spectrum will pick up (negative) noise. In
+order to avoid that, using \eg the 5\textsuperscript{th} percentile spectrum is more suitable:
 <<perc, fig = TRUE, width = 10, height = 5, include = TRUE>>=
-perc.5th <- apply (chondro, 2, quantile, 0.05)
-chondro <- sweep (chondro, 2, perc.5th, "-")
+chondro <- scale (chondro, center = quantile (chondro, 0.05), scale = FALSE)
 plot (chondro, "spcprctl5")
 @
 
-
-\subsection{Variance Scaling}
-
-\mFun{\Rfunction{apply} \Rfunction{sweep} \Rfunction{scale}} Variance scaling is often used in
-multivariate analysis to adjust the influence and scaling of the variates (that are typically
-different physical values). However, spectra already do have the same scale of the same physical
-value. Thus one has to trade off the the expected numeric benefit with the fact that wavelengths with
-low signal will contain exploded noise after variance scaling.
-
-Again, \Rfunction{sweep} may be used:
-<<scale-sweep>>=
-scaled.chondro <- sweep (chondro, 2, var, "/")
-@
-
-Alternatively, R provides a function \Rfunction{scale} which works on matrices:
-<<scale2>>=
-scaled.chondro <- chondro
-scaled.chondro [[]] <- scale (scaled.chondro [[]])
-@
+See section~\ref{sec:speed-considerations} (p.~\ref{sec:speed-considerations}) for some tips to speed
+up these calculations.
 
 \subsection{Multiplicative Scatter Correction (MSC)}
 \mFun{\Rfunction{pls::msc}}MSC can be done using \Rfunction{msc} from package
@@ -1582,7 +1577,8 @@ system.time ({
 @ 
 
 \index{options!log} A first possibility is switching of the automatic logging of how the objects are
-transformed. This is now the default setting of the option as the logbook will 
+transformed. This is now the default setting of the option as the logbook is deprecated and will be
+completely removed.
 
 Logging involves appending rows to the \df in slot \Rcode{@log}.  While the absolute
 amount of time needed to add a logbook entry is small, it may be executed very often (e.g. during
@@ -1612,6 +1608,17 @@ system.time ({
   tmp [[]] <- tmp.matrix
 })
 @
+
+\paragraph{Additional packages.} 
+
+\begin{description}
+\item[\Rpackage{matrixStats}] implements fast functions to calculate summary statistics for each row
+  or each column of a matrix. This functionality can be enabled for \phy by installing package
+  \Rpackage{hyperSpec.matrixStats} which is available in \phy's development repository at
+  \url{http://hyperSpec.r-forge.r-project.org/}
+\item[\Rpackage{scale}] implements a fast replacement for \Rfunction{base::scale} implemented in
+  C++. It is not yet publicly available, but you can email me (\mailme) for the source package.
+\end{description}
 
 \paragraph{Compiled code.} R provides interfaces to Fortran and C code,
 see the manual ``Writing R Extensions''. \Rpackage{Rcpp}\Sexpr{cite.pkg("Rcpp")} allows to

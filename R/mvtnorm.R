@@ -38,6 +38,7 @@ setGeneric ("rmmvnorm", .rmmvnorm)
 ##'
 ##' \code{\link[hyperSpec]{cov}} and \code{\link[hyperSpec]{pooled.cov}} about calculating  covariance of hyperSpec objects.
 ##' @rdname rmmvnorm
+##' @importFrom mvtnorm rmvnorm
 ##' @examples
 ##' ## multiple groups, common covariance matrix
 ##' 

@@ -116,8 +116,9 @@ if (require (ggplot2)){
   to \code{as.matrix}
 
   \code{\link[utils]{stack}} and
-  \code{\link[reshape]{melt}} for other functions producing
-  long-format data.frames.
+  \code{\link[reshape]{melt}} or
+  \code{\link[reshape2]{melt}} for other functions
+  producing long-format data.frames.
 }
 \keyword{methods}
 

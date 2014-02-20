@@ -1,14 +1,11 @@
-##' JCAMP-DX Import for Shimadzu Library Spectra
-##'
-##' this is a first rough import function for JCAMP-DX spectra as exported by the
-##' Shimadzu GCxGC-MS library
-##' @note JCAMP-DX support is very incomplete and the functions may change without notice.
-##' @param filename file name and path of the .jdx file
-##' @param encoding encoding of the JCAMP-DX file (used by \code{\link[base]{readLines}})
-##' @return hyperSpec object
-##' @author C. Beleites
+##' @rdname read.jdx
+##' @deprecated 
 ##' @export
 read.jdx.Shimadzu <- function (filename, encoding=""){
+  .Deprecated (read.jdx (filename, encoding,
+                         header = list (xunits = expression (m/z), yunits = 'I / a.u.')),
+               package = "hyperSpec",
+               msg = "read.jdx.Shimadzu is deprecated.\nUse\nread.jdx (filename, encoding, header = list (xunits = expression (m/z), yunits = 'I / a.u.'))")
   
   jdx <- readLines (filename, encoding = encoding)
 
@@ -41,8 +38,8 @@ read.jdx.Shimadzu <- function (filename, encoding=""){
 
   .logentry (spc, short = "read.jdx.Shimadzu", long = list (filename = filename))
 }
-
-
 .trimquotes <- function (x){
-  gsub ("^[\"'[:blank:]]*([^\"'[:blank:]].*[^\"'[:blank:]])[\"'[:blank:]]*$", "\\1", x)
+  gsub ("[\"'[:blank:]]*([^\"'[:blank:]].*[^\"'[:blank:]])[\"'[:blank:]]", "\\1", x)
 }
+
+

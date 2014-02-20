@@ -20,7 +20,9 @@
 ##' @slot data  the data (extra data and spectra matrix)
 ##' @slot label expressions for column labels (incl. units). The label of the wavelength axis is in
 ##' the special element \code{.wavelength}.
-##' @slot log the \code{\link{logbook}}
+##' @slot log the \code{\link{logbook}} deprecated.
+##' @note Please note that the logbook is deprecated, and will be removed soon. See the explanation
+##' in in the "introduction" vignette for details.
 ##' @author C. Beleites
 ##' @seealso See the vignette "introduction" for an introduction to hyperSpec
 ##'   from a spectroscopic point of view.
@@ -37,7 +39,7 @@ setClass ("hyperSpec",
             wavelength = "numeric",     # spectral abscissa
             data = "data.frame",        # data: spectra & information related to each spectrum
             label = "list",             # labels and units of the stored 
-            log = "data.frame"          # log of transformations etc.
+            log = "data.frame"          # log of transformations etc. - deprecated
             ),
           prototype = prototype (	
             wavelength = numeric (0),

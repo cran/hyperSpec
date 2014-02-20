@@ -4,7 +4,7 @@
 \usage{
   qplotspc(x, wl.range, ...,
     mapping = aes_string(x = ".wavelength", y = "spc", group = ".rownames"),
-    spc.nmax = 10)
+    spc.nmax = 10, map.lineonly = FALSE)
 }
 \arguments{
   \item{x}{hyperSpec object}
@@ -16,6 +16,10 @@
   \item{mapping}{see \code{\link[ggplot2]{geom_line}}}
 
   \item{spc.nmax}{maximum number of spectra to plot}
+
+  \item{map.lineonly}{if \code{TRUE}, \code{mapping} will
+  be handed to \code{\link[ggplot2]{geom_line}} instead of
+  \code{\link[ggplot2]{ggplot}}.}
 }
 \value{
   a \code{\link[ggplot2]{ggplot}} object

@@ -43,6 +43,7 @@
     }
   }
 
+  data$spc <- unclass (data$spc)
   data
 }
 

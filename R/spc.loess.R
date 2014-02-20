@@ -8,7 +8,7 @@
 ##' the parameters that control the amount of smoothing.
 ##' 
 ##' @param spc the \code{hyperSpec} object
-##' @param newx wavelengh axis tointrpolate on
+##' @param newx wavelengh axis to interpolate on
 ##' @param enp.target,surface,\dots parameters for \code{\link[stats]{loess}} and
 ##' \code{\link[stats]{loess.control}}. 
 ##' @param short,user,date handed to \code{\link{logentry}}.
@@ -49,16 +49,13 @@ spc.loess <- function (spc, newx, enp.target = nwl (spc) / 4,
   chk.hy (spc)
   validObject (spc)
 
-  if (any (newx < min (spc@wavelength)) || any (newx > max (spc@wavelength)))
-    warning ("newx outside spectral range of spc. NAs will be generated.")
-
   loess <- apply (t (spc[[]]), 2, .loess, spc@wavelength)
 
   spc@data$spc <- t (sapply (loess, .predict, newx))
   .wl(spc) <- newx
 
-  .logentry (spc, short =  short,
-             long = list (newx = newx, enp.target = enp.target,
-               surface = surface, ...),
-             user = user, date = date)
+  if (any (is.na (spc@data$spc)))
+    warning ("NAs were generated. Probably newx was outside the spectral range covered by spc.")
+
+  spc
 }

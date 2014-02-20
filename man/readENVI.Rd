@@ -12,11 +12,11 @@ pixel size    \tab interpreted as x and y step size
 }}
 \usage{
   read.ENVI.Nicolet(..., x = NA, y = NA, log = list(),
-    keys.hdr2log = TRUE, nicolet.correction = FALSE)
+    keys.hdr2log = FALSE, nicolet.correction = FALSE)
 
   read.ENVI(file = stop("read.ENVI: file name needed"),
     headerfile = NULL, header = list(),
-    keys.hdr2data = FALSE, keys.hdr2log = TRUE, x = 0:1,
+    keys.hdr2data = FALSE, keys.hdr2log = FALSE, x = 0:1,
     y = x, wavelength = NULL, label = list(), log = list())
 }
 \arguments{
@@ -42,15 +42,15 @@ pixel size    \tab interpreted as x and y step size
   data is then handed to
   \code{\link[hyperSpec]{initialize}}}
 
-  \item{keys.hdr2data,keys.hdr2log}{determine which fields
-  of the header file should be put into the extra data and
-  which are to be stored in \code{long.description$header}
-  in the hyperSpec object's log. Defaults to putting all
-  header information into the log, and none as extra data.
+  \item{keys.hdr2data}{determines which fields of the
+  header file should be put into the extra data. Defaults
+  to none.
 
   To specify certain entries, give character vectors
   containing the lowercase names of the header file
   entries.}
+
+  \item{keys.hdr2log}{deprecated}
 }
 \value{
   a \code{hyperSpec} object

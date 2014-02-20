@@ -50,6 +50,7 @@ plotmat (laser, laser$t / 3600, ylab = "t / h")
 }
 \seealso{
   \code{\link[graphics]{image}},
-  \code{\link[graphics]{contour}}
+  \code{\link[graphics]{contour}},
+  \code{\link[hyperSpec]{levelplot}}
 }
 

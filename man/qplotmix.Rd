@@ -14,7 +14,7 @@
   qmixtile(object,
     purecol = stop("pure component colors needed."),
     mapping = aes_string(x = "x", y = "y", fill = "spc"),
-    ...)
+    ..., map.tileonly = FALSE)
 
   normalize.colrange(x, na.rm = TRUE, legend = FALSE,
     n = 100)
@@ -51,6 +51,10 @@
   \code{qmixlegend}: handed to \code{normalize}
 
   \code{colmix.rgb}: handed to \code{normalize}}
+
+  \item{map.tileonly}{if \code{TRUE}, \code{mapping} will
+  be handed to \code{\link[ggplot2]{geom_tile}} instead of
+  \code{\link[ggplot2]{ggplot}}.}
 
   \item{na.rm}{see \code{link[base]{min}}}
 

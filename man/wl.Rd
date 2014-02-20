@@ -24,7 +24,7 @@
   \item{digits}{handed to \code{\link[base]{signif}}. See
   details.}
 
-  \item{short,user,date}{handed to \code{\link{logentry}}.}
+  \item{short,user,date}{deprecated.}
 }
 \value{
   a numeric vector

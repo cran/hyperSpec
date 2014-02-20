@@ -59,6 +59,19 @@
   do.call(levelplot, c (list (x, data), dots))
 }
 
+.test (.levelplot) <- function (){
+
+  ## just check that no errors occur
+  levelplot (laser, contour = TRUE, col = "#00000080")
+  
+  ## applying a function before plotting
+  plotmap (chondro, func = max, col.regions = gray (seq (0, 1, 0.05)))
+
+  plotmap (chondro, clusters ~ x * y, transform.factor = FALSE)
+  plotmap (chondro, clusters ~ x * y, col.regions = gray (seq (0, 1, 0.05)))
+
+}
+
 ##' @include plotmap.R
 ##' @rdname levelplot
 ##' @import lattice
@@ -70,12 +83,13 @@
 ##' @seealso  \code{\link[lattice]{levelplot}}
 ##'
 ##'  \code{\link{trellis.factor.key}} for improved color coding of factors
-setMethod ("levelplot", signature = signature (x = "formula", data = "hyperSpec"), .levelplot)
+setMethod (f = "levelplot", signature = signature (x = "hyperSpec", data = "missing"),
+           definition = function (x, data, ...) {
+             .levelplot (x = formula (spc ~ .wavelength * .row), data = x, ...)
+           })
 
 ##' @rdname levelplot
 ##' @export
+setMethod (f = "levelplot", signature = signature (x = "formula", data = "hyperSpec"),
+           definition = .levelplot)
 
-setMethod ("levelplot", signature = signature (x = "hyperSpec", data = "missing"),
-           function (x, data, ...) {
-             .levelplot (x = formula (spc ~ .wavelength * .row), data = x, ...)
-           })

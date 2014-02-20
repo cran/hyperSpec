@@ -34,7 +34,7 @@
 ##'   values start at \code{1e6}.
 ##' @param nspc number of spectra in the file
 ##' @param \dots Arguments for \code{scan.txt.Renishaw}
-##' @param short,user,date passed to logentry
+##' @param short,user,date deprecated
 ##' @return the \code{hyperSpec} object
 ##' @rdname scan-txt-Renishaw
 ##' @export
@@ -133,13 +133,7 @@ scan.txt.Renishaw <- function (file = stop ("file is required"),
   spc <- matrix (spc, ncol = length (wl), nrow = nspc, byrow = TRUE)
 
   orderwl (new ("hyperSpec", spc = spc, data = as.data.frame (data),
-                wavelength = wl, label = cols,
-                log = list (short = short,
-                  long = list (file = file, cols = I (cols),
-                    nlines = nlines, nspc = nspc),
-                  user = user, date = date
-                )
-           ))
+                wavelength = wl, label = cols))
 }
 
 ##' @export

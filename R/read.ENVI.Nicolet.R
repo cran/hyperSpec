@@ -21,7 +21,7 @@
 read.ENVI.Nicolet <- function (..., # goes to read.ENVI: file headerfile, header
 		x = NA, y = NA, # NA means: use the specifications from the header file if possible
 		log = list (),
-		keys.hdr2log = TRUE,
+		keys.hdr2log = FALSE,
 		nicolet.correction = FALSE) {
 	
   ## set some defaults

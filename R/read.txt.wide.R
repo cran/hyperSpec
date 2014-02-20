@@ -41,16 +41,18 @@
 ##' respectively
 ##' @aliases read.txt.wide 
 ##' @rdname textio
-##' @param check.names handed to \code{\link[utils]{read.table}}. Make sure
-##'   this is \code{FALSE}, if the column names of the spectra are the
-##'   wavelength values.
+##' @param check.names handed to \code{\link[utils]{read.table}}. Make sure this is \code{FALSE}, if
+##' the column names of the spectra are the wavelength values.
 ##' @export
 read.txt.wide <- function (file = stop ("file is required"),
                            cols = list (
                              spc = "I / a.u.",
                              .wavelength = expression (lambda / nm)),
+                           sep = '\t',
+                           row.names = NULL,
                            check.names = FALSE,
                            ...){
+  
   .wavelength <- match (".wavelength", names (cols))
   if (is.na (.wavelength))
     cols <- as.list (c (cols, .wavelength = expression (lambda / nm)))
@@ -63,7 +65,8 @@ read.txt.wide <- function (file = stop ("file is required"),
   if (is.na (spc))
     stop ("cols$spc must exist.")
 
-  txtfile <- read.table (file = file, ..., check.names = FALSE)
+  txtfile <- read.table (file = file, check.names = check.names, row.names = row.names,
+                         sep = sep, ...)
 
   spc <- 0 : (ncol (txtfile) - length (cols) + 1) + spc
 
@@ -74,12 +77,5 @@ read.txt.wide <- function (file = stop ("file is required"),
   ## enforce colnames given by cols
   colnames (txtfile) <- head (names (cols), -1)
 
-  new ("hyperSpec",
-       data = txtfile,
-       labels = cols,
-       log = list (
-         short = "read.txt.long",
-         long = list (file = file, cols = I (cols), ...)
-         )
-       )
+  new ("hyperSpec", data = txtfile, labels = cols)
 }

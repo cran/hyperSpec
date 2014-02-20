@@ -15,7 +15,7 @@ ways to import and export data into \code{hyperSpec} objects exist.}
 
   read.txt.wide(file = stop("file is required"),
     cols = list(spc = "I / a.u.", .wavelength = expression(lambda/nm)),
-    check.names = FALSE, ...)
+    sep = "\t", row.names = NULL, check.names = FALSE, ...)
 
   write.txt.long(object, file = "",
     order = c(".rownames", ".wavelength"), na.last = TRUE,

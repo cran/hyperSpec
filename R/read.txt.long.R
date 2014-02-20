@@ -147,13 +147,5 @@ read.txt.long <- function (file = stop ("file is required"),
   txtfile$.wavelength <- NULL
   txtfile$spc <- I (spc)
 
-  new ("hyperSpec",
-       wavelength = wavelength,
-       data = txtfile,
-       labels = cols,
-       log = list (
-         short = "read.txt.long",
-         long = list (file = file, cols = I (cols), ...)
-         )
-       )
+  new ("hyperSpec", wavelength = wavelength, data = txtfile, labels = cols)
 }

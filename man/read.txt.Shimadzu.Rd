@@ -1,6 +1,6 @@
 \name{read.txt.Shimadzu}
 \alias{read.txt.Shimadzu}
-\title{Reads Shimadzu GCxGC - Spectra Files (.txt) as exported by Shimadzu Chrome Solution (v. 2.73)
+\title{Reads Shimadzu GCxGC-qMS - Spectra Files (.txt) as exported by Shimadzu Chrome Solution (v. 2.72)
 Mass Spectrometer: Shimadzu GCMS-QP 2010 Ultra (www.shimadzu.com)}
 \usage{
   read.txt.Shimadzu(filename, encoding = "", quiet = TRUE)
@@ -14,12 +14,13 @@ Mass Spectrometer: Shimadzu GCMS-QP 2010 Ultra (www.shimadzu.com)}
   \item{quiet}{suppress printing of progress}
 }
 \value{
-  hyperSpec object
+  list of spectra tables
 }
 \description{
-  Reads Shimadzu GCxGC - Spectra Files (.txt) as exported
-  by Shimadzu Chrome Solution (v. 2.73) Mass Spectrometer:
-  Shimadzu GCMS-QP 2010 Ultra (www.shimadzu.com)
+  Reads Shimadzu GCxGC-qMS - Spectra Files (.txt) as
+  exported by Shimadzu Chrome Solution (v. 2.72) Mass
+  Spectrometer: Shimadzu GCMS-QP 2010 Ultra
+  (www.shimadzu.com)
 }
 \note{
   This is a first rough import function and the functions

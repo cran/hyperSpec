@@ -1,5 +1,4 @@
-scan.txt.PerkinElmer <- function (files = "*.txt",  ..., label = list (),
-                                  short = "scan.txt.PerkinElmer", user = NULL, date = NULL) {
+scan.txt.PerkinElmer <- function (files = "*.txt",  ..., label = list ()) {
   ##  set some defaults
   long <- list (files = files, ..., label = label)
 
@@ -41,7 +40,6 @@ scan.txt.PerkinElmer <- function (files = "*.txt",  ..., label = list (),
 
   ## make the hyperSpec object
   new ("hyperSpec", wavelength = wavelength, spc = spc,
-       data = data.frame (file = files), label = label,
-       log = list (short = short, long = long, user = user, date = date))
+       data = data.frame (file = files), label = label)
 }
 

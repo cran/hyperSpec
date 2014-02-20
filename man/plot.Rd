@@ -54,6 +54,14 @@
   \item{"map"}{calls \code{\link{plotmap}} to produce a map
   plot.}
 
+  \item{"voronoi"}{calls \code{\link{plotvoronoi}} to
+  produce a Voronoi plot (tesselated plot, like "map" for
+  hyperSpec objects with uneven/non-rectangular grid).}
+
+  \item{"mat"}{calls \code{\link{plotmat}} to produce a
+  plot of the spectra matrix (not to be confused with
+  \code{\link[graphics]{matplot}}).}
+
   \item{"c"}{calls \code{\link{plotc}} to produce a
   calibration (or time series, depth-profile, or the like)}
 
