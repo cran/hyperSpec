@@ -13,6 +13,7 @@
 ##' subset for hyperSpec object
 ##'
 ##' @title subset
+##' @name subset
 ##' @param x hyperSpec object
 ##' @param \dots handed to \code{\link[base]{subset}} (data.frame method)
 ##' @param short,user,date passed to \code{\link[hyperSpec]{logentry}}

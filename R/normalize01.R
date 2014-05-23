@@ -5,7 +5,9 @@ setGeneric ("normalize01", function (x, ...) standardGeneric ("normalize01"))
 ##'
 ##' The input \code{x} is mapped to [0, 1] by subtracting the minimum and subsequently dividing by
 ##' the maximum. If all elements of \code{x} are equal, 1 is returned.
-##' 
+##'
+##' @title normalization for mixed colors
+##' @name normalize01
 ##' @param x  vector with values to transform
 ##' @param eps tolerance level for determining what is 0 and 1
 ##' @param \dots additional parameters such as \code{eps} handed down.

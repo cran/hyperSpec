@@ -887,7 +887,7 @@ mtext3d ("I / a.u.", edge = 'z--', line = 2.5)
 ##   facet_grid (. ~ range, labeller = function (...) "",
 ##               scales = "free", space = "free") +
 ##   scale_x_continuous (breaks = seq (0, 3200, 400)) +
-##   opts (strip.background = theme_blank ())
+##   theme (strip.background = element_blank ())
 
 
 ###################################################
@@ -927,7 +927,7 @@ ggplot (df, aes (x = .wavelength, y = spc)) +
   facet_grid (. ~ range, labeller = function (...) "",
               scales = "free", space = "free") +
   scale_x_continuous (breaks = seq (0, 3200, 400)) +
-  opts (strip.background = theme_blank ())
+  theme (strip.background = element_blank ())
   ggsave("plotting-fig--ggplotspccut.pdf", width = 4, height = 2.6)
 } else {
   for (f in c ("ggplotspc", "ggplotmap", "ggplotmeansd", "ggplotspccut")){

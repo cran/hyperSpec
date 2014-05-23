@@ -6,7 +6,7 @@
 ##' @param file connection (file name and path) to the .txt file
 ##' @param remove.zerospc LabRAM saves spectra consisting of zeros only if e.g. a map was
 ##' aborted. The default is to remove these spectra.
-##' @param cols,header,sep,row.names,check.names,... further parameters are handed over to \code{\link[hyperSpec]{read.txt.wide}}
+##' @param cols,header,sep,row.namescheck.names,... further parameters are handed over to \code{\link[hyperSpec]{read.txt.wide}}
 ##' @rdname read.txt.Horiba
 ##' @author C. Beleites
 ##' @return hyperSpec object

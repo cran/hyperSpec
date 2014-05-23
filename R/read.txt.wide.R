@@ -43,6 +43,8 @@
 ##' @rdname textio
 ##' @param check.names handed to \code{\link[utils]{read.table}}. Make sure this is \code{FALSE}, if
 ##' the column names of the spectra are the wavelength values.
+##' @param row.names handed to \code{\link[utils]{read.table}}. Should usually be \code{NULL} so the
+##' first column becomes a extra data column (as opposed to row names of the extra data).
 ##' @export
 read.txt.wide <- function (file = stop ("file is required"),
                            cols = list (

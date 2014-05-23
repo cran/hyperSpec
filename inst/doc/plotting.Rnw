@@ -771,7 +771,7 @@ ggplot (df, aes (x = .wavelength, y = spc)) +
   facet_grid (. ~ range, labeller = function (...) "",
               scales = "free", space = "free") +
   scale_x_continuous (breaks = seq (0, 3200, 400)) +
-  opts (strip.background = theme_blank ())
+  theme (strip.background = element_blank ())
 @
 \end{longtable}
 <<ggplot2-do, echo = FALSE, results = hide>>=

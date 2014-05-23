@@ -2,8 +2,8 @@ Package: hyperSpec
 Type: Package
 Title: Interface for hyperspectral data, i.e. spectra + meta info
         (spatial, time, concentration, ...)
-Version: 0.98-20140220
-Date: 2014-02-20
+Version: 0.98-20140523
+Date: 2014-05-23
 Author: Claudia Beleites
 Maintainer: Claudia Beleites <chemometrie@beleites.de>
 Description: This package is an interface to handle hyperspectral data sets in
@@ -47,7 +47,7 @@ Collate: 'hyperspec-package.R' 'validate.R' 'hyperspec-class.R'
         'read.txt.Shimadzu.R' 'scale.R' 'spc.rubberband.R'
         'spc.spline.R' 'subset.R' 'vandermonde.R' 'wleval.R'
         'y-pastenames.R'
-Packaged: 2014-02-19 23:06:03 UTC; cb
+Packaged: 2014-05-23 11:39:16 UTC; cb
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-02-20 07:03:38
+Date/Publication: 2014-05-23 21:07:34
