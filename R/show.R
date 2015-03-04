@@ -18,7 +18,7 @@
 
 setMethod ("as.character", signature = signature (x = "hyperSpec"),
            function (x, digits = getOption ("digits"), range = TRUE,
-                     max.print = 5, shorten.to = c(2,1), log = TRUE){
+                     max.print = 5, shorten.to = c(2,1)){
   ## input checking
   validObject (x)
 
@@ -55,43 +55,6 @@ setMethod ("as.character", signature = signature (x = "hyperSpec"),
                                 val = TRUE, range = range,
                                 shorten.to = shorten.to, max.print = max.print))
   
-  if (log){
-    chr <- c(chr, "log:")
-
-    if (nrow (chondro@log) > 0L){
-      long <- lapply (as.character (x@log$long.description),
-                      function (x, max.print, shorten.to, desc = TRUE){
-                        if (nchar (x) > max.print)
-                          paste (substr (x, 1, max.print), "...", sep = "")
-                        else
-                          x
-                      },
-                      max.print, shorten.to, desc = FALSE)
-      width = c (4 + floor (log10 (nrow (x@log))),
-        max (sapply (c("short", as.character (x@log$short.description)), nchar)),
-        max (sapply (c("long", long), nchar)),
-        max (sapply (c("date", as.character (x@log$date)), nchar)),
-        max (sapply (c("user", as.character (x@log$user)), nchar))
-        )
-
-      chr <- c (chr, paste (paste (rep (" ", width [1]), collapse = ""),
-                            format ("short", justify = "right", width = width [2]),
-                            format ("long", justify = "right", width = width [3]),
-                            format ("date", justify = "right", width = width [4]),
-                            format ("user", justify = "right", width = width [5]),
-                            sep = "   ")
-                )
-
-      for (i in seq_len (nrow (x@log)))
-        chr <- c (chr, paste (format (i, justify = "right", width = width [1]),
-                              format (as.character (x@log[i, 1]), justify = "right", width = width [2]),
-                              format (long [i], justify = "right", width = width [3]),
-                              format (as.character (x@log[i, 3]), justify = "right", width = width [4]),
-                              format (as.character (x@log[i, 4]), justify = "right", width = width [5]),
-                              sep = "   ")
-                  )
-      }
-    }
   chr
 })
 
@@ -103,7 +66,7 @@ setMethod ("as.character", signature = signature (x = "hyperSpec"),
 ##' \code{show} displays the range of values instead,
 ##' @name show
 ##' @rdname show
-##' @aliases show
+##' @aliases show show,hyperSpec-method
 ##' @param object a \code{hyperSpec} object
 ##' @seealso \code{\link[methods]{show}}
 ##' @keywords methods print
@@ -116,11 +79,8 @@ setMethod ("as.character", signature = signature (x = "hyperSpec"),
 ##' 
 ##' summary (chondro)
 ##' 
-##' print (chondro, log = TRUE)
 ##' print (chondro, range = TRUE)
 ##' 
-##' logbook (chondro)
-##'
 setMethod ("show", signature = signature (object = "hyperSpec"), function (object){
   print (object, range = TRUE)
   invisible (NULL)
@@ -129,19 +89,17 @@ setMethod ("show", signature = signature (object = "hyperSpec"), function (objec
 ##'
 ##' \code{print} shows the overview giving the first and last values of each
 ##' data column (fastest).
-##' @param log should the log be printed?
-##' @aliases print
+##' @aliases print print,hyperSpec-method
 ##' @param x a \code{hyperSpec} object
-##' @param \dots \code{print} and \code{summary}  hand further arguments to \code{as.character}
+##' @param ... \code{print} and \code{summary}  hand further arguments to \code{as.character}
 ##' @return \code{print} invisibly returns \code{x} after printing, \code{show} returns
 ##'   an invisible \code{NULL}.
 ##' @rdname show
 ##' @export 
 ##' @seealso \code{\link[base]{print}}
-setMethod ("print", signature = signature (x = "hyperSpec"),
-           function (x, log = FALSE, range = FALSE, ...){
+setMethod ("print", signature = signature (x = "hyperSpec"), function (x, range = FALSE, ...){
   validObject (x)
-  cat (as.character (x, log = log, range = FALSE, ...), sep ="\n")
+  cat (as.character (x, range = FALSE, ...), sep ="\n")
   invisible (x)
 })
 
@@ -149,11 +107,11 @@ setMethod ("print", signature = signature (x = "hyperSpec"),
 ##' 
 ##' \code{summary} displays the logbook in addition.
 ##' 
-##' @aliases summary
+##' @aliases summary summary,hyperSpec-method
 ##' @seealso \code{\link[base]{summary}}
 ##' @export
 ##' @rdname show
 setMethod ("summary", signature = signature (object = "hyperSpec"),
-           function (object, log = TRUE, ...){
-  print (object, log = log, ...)
+           function (object, ...){
+  print (object, ...)
 })

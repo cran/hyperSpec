@@ -1,46 +1,41 @@
 ##' 
 ##' Nicolet uses some more keywords in their header file.
-##' \code{read.ENVI.Nicolet} therefore appends "description", "z plot titles",
-##' and "pixel size" to \code{keys.hdr2log} before calling \code{read.ENVI}.
-##' They are then interpreted as follows:
+##' They are interpreted as follows:
 ##' \tabular{ll}{
 ##' description   \tab giving the position of the first spectrum \cr
 ##' z plot titles \tab wavelength and intensity axis units, comma separated \cr
 ##' pixel size    \tab interpreted as x and y step size
 ##' }
+##' These parameters can be overwritten by giving a list with the respective 
+##' elements in parameter \code{header}. 
 ##' 
 ##' The values in header line description seem to be microns while the pixel
 ##' size seems to be in microns. If \code{nicolet.correction} is true, the
 ##' pixel size values (i.e. the step sizes) are multiplied by 1000.
 ##' 
 ##' @param nicolet.correction see details
-##' @param \dots handed to \code{read.ENVI}
+##' @param ... handed to \code{read.ENVI}
 ##' @rdname readENVI
 ##' @export
 
-read.ENVI.Nicolet <- function (..., # goes to read.ENVI: file headerfile, header
-		x = NA, y = NA, # NA means: use the specifications from the header file if possible
-		log = list (),
-		keys.hdr2log = FALSE,
-		nicolet.correction = FALSE) {
+read.ENVI.Nicolet <- function (file = stop ("read.ENVI: file name needed"), headerfile = NULL, 
+															 header = list (), ..., # goes to read.ENVI
+															 x = NA, y = NA, # NA means: use the specifications from the header file if possible
+															 nicolet.correction = FALSE) {
+
+  ## the additional keywords to interprete must be read from headerfile
+	headerfile <- .find.ENVI.header (file, headerfile)
+	keys <- readLines (headerfile)
+	keys <- .read.ENVI.split.header (keys)
+  keys <- keys [c ("description", "z plot titles", "pixel size")]
 	
-  ## set some defaults
-  log <- modifyList (list (short = "read.ENVI.Nicolet", 
-                           long = list (call = match.call ())),
-                     log)
-  ## the additional keywords to interprete must be read
-  if (! isTRUE (keys.hdr2log))
-    keys.hdr2log <- unique (c ("description", "z plot titles", "pixel size", keys.hdr2log))
-	
-  ## most work is done by read.ENVI
-  spc <- read.ENVI (..., keys.hdr2log = keys.hdr2log,
-                    x = if (is.na (x)) 0 : 1 else x,
-                    y = if (is.na (y)) 0 : 1 else y,
-                    log = log)
+	header <- modifyList (keys, header)  
   
-  ## get the header for post-processing
-  header <-spc@log$long.description [[1]]$header 
-	
+	## most work is done by read.ENVI
+  spc <- read.ENVI (file = file, headerfile = headerfile, header = header, ...,
+                    x = if (is.na (x)) 0 : 1 else x,
+                    y = if (is.na (y)) 0 : 1 else y)
+
 ### From here on processing the additional keywords in Nicolet's ENVI header ************************
   
   ## z plot titles ----------------------------------------------------------------------------------
@@ -105,5 +100,6 @@ read.ENVI.Nicolet <- function (..., # goes to read.ENVI: file headerfile, header
     if (! any (is.na (y)))
       spc@data$y <- y
   }
+
   spc
 }

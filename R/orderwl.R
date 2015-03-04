@@ -7,7 +7,6 @@
 ##' 
 ##' @param x The \code{hyperSpec} object.
 ##' @param na.last,decreasing Handed to \code{\link[base]{order}}.
-##' @param short,date,user Handed to \code{\link{logentry}}.
 ##' @return A \code{hyperSpec} object.
 ##' @author C. Beleites
 ##' @export
@@ -35,16 +34,11 @@
 ##' lines (seq_len(nwl(spc)), spc[[]], type = "l", col = "red")
 ##' spc[[]]
 ##' 
-orderwl <- function (x, na.last = TRUE, decreasing = FALSE,
-                     short = "orderwl", date = NULL, user = NULL){
+orderwl <- function (x, na.last = TRUE, decreasing = FALSE){
   chk.hy (x)
   validObject (x)
 
-  x <- .orderwl (x)
-  
-  .logentry (x, short = short,
-             long = list (na.last = na.last, decreasing = decreasing),
-             date = date, user = user)
+  .orderwl (x)
 }
 
 .orderwl <- function (x, na.last = TRUE, decreasing = FALSE){

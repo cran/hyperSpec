@@ -20,8 +20,7 @@
 ##' 
 ##' if \code{2}, the binning is done using \code{na.rm = FALSE}, and resulting \code{NA}s are
 ##' corrected with \code{mean(\dots{}, na.rm = TRUE)}.
-##' @param \dots ignored
-##' @param short,user,date handed to \code{\link[hyperSpec]{logentry}}.
+##' @param ... ignored
 ##' @return A \code{hyperSpec} object with \code{ceiling (nwl (spc) / by)} data points per spectrum.
 ##' @rdname spc-bin
 ##' @export
@@ -37,12 +36,9 @@
 ##'  nwl (flu)
 ##'  nwl (spc)
 ##' 
-spc.bin <- function (spc, by = stop ("reduction factor needed"), na.rm = TRUE, ...,
-                     short = "spc.bin", user = NULL, date = NULL) {
+spc.bin <- function (spc, by = stop ("reduction factor needed"), na.rm = TRUE, ...) {
   chk.hy (spc)
   validObject (spc)
-
-  long <- list (by = deparse (by), na.rm = na.rm)
 
   n <- ceiling (nwl (spc) / by)
 
@@ -78,6 +74,6 @@ spc.bin <- function (spc, by = stop ("reduction factor needed"), na.rm = TRUE, .
   .wl (spc) <- as.numeric (tapply (spc@wavelength, bin, mean, na.rm = na.rm > 0))
 
   validObject (spc)
-  .logentry (spc, short = short, long = long, user = user, date = date)
+  spc
 }
 

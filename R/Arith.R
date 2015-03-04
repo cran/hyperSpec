@@ -1,6 +1,3 @@
-
-### use manually generated .Rd as aliases are not properly escaped.
-
 ##' Arithmetical Operators: +, -, *, /, ^, \%\%, \%/\%, \%*\% for hyperSpec objects
 ##'
 ##' The arithmetical operators \code{+}, \code{-}, \code{*}, \code{/}, \code{\^}, \code{\%\%},
@@ -26,30 +23,40 @@
 ##' If you want to calculate on the extra data as well, use the data.frame \code{hyperSpec@@data}
 ##' directly or \code{\link[hyperSpec]{as.data.frame} (x)}.
 ##' @author C. Beleites
-##' 
-##' @noRd
+##' @title Arithmetical Operators for hyperSpec objects
+##' @name Arith
+##' @rdname Arith
+##' @docType methods
+##' @aliases Arith Arith,hyperSpec-method Arith,hyperSpec,hyperSpec-method
+##' +,hyperSpec,hyperSpec-method -,hyperSpec,hyperSpec-method *,hyperSpec,hyperSpec-method
+##' ^,hyperSpec,hyperSpec-method %%,hyperSpec,hyperSpec-method %/%,hyperSpec,hyperSpec-method
+##' /,hyperSpec,hyperSpec-method
+##' Arith,hyperSpec,matrix-method
+##' Arith,hyperSpec,numeric-method
+##' Arith,hyperSpec,missing-method
+##' Arith,matrix,hyperSpec-method
+##' Arith,numeric,hyperSpec-method
+##' %*% %*%,hyperSpec,hyperSpec-method %*%,matrix,hyperSpec-method %*%,hyperSpec,matrix-method
 ##' @param e1,e2 or
-##' @param x,y either two \code{hyperSpec} objects or one \code{hyperSpec} object and  matrix of same
-##' size as \code{hyperSpec[[]]} or a scalar (numeric of length 1).
+##' @param x,y either two \code{hyperSpec} objects or
+##'
+##' one \code{hyperSpec} object and  matrix of same size as \code{hyperSpec[[]]} or
+##'
+##' a vector which length equalling either the number of rows or the number of wavelengths
+##' of the hyperSpec object, or
+##' 
+##' a scalar (numeric of length 1).
 ##' @return \code{hyperSpec} object with the new spectra matrix.
 ##' @export
-##' @aliases Arith-method Arith,hyperSpec-method Arith,hyperSpec,hyperSpec-method
-##' +,hyperSpec,hyperSpec-method -,hyperSpec,hyperSpec-method *,hyperSpec,hyperSpec-method
-##' ^,hyperSpec,hyperSpec-method /,hyperSpec,hyperSpec-method Arith,hyperSpec,matrix-method
-##' Arith,hyperSpec,numeric-method Arith,hyperSpec,missing-method Arith,matrix,hyperSpec-method
-##' Arith,numeric,hyperSpec-method
-##' @keywords methods
+##' @keywords methods arith
 ##' @include paste.row.R
-##' @docType methods
+##' @include hyperspec-package.R
+##' @include hyperspec-class.R
 ##' @concept hyperSpec arithmetic
 ##' @concept hyperSpec arithmetical operators
 ##' @concept hyperSpec plus
 ##' @concept hyperSpec division
 ##' @concept hyperSpec spectra conversion
-##' @usage
-##' x %*% y
-##' x %% y
-##' x %/% y
 ##' @seealso
 ##' \code{\link[hyperSpec]{sweep-methods}} for calculations involving a vector and
 ##'   the spectral matrix.
@@ -62,10 +69,11 @@
 ##'   \code{\link[hyperSpec]{Math}} for mathematical group generic 
 ##'   functions (Math and Math2 groups) working on \code{hyperSpec} objects.
 ##' @examples
-##' chondro + chondro
-##' 1 / chondro
-##' all((chondro + chondro - 2 * chondro)[[]] == 0)
+##' flu + flu
+##' 1 / flu
+##' all((flu + flu - 2 * flu)[[]] == 0)
 ##' -flu
+##' flu / flu$c
 
 
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
@@ -77,7 +85,7 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
              e2 <- .expand (e2, dim (e1) [c (1, 3)])
              
              e1 [[]] <- callGeneric (e1[[]], e2[[]])
-             .logentry (e1, short = .Generic, long = as.character (e2))
+             e1
            }
            )
 
@@ -86,7 +94,7 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
 
   if (missing (e2)){
     e1  [[]] <- callGeneric (e1 [[]])
-    .logentry (e1, short = .Generic, long = list ())
+    e1
   } else {
     e2 <- as.matrix (e2)
 
@@ -95,15 +103,14 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "hyperSpec"),
     e2 <- .expand (e2, dim (e1) [c (1, 3)])
     
     e1  [[]] <- callGeneric (e1 [[]], e2)
-    .logentry (e1, short = .Generic,
-               long = list (e2 = .paste.row (e2, val = TRUE)))
+    e1
   }
 }
-##' @noRd
+##' @rdname Arith
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "numeric"), .arithx)
-##' @noRd
+##' @rdname Arith
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "matrix"), .arithx)
-##' @noRd
+##' @rdname Arith
 setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "missing"), .arithx)
 
 .arithy <- function (e1, e2){
@@ -115,15 +122,15 @@ setMethod ("Arith", signature (e1 = "hyperSpec", e2 = "missing"), .arithx)
   e2 <- .expand (e2, dim (e1))
     
   e2  [[]] <- callGeneric (e1, e2 [[]])
-  .logentry (e2, short = .Generic, long = list (e1 = .paste.row (e1, val = TRUE)))
+  e2
 }
-##' @noRd
+##' @rdname Arith
 setMethod ("Arith", signature (e1 = "numeric", e2 = "hyperSpec"), .arithy)
-##' @noRd
+##' @rdname Arith
 setMethod ("Arith", signature (e1 = "matrix", e2 = "hyperSpec"), .arithy)
 
 ##' @param m matrix
-##' @param target.dim target size to expand the 
+##' @param target.dim target size to expand the vector to for the sweep-shortcuts
 ##' @noRd
 .expand <- function (m, target.dim) {
   m.dim = dim (m)
@@ -143,10 +150,10 @@ setMethod ("Arith", signature (e1 = "matrix", e2 = "hyperSpec"), .arithy)
 }
 
 
-##' @noRd
+##' @rdname Arith
 ##' @concept hyperSpec matrix multiplication
-##' @aliases \%*\% \%*\%,hyperSpec,hyperSpec-method \%*\%,matrix,hyperSpec-method
-##' \%*\%,hyperSpec,matrix-method
+##' @aliases %*% %*%,hyperSpec,hyperSpec-method %*%,matrix,hyperSpec-method
+##' %*%,hyperSpec,matrix-method
 ##' @export "%*%"
 ##' @seealso  \code{\link[base]{matmult}} for matrix multiplications with \code{\%*\%}.
 setMethod ("%*%", signature (x = "hyperSpec", y = "hyperSpec"),
@@ -162,22 +169,22 @@ setMethod ("%*%", signature (x = "hyperSpec", y = "hyperSpec"),
              .wl (x) <- y@wavelength
              x@label$.wavelength = y@label$.wavelength
 
-             .logentry (x, short = "%*%", long = as.character (y))
+             x
            }
            )
 
-##' @noRd
+##' @rdname Arith
 setMethod ("%*%", signature (x = "hyperSpec", y = "matrix"),
            function (x, y){
              validObject (x)
              x@data$spc <-  x@data$spc %*% y
              .wl (x) <- seq_len (ncol (y))
              x@label$.wavelength = NA
-             .logentry (x, short = "%*%", long = list (y = .paste.row (y, val = TRUE)))
+             x
            }
            )
 
-##' @noRd
+##' @rdname Arith
 setMethod ("%*%", signature (x = "matrix", y = "hyperSpec"),
            function (x, y){
              validObject (y)
@@ -191,7 +198,7 @@ setMethod ("%*%", signature (x = "matrix", y = "hyperSpec"),
                        log = y@log
                        )
 
-             .logentry (y, short = "%*%", long = list (x = .paste.row (x, val = TRUE)))
+             y
            }
            )
 

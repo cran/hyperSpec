@@ -172,7 +172,7 @@ rbind.fill.matrix <- function (...){
 ##' that are not present in all inputs, accepts a list of data frames, and 
 ##' operates substantially faster
 ##'  
-##' @param \dots data frames/matrices to row bind together
+##' @param ... data frames/matrices to row bind together
 ##' @keywords manip
 ##' @rdname rbind-fill
 ##' @examples

@@ -2,12 +2,12 @@
 \usepackage[utf8]{inputenc} % Sweave doesn't find the encoding definition in vignettes.defs
 \SweaveInput{vignettes.defs}
 \SweaveOpts{prefix.string=laser-fig-}
-\hypersetup{pdftitle={Laser Vignette for hyperSpec},
+\hypersetup{pdftitle={laser},
  pdfauthor={C. Beleites},
  pdfsubject={Vignette on hyperSpec's laser data set},
  pdfkeywords={hyperSpec, laser, time series}}
 
-% \VignetteIndexEntry{laser: Vignette on the laser data set, example of a time series. Shows also how to change the spectral abscissa.}
+% \VignetteIndexEntry{laser: Vignette on hyperSpec's laser data set.}
 % \VignetteKeywords{hyperSpec, laser, time series}
 % \VignettePackage{hyperSpec}
 \begin{document}

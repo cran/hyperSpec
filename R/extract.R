@@ -12,9 +12,11 @@
   if (! missing (i))
     x@data <- x@data[i,, drop = FALSE]
 
-  if (!missing (j))
+  if (!missing (j)){
     x@data <- x@data[, j, drop = FALSE]
-
+    x@label <- x@label [c (".wavelength", colnames (x@data))]
+  }
+    
   if (!missing (l)) {
     if (is.null (x@data$spc))
       warning ("Selected columns do not contain specta. l ignored.")
@@ -64,10 +66,10 @@
 ##' \emph{Replacing: \code{[<-}, \code{[[<-}, and \code{$<-}}.
 ##' \preformatted{
 ##' ## S4 method for signature 'hyperSpec':
-##' x [i, j, l, short = NULL, \dots] <- value
+##' x [i, j, l, \dots] <- value
 ##' 
 ##' ## S4 method for signature 'hyperSpec':
-##' x [[i, j, l, wl.index = FALSE, short = NULL, \dots]] <- value
+##' x [[i, j, l, wl.index = FALSE, \dots]] <- value
 ##' 
 ##' ## S4 method for signature 'hyperSpec':
 ##' x$name <- value
@@ -95,6 +97,7 @@
 ##' @title Extract and Replace parts of hyperSpec objects
 ##' @rdname extractreplace
 ##' @docType methods
+##' @aliases [ [,hyperSpec-method
 ##' @rdname extractreplace
 ##' @param x a \code{hyperSpec} Object
 ##' @param i row index: selects spectra
@@ -110,11 +113,10 @@
 ##'   treated as column indices for the spectral matrix. Otherwise, the numbers
 ##'   in \code{l} are treated as wavelengths and the corresponding column
 ##'   indices are looked up first via \code{\link{wl2i}}.
-##' @param short,user,date handed to \code{\link{logentry}}.
 ##' @param drop For \code{[[}: drop unnecessary dimensions, see
 ##'   \code{\link[base]{drop}} and \code{\link[base]{Extract}}. Ignored for
 ##'   \code{[}, as otherwise invalid \code{hyperSpec} objects might result.
-##' @param \dots ignored
+##' @param ... ignored
 ##' @return For \code{[}, \code{[<-}, \code{[[<-}, and \code{$<-} a \code{hyperSpec} object,
 ##' 
 ##' for \code{[[} a matrix or \code{data.frame}, and
@@ -197,7 +199,6 @@
 setMethod ("[", signature = signature (x = "hyperSpec"),
            function (x, i, j, l, ..., 
                      wl.index = FALSE, 
-                     short = "[", date = NULL, user = NULL,
                      drop = FALSE  # drop has to be at end
                      ){
   validObject (x)
@@ -216,14 +217,13 @@ setMethod ("[", signature = signature (x = "hyperSpec"),
     x@wavelength <- numeric (0)
   }
 
-  .logentry (x, short = short,
-             long = .call.list (match.call (call = sys.call (-1))),
-             date = date, user = user)
+  x
 })
 
 ##' @rdname extractreplace
 ##' @export "[["
-##' @name [[
+##' @aliases [[ [[,hyperSpec-method
+## ' @name [[
 setMethod ("[[", signature = signature (x = "hyperSpec"),
            function (x, i, j, l, ...,
                      wl.index = FALSE,
@@ -257,6 +257,7 @@ setMethod ("[[", signature = signature (x = "hyperSpec"),
 
 ##' @rdname extractreplace
 ##' @param name name of the data column to extract. \code{$spc} yields the spectra matrix.
+##' @aliases $ $,hyperSpec-method
 ##' @export "$"
 setMethod ("$", signature = signature (x = "hyperSpec"),
            function (x, name){

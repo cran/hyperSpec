@@ -33,8 +33,7 @@
 ##'   must be at least the number of data points per spectrum. Reasonable
 ##'   values start at \code{1e6}.
 ##' @param nspc number of spectra in the file
-##' @param \dots Arguments for \code{scan.txt.Renishaw}
-##' @param short,user,date deprecated
+##' @param ... Arguments for \code{scan.txt.Renishaw}
 ##' @return the \code{hyperSpec} object
 ##' @rdname scan-txt-Renishaw
 ##' @export
@@ -43,9 +42,7 @@
 ##'   \code{\link[base]{scan}}
 ##' @keywords IO file
 scan.txt.Renishaw <- function (file = stop ("file is required"),
-                               data = "xyspc", nlines = 0, nspc = NULL,
-                               short = "scan.txt.Renishaw", user = NULL,
-                               date = NULL){
+                               data = "xyspc", nlines = 0, nspc = NULL){
   cols <- switch (data,
                   spc = NULL,
                   xyspc = list (y = expression ("/" (y, mu * m)), 
@@ -64,10 +61,6 @@ scan.txt.Renishaw <- function (file = stop ("file is required"),
   on.exit(close(file))
 
   first <- scan(file, nlines = 1, quiet = TRUE)
-
-#  if (! isSeekable(file))
-#    stop ("Only seekable connections are supported.")
-#  seek (file, 0L, origin = "start")
   
   ncol <- length (first)
 

@@ -67,19 +67,19 @@ plotmat <- function (object, y = ".row", ylab, col = alois.palette (20), ...,
     par (mar = mar)
 
     ## color legend
-    if (require ("plotrix")){
+    if (requireNamespace ("plotrix")){
     
       usr <- par()$usr
 
       dx <- diff (usr [1 : 2])
     
-      color.legend (usr [2] + 0.05 * dx,
-                    usr [3],
-                    usr [2] + 0.10 * dx,
-                    usr [4],
-                    pretty (range (object, na.rm = TRUE)),
-                    col,
-                    align="rb",gradient="y")
+      plotrix::color.legend (usr [2] + 0.05 * dx,
+      											 usr [3],
+      											 usr [2] + 0.10 * dx,
+      											 usr [4],
+      											 pretty (range (object, na.rm = TRUE)),
+      											 col,
+      											 align="rb",gradient="y")
     } else {
       warning ("package 'plotrix' not available: omitting legend.")
     }

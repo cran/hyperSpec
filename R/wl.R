@@ -56,7 +56,7 @@ wl <- function (x){
 ##' @export "wl<-"
 ##' @aliases wl<-
 ##' @usage
-##' wl (x, label=NULL, digits=6, short="wl<-", user = NULL, date = NULL) <- value
+##' wl (x, label=NULL, digits=6) <- value
 ##' 
 ##' @param value either a numeric containing the new wavelength vector, or a
 ##'   list with \code{value$wl} containing the new wavelength vector and
@@ -64,7 +64,6 @@ wl <- function (x){
 ##' @param label The label for the new wavelength axis. See \link{initialize}
 ##'   for details.
 ##' @param digits handed to \code{\link[base]{signif}}. See details.
-##' @param short,user,date deprecated.
 ##' @return \code{hyperSpec} object
 ##' @examples
 ##' 	# convert from wavelength to frequency 
@@ -78,7 +77,7 @@ wl <- function (x){
 ##' 	wl (chondro) <- list (wl = 1e7 / (1e7/785 - wl (chondro)), label = expression (lambda / nm))
 ##' 	plot (chondro [1])
 ##' 
-"wl<-" <- function (x, label = NULL, digits = 6, short = "wl<-", user = NULL, date = NULL, value){
+"wl<-" <- function (x, label = NULL, digits = 6, value){
 
   chk.hy (x)
   validObject (x)
@@ -93,9 +92,6 @@ wl <- function (x){
   x@label$.wavelength <- label
 
   validObject (x)
-
-  .logentry (x, short = short, long = list (value = value, digits = digits),
-             date = date, user = user)
 
   x
 }

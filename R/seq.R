@@ -14,9 +14,8 @@
 ##' @aliases seq seq,hyperSpec-method
 ##' @param x the hyperSpec object
 ##' @param from,to arguments handed to \code{\link[base]{seq.int}}
-##' @param \dots arguments for \code{\link[base]{seq}}, namely \code{by}, \code{length.out}
+##' @param ... arguments for \code{\link[base]{seq}}, namely \code{by}, \code{length.out}
 ##' @param index should a vector with indices be returned rather than a hyperSpec object?
-##' @param short,user,date handed to \code{\link{logentry}}.
 ##' @return a numeric or hyperSpec object, depending on \code{index}.
 ##' @author C. Beleites
 ##' @seealso \code{\link{wl2i}} to construct sequences of wavelength indices.
@@ -25,7 +24,6 @@
 ##' @rdname seq
 ##' @export
 ##' @method seq hyperSpec
-##' @S3method seq hyperSpec
 ##' @keywords manip
 ##' @examples
 ##' 
@@ -40,8 +38,7 @@
 ##' 
 ### needs to be an S3 function as S4 ... dispatch has to have the same signature for all parameters
 seq.hyperSpec <- function (x, from = 1, to = nrow (x),
-                           ..., index = FALSE,
-                           short = "seq", user = NULL, date = NULL){
+                           ..., index = FALSE){
   validObject (x)
 
   s <- seq (from = from, to = to, ...)
@@ -49,16 +46,11 @@ seq.hyperSpec <- function (x, from = 1, to = nrow (x),
   if (index)
     s
   else {
-    x <- .extract (x, i = s)
-
-    .logentry (x, short = short,
-               long = list (from = from, to = to, ..., index = index),
-               user = user, date = date)
-  }
-
+    .extract (x, i = s)
+	}
 }
 
-## internal abbreviations
+## internal abbreviation function
 
 row.seq <- function (x, from = 1, to = nrow (x@data), ...){
   if (nrow (x@data) == 0)

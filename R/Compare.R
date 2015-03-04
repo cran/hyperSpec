@@ -1,4 +1,3 @@
-##' Comparison Operators: <, >, <=, >=, ==, and !=
 ##' The comparison operators \code{>}, \code{<}, \code{>=}, \code{<=},
 ##' \code{==}, and \code{!=} for \code{hyperSpec} objects.
 ##' 
@@ -17,6 +16,7 @@
 ##' If you want to calculate on the \code{data.frame} \code{hyperSpec@@data},
 ##' you have to do this directly on \code{hyperSpec@@data}.
 ##'
+##' @author C. Beleites
 ##' @title Comparison of hyperSpec objects
 ##' @name Comparison
 ##' @rdname Comparison
@@ -33,7 +33,6 @@
 ##' As \code{hyperSpec} objects must have numeric spectra matrices, the
 ##'   resulting matrix of the comparison is returned directly.
 ##' @return a logical matrix for the comparison operators.
-##' @author C. Beleites
 ##' @seealso \code{\link[hyperSpec]{sweep-methods}} for calculations involving
 ##'   a vector and the spectral matrix.
 ##' 

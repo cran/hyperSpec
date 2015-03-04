@@ -1,3 +1,11 @@
+.sample <- function (x, size = nrow (x), replace = FALSE, prob = NULL) {
+	validObject (x)
+	
+	s <- sample.int (nrow (x@data), size = size, replace = replace, prob = prob)
+	
+	x [s]
+}
+
 ##' Random Samples and Permutations
 ##' Take a sample of the specified size from the elements of x with or without
 ##' replacement.
@@ -9,9 +17,6 @@
 ##' @param replace Should sampling be with replacement?
 ##' @param prob A vector of probability weights for obtaining the elements of
 ##'   the vector being sampled.
-##' @param short date are handed to \code{\link{logentry}}
-##' @param user date are handed to \code{\link{logentry}}
-##' @param date are handed to \code{\link{logentry}}
 ##' @return a hyperSpec object, data.frame or matrix with \code{size} rows for \code{sample}, and an
 ##' integer vector for \code{isample} that is suitable for indexing (into the spectra) of x.
 ##' @author C. Beleites
@@ -29,19 +34,7 @@
 ##' plot (sample (flu, 3, replace = TRUE), col = "#0000FF80", add = TRUE,
 ##'       lines.args = list (lwd = 2));
 ##' 
-setMethod ("sample", signature = signature (x = "hyperSpec"),
-           function (x, size = nrow (x), replace = FALSE, prob = NULL,
-                     short = "sample", user = NULL, date = NULL
-                     ) {
-             validObject (x)
-
-             s <- sample.int (nrow (x@data), size = size, replace = replace, prob = prob)
-
-             .logentry (x [s], short = short,
-                        long = list (size = size, replace = replace, prob = prob,
-                        user = user, date = date))
-           }
-           )
+setMethod ("sample", signature = signature (x = "hyperSpec"), .sample)
 
 ##' \code{isample} returns an vector of indices, \code{sample} returns the
 ##' corresponding hyperSpec object.

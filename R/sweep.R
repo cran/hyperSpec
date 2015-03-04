@@ -1,3 +1,20 @@
+.sweep <- function (x, MARGIN, STATS, FUN = "-",
+										check.margin = TRUE, ...){
+	validObject (x)
+	
+	if (is (STATS, "hyperSpec")){
+		validObject (STATS)
+		STATS <- STATS@data$spc
+	} else if (is (STATS, "function")) {
+		STATS <- apply (x, MARGIN, STATS)@data$spc
+	}
+	
+	x@data$spc <- sweep (x = x@data$spc, MARGIN = MARGIN, STATS = STATS,
+											 FUN = FUN, check.margin = check.margin, ...)
+	
+	x
+}
+
 ##' Sweep Summary Statistic out of an hyperSpec Object
 ##' \code{\link[base]{sweep}} for \code{hyperSpec} objects.
 ##' 
@@ -26,8 +43,7 @@
 ##'   dimensions of \code{STATS} do not match the specified dimensions of
 ##'   \code{x}.  Set to \code{FALSE} for a small speed gain when you
 ##'   \emph{know} that dimensions match.
-##' @param \dots further arguments for \code{FUN}
-##' @param short,user,date handed over to \code{\link{logentry}}.
+##' @param ... further arguments for \code{FUN}
 ##' @return A \code{hyperSpec} object.
 ##' @author C. Beleites
 ##' @seealso \code{\link[base]{sweep}}
@@ -60,24 +76,4 @@
 ##' ## checking
 ##' stopifnot (all (mm.corrected2 == mm.corrected))
 ##' 
-setMethod ("sweep", signature = signature (x = "hyperSpec"), function (x, MARGIN, STATS, FUN = "-",
-                                           check.margin = TRUE, ...,
-                                           short = "sweep", user = NULL, date = NULL){
-  validObject (x)
-
-  if (is (STATS, "hyperSpec")){
-    validObject (STATS)
-    STATS <- STATS@data$spc
-  } else if (is (STATS, "function")) {
-    STATS <- apply (x, MARGIN, STATS)@data$spc
-  }
-
-  x@data$spc <- sweep (x = x@data$spc, MARGIN = MARGIN, STATS = STATS,
-                       FUN = FUN, check.margin = check.margin, ...)
-
-  .logentry (x, short = short,
-             long = list (MARGIN = MARGIN, FUN = FUN, STATS = STATS,  FUN = FUN,
-                          check.margin = check.margin, ...),
-             date = date, user = user)
-                      
-})
+setMethod ("sweep", signature = signature (x = "hyperSpec"), .sweep)

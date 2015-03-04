@@ -49,7 +49,7 @@ setReplaceMethod ("rownames", signature = signature (x = "hyperSpec"), function 
   validObject (x)
   
   rownames (x@data) <- value
-  .logentry (x, short = "rownames<-")
+  x
 })
 
 ##' @rdname dimnames
@@ -79,5 +79,5 @@ setReplaceMethod ("colnames", signature = signature (x = "hyperSpec"),
   colnames (x@data) <- value
   
   validObject (x)                       # necessary: $spc could be renamed!
-  .logentry (x)
+  x
 })

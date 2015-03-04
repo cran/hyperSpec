@@ -4,12 +4,12 @@
 
 \SweaveInput{vignettes.defs}
 \SweaveOpts{prefix.string=introduction-fig-}
-\hypersetup{pdftitle={hyperSpec Introduction},
+\hypersetup{pdftitle={hyperSpec Manual},
  pdfauthor={C. Beleites},
  pdfsubject={Introduction on the R package hyperSpec},
  pdfkeywords={hyperSpec}}
 
-% \VignetteIndexEntry{hyperSpec Introduction}
+% \VignetteIndexEntry{introduction: hyperSpec's main manual}
 % \VignetteKeywords{hyperspec}
 % \VignettePackage{hyperSpec}
 % \VignetteDepends{MASS}
@@ -17,6 +17,7 @@
 \makeindex
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \title{\phy Introduction }
 \maketitle
 \warnbox{Reproducing the Examples in this Vignette}{
@@ -186,7 +187,6 @@ library ("hyperSpec")
 \index{options|textbf}
 \index{options!debuglevel}
 \index{options!gc}
-\index{options!log}
 The global behaviour of \phy can be configured via options. The values of the options are
 retrieved with \Rfunction{hy.getOptions} and \Rfunction{hy.getOption}, and changed with
 \Rfunction{hy.setOptions}. Table~\ref{tab:options} gives an overview.
@@ -196,9 +196,11 @@ retrieved with \Rfunction{hy.getOptions} and \Rfunction{hy.getOption}, and chang
     \hline
     \textbf{name} & \textbf{default value} (range) & \textbf{description}                       & \textbf{used by}                                        \\
     \cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-    debuglevel    & 0 (1L 2L)                      & amount of debugging information produced   & \Rfunction{spc.identify}, \Rfunction{map.identify}      \\
+    debuglevel    & 0 (1L 2L)                      & amount of debugging information produced   & \Rfunction{spc.identify}, \Rfunction{map.identify}, various file import functions      \\
     gc            & FALSE                          & triggers frequent calling of \Rcode{gc ()} & \Rfunction{read.ENVI},\newline\Rcode{new ("hyperSpec")} \\
-    log           & TRUE                           & automatically create logbook entries       & \Rfunction{logbook}                                     \\
+    tolerance & $\sqrt{\Rcode{.Machine\$.double.eps}}$ & tolerance for numerical comparisons & file import functions (removing empty spectra), \Rfunction{normalize01}\\
+    file.remove.emptyspc & TRUE & automatic removing of empty spectra & file import functions, see \Rcode{vignette ("fileio")}\\
+    file.keep.name & TRUE & automatic recording of file name in column \Rcode{\$filename} & file import functions, see \Rcode{vignette ("fileio")}\\
     \hline
     % 
   \end{tabular}
@@ -207,7 +209,8 @@ retrieved with \Rfunction{hy.getOptions} and \Rfunction{hy.getOption}, and chang
   \label{tab:options}
 \end{table}
 <<checkCompleteOptionTable, echo = FALSE, results = hide>>=
-stopifnot (all (names (hy.getOptions(TRUE)) %in% c ("log", "debuglevel", "gc")))
+stopifnot (all (names (hy.getOptions(TRUE)) %in% c ("debuglevel", "gc", "file.remove.emptyspc", 
+                  "file.keep.name", "tolerance")))
 @
 \section{The structure of \Rclass{hyperSpec} objects}
 \label{sec:structure-chy}
@@ -217,7 +220,6 @@ stopifnot (all (names (hy.getOptions(TRUE)) %in% c ("log", "debuglevel", "gc")))
 \item [{\Robject{@wavelength}}] containing a numeric vector with the wavelength axis of the spectra.
 \item [{\Robject{@data}}] a \df with the spectra and all further information belonging to the spectra
 \item [{\Robject{@label}}] a list with appropriate labels (particularly for axis annotations)
-\item [{\Robject{@log}}] a \df keeping track of what is done with the object
 \end{labeling}
 While the parts of the \chy object can be accessed directly, it is good practice to use the functions
 provided by \phy to handle the objects rather than accessing the slots directly
@@ -233,7 +235,6 @@ cases, however, direct access to the slots can considerably speed up calculation
     @wavelength   & \verb+wl+                                                                      & wl<-                                \\ 
     @data         & \verb+[+, \verb+[[+, \verb+$+, \verb+as.data.frame+, \verb+as.long.df+, \ldots & \verb+[<-+, \verb+[[<-+, \verb+$<-+ \\ %] emacs font lock gets confused otherwise
     @label        & \verb+labels+                                                                  & \verb+labels<-+                     \\
-    @log          & \verb+logbook+                                                                 & \verb+logentry+                     \\
     \bottomrule
   \end{tabular}
   \caption{Get and set functions for the slots of \chy objects}
@@ -365,46 +366,7 @@ If individual covariance matrices should be used for each group, \Rfunarg{sigma}
 with the 3rd dimension corresponding to the group.
 \section{The Logbook}
 \label{sec:logbook}
-\warnbox{Deprecated}{The logbook is now DEPRECATED and the functionality will be removed in the future.\\
-  This feature has never seen much use, but slows down \phy considerably.}
-
-Slot \Rcode{@log} of \chy objects is intended to keep track of the history of the object.  This
-logbook part of the output of the \Rfunction{summary}, and can also be retrieved by
-\Rfunction{logbook}.
-<<logbook>>=
-logbook (flu)
-@
-
-New entries can be created manually by calling \Rfunction{logentry}\mFun{\Rfunction{logentry},
-  \Rfunction{logbook}}:
-<<>>=
-tmp <- logentry (flu, short = "test", long = "This could also be a list of parameters")
-logbook (tmp)
-@
-
-In addition, \phy by default logs automatically all changes to the object:
-<<>>=
-tmp <- tmp [1:3]
-logbook (tmp)
-@ 
-%
-The automatic logging mechanism can only log function calls and parameters (as opposed to the
-intention of the function call). \phy functions that return a changed object allow to use more
-meaningful short descriptions: they are assigned via the argument \Rfunarg{short}:
-<<>>=
-tmp <- sweep (tmp, 2, mean, short = "centering")
-logbook (tmp)
-@ 
-\index{options!log} Automatic logging may be turned off by
-<<logoff>>=
-hy.setOptions (log = FALSE)
-@ 
-%
-This can help optimizing program execution speed, see section~\ref{sec:speed-considerations}
-(p.~\ref{sec:speed-considerations}).
-<<echo=FALSE, results=hide>>=
-rm (tmp)
-@
+\warnbox{Deprecated}{The logbook has now been REMOVED.}
 
 \section{Access to the data}
 \label{sec:access-parts}
@@ -1575,23 +1537,6 @@ system.time ({
     tmp [[i]] <- interpolate (tmp [[i]], shifts [i], wl = wl (tmp))
 })
 @ 
-
-\index{options!log} A first possibility is switching of the automatic logging of how the objects are
-transformed. This is now the default setting of the option as the logbook is deprecated and will be
-completely removed.
-
-Logging involves appending rows to the \df in slot \Rcode{@log}.  While the absolute
-amount of time needed to add a logbook entry is small, it may be executed very often (e.g. during
-each call of \Rfunction{[}). 
-<<speed2>>=
-hy.setOptions (log = FALSE)
-tmp <- chondro [1 : 50]
-system.time ({
-  for (i in seq_len (nrow (tmp)))
-    tmp [[i]] <- interpolate (tmp [[i]], shifts [i], wl = wl (tmp))
-})
-hy.setOptions (log = TRUE)
-@
 
 Calculations that involve a lot of subsetting (\ie extracting or changing the spectra matrix or extra
 data) can be sped up considerably if the required parts of the \chy object are extracted

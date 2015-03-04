@@ -330,11 +330,11 @@ plotspc <- function  (object,
       break.args$breakpos <- NULL
 
       if (length (cuts$cut) > 0) {
-        if (! require (plotrix)){
+        if (! requireNamespace ("plotrix")){
           cat ("hyperSpec will use its own replacement for plotrix' axis.break\n\n")
           break.fun <- .axis.break
         } else {
-          break.fun <- axis.break
+          break.fun <- plotrix::axis.break
         }
         for (i in cuts$cut)
           do.call (break.fun, c (list (axis = 1, breakpos = i), break.args))
@@ -343,7 +343,7 @@ plotspc <- function  (object,
 
     ## y-axis labels & ticks
     if (bty %in% c("o", "l", "c", "u", "y")){
-      axis.args$y <- modifyList (axis.args [! names (axis.args) %in% c ("x", "y")],
+      axis.args$y <- modifyList (axis.args [! names (axis.args) %in% c ("x", "y", "main", "sub")],
                                  axis.args$y)
 
       ## default for stacked plots is marking the groups
@@ -365,13 +365,18 @@ plotspc <- function  (object,
 
     ## Title: axis labels ---------------------------------------------------------------------------
 
-    tmp <- title.args [! names (title.args) %in% c ("x","y", "ylab")]
+    tmp <- title.args [! names (title.args) %in% c ("x","y", "ylab", "main", "sub")]
     tmp <- modifyList (tmp, as.list (title.args$x))
     tmp <- modifyList (list (xlab = I(object@label$.wavelength), line = 2.5), tmp)
     do.call (title, tmp)
     
-    tmp <- title.args [! names (title.args) %in% c ("x","y", "xlab")]
+    tmp <- title.args [! names (title.args) %in% c ("x","y", "xlab", "main", "sub")]
     tmp <- modifyList (tmp, as.list (title.args$y))
+    tmp <- modifyList (list (ylab = I(object@label$spc)), tmp)
+    do.call (title, tmp)
+  
+    tmp <- title.args [! names (title.args) %in% c ("x","y", "xlab", "ylab")]
+    tmp <- modifyList (tmp, as.list (title.args [c ("main", "sub")]))
     tmp <- modifyList (list (ylab = I(object@label$spc)), tmp)
     do.call (title, tmp)
   }

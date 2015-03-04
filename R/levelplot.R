@@ -1,3 +1,6 @@
+##' @importFrom lattice latticeParseFormula
+setGeneric ("levelplot", package = "lattice")
+
 #################################################################################
 ###
 ###  levelplot.R - everything that has to do with levelplot-like plotting:
@@ -74,7 +77,6 @@
 
 ##' @include plotmap.R
 ##' @rdname levelplot
-##' @import lattice
 ##' @param transform.factor If the color-coded variable is a factor, should
 ##'   \code{\link{trellis.factor.key}} be used to compute the color coding and
 ##'   legend?
@@ -83,6 +85,7 @@
 ##' @seealso  \code{\link[lattice]{levelplot}}
 ##'
 ##'  \code{\link{trellis.factor.key}} for improved color coding of factors
+##' @importFrom lattice levelplot
 setMethod (f = "levelplot", signature = signature (x = "hyperSpec", data = "missing"),
            definition = function (x, data, ...) {
              .levelplot (x = formula (spc ~ .wavelength * .row), data = x, ...)

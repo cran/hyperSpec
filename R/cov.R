@@ -18,7 +18,6 @@ setMethod ("cov", signature = signature (x = "hyperSpec", y = "missing"), functi
 })
 
 
-##' @param groups factor giving the groups 
 ##' @param ... ignored
 ##' @param regularize regularization of the covariance matrix. Set \code{0} to switch off
 ##'

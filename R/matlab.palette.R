@@ -7,7 +7,7 @@
 ##' @rdname palettes
 ##' @aliases matlab.palette
 ##' @param n the number of colors to be in the palette.
-##' @param \dots further arguments are handed to \code{\link[grDevices]{rainbow}}
+##' @param ... further arguments are handed to \code{\link[grDevices]{rainbow}}
 ##' (\code{alois.palette}: \code{\link[grDevices]{colorRampPalette}})
 ##' @return A vector containing the color values in the form "\#rrbbggaa".
 ##' @author C. Beleites and A. Bonifacio

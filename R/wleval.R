@@ -3,7 +3,7 @@
 ##' This is useful for generating certain types of baseline "reference spectra".
 ##'
 ##' @param x hyperSpec object
-##' @param \dots hyperSpec method: expressions to be evaluated
+##' @param ... hyperSpec method: expressions to be evaluated
 ##' @param normalize.wl function to transorm the wavelengths before evaluating the polynomial (or
 ##' other function). Use \code{\link[hyperSpec]{normalize01}} to map the wavelength range to the interval [0, 1].
 ##' @return hyperSpec object containing one spectrum for each expression 

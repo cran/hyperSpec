@@ -62,7 +62,7 @@
 ##' \code{.wavelength} appears in the formula.
 ##' @param voronoi Should the plot for identifying spectra by mouse click be
 ##'   produced by \code{plotmap} (default) or \code{plotvoronoi}?
-##' @param \dots further arguments are passed down the call chain, and finally
+##' @param ... further arguments are passed down the call chain, and finally
 ##'   to \code{\link[lattice]{levelplot}}
 ##' @return \code{map.identify} returns a vector of row indices into
 ##'   \code{object} of the clicked points.

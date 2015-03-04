@@ -38,6 +38,8 @@ spc.rubberband <- function (spc, ..., upper = FALSE, noise = 0, spline = TRUE){
 .rubberband <- function (x, y, noise, spline, ...){
   for (s in seq_len (nrow (y))){
     pts <- chull (x, y [s,])
+    imax <- which.max (pts) - 1
+    pts <- c (pts [- seq_len (imax)], pts [seq_len (imax)])
 
     neg <- which (diff (pts) < 0)
     pts <- c (ncol (y), pts [c (1, neg + 1)])

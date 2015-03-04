@@ -1,12 +1,10 @@
 
-.subset <- function (x, ..., short = "subset", date = NULL, user = NULL){
+.subset <- function (x, ...){
   validObject (x)
   x@data <- subset (x@data, ...)
   validObject (x)
-
-  long <- match.call (call = sys.call(sys.parent(1)))
-  long <- as.character (long) [-(1:2)]
-  .logentry (x, long = long, short = short, date = date, user = user)  
+  
+	x
 }
 
 
@@ -15,9 +13,9 @@
 ##' @title subset
 ##' @name subset
 ##' @param x hyperSpec object
-##' @param \dots handed to \code{\link[base]{subset}} (data.frame method)
-##' @param short,user,date passed to \code{\link[hyperSpec]{logentry}}
+##' @param ... handed to \code{\link[base]{subset}} (data.frame method)
 ##' @docType methods
+##' @aliases subset subset,hyperSpec-method
 ##' @return hyperSpec object containing the respective subset of spectra.
 ##' @author Claudia Beleites
 ##' @seealso \code{\link[base]{subset}}

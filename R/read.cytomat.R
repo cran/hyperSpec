@@ -15,10 +15,10 @@
 ##' @export
 ##' @keywords IO file
 read.cytomat <- function (file, keys2data = FALSE, blocks = TRUE, drop.empty = TRUE) {
-  if (! require ("R.matlab"))
+  if (! requireNamespace ("R.matlab"))
       stop ("package 'R.matlab' needed.")
   
-  tmp <- readMat(file)
+  tmp <- R.matlab::readMat(file)
   
   ## read spectra matrix
   spc <- tmp$C

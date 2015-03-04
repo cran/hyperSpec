@@ -280,8 +280,8 @@ for (p in required.pkgs [! required.pkgs %in% c("latticeExtra", "deldir")])
 ### code chunk number 6: preproc-chondro
 ###################################################
 chondro.preproc <- chondro - spc.fit.poly.below (chondro)
-chondro.preproc <- sweep (chondro.preproc, 1, mean, "/")
-chondro.preproc <- sweep (chondro.preproc, 2, apply (chondro.preproc, 2, quantile, 0.05), "-")
+chondro.preproc <- chondro.preproc / rowMeans (chondro)
+chondro.preproc <- chondro.preproc - quantile (chondro, 0.05)
 
 cluster.cols <- c ("dark blue", "orange", "#C02020")
 cluster.meansd <- aggregate (chondro.preproc, chondro$clusters, mean_pm_sd)
@@ -789,7 +789,48 @@ plotmap (sample (chondro, 865),
 
 
 ###################################################
-### code chunk number 66: rgl-plot (eval = FALSE)
+### code chunk number 66: uneven-prep
+###################################################
+uneven <- chondro
+uneven$x <- uneven$x + round (rnorm (nrow (uneven), sd = 0.05), digits = 1)
+uneven$y <- uneven$y + round (rnorm (nrow (uneven), sd = 0.05), digits = 1)
+
+
+###################################################
+### code chunk number 67: uneven-I
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+plotmap (uneven)
+
+
+###################################################
+### code chunk number 68: uneven-II
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+plotvoronoi (uneven)
+
+
+###################################################
+### code chunk number 69: uneven-III
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+plotmap (uneven, panel = panel.levelplot.points, 
+				 cex = 0.75, col.symbol=NA)
+
+
+###################################################
+### code chunk number 70: uneven-IV
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+rx <- makeraster (uneven$x, start = -11.55, d = 1, tol = 0.3)
+uneven$x <- rx$x
+ry <- makeraster (uneven$y, start = -4.77, d = 1, tol = 0.3)
+uneven$y <- ry$x
+plotmap (uneven)
+
+
+###################################################
+### code chunk number 71: rgl-plot (eval = FALSE)
 ###################################################
 ## laser <- laser [,,404.8 ~ 405.6] / 10000
 ## laser$t <- laser$t / 3600
@@ -805,7 +846,7 @@ plotmap (sample (chondro, 865),
 
 
 ###################################################
-### code chunk number 67: rgl-do
+### code chunk number 72: rgl-do
 ###################################################
 if (exists (".rgl") && .rgl){        # use extra argument to turn on rgl only on local machine as it doesn't work on r-forge.
   if (require (rgl)){
@@ -840,94 +881,56 @@ mtext3d ("I / a.u.", edge = 'z--', line = 2.5)
 
 
 ###################################################
-### code chunk number 68: ggplotspc (eval = FALSE)
+### code chunk number 73: ggplotspc (eval = FALSE)
 ###################################################
-## df <- as.long.df (flu, rownames = TRUE)
-## ggplot (df, aes (x = .wavelength, y = spc, 
-##                  colour = c, group = .rownames)) + 
-##   geom_line () +
-##   xlab (labels (flu)$.wavelength) +
-##   ylab (labels (flu)$spc) 
+## qplotspc (flu) + aes (colour = c)
 
 
 ###################################################
-### code chunk number 69: ggplotmap (eval = FALSE)
+### code chunk number 74: ggplotmap (eval = FALSE)
 ###################################################
-## df <- as.long.df (apply (chondro, 1, mean))
-## ggplot (df,aes (x = x, y = y, fill = spc)) +
-##   geom_tile() + 
-##   scale_fill_gradientn ("spc", colours = matlab.palette ()) +
-##   scale_x_continuous (expand = c (0, 0)) +
-##   scale_y_continuous (expand = c (0, 0)) +
-##   coord_equal ()
+## qplotmap (chondro) + 
+##   scale_fill_gradientn ("spc", colours = matlab.palette ()) 
 
 
 ###################################################
-### code chunk number 70: ggplotmeansd (eval = FALSE)
+### code chunk number 75: ggplotmeansd (eval = FALSE)
 ###################################################
-## df <- as.t.df (apply (chondro, 2, mean_pm_sd))
-## 
-## ggplot (df, aes (x = .wavelength)) +
-##   geom_ribbon (aes (ymin = mean.minus.sd, 
-##                     ymax = mean.plus.sd), 
-##                alpha = 0.25) +
-##   geom_line (aes (y = mean)) +
-##   xlab (labels (chondro)$.wavelength) +
-##   ylab (labels (chondro)$spc) 
+## qplotspc (mean (chondro)) +
+## geom_ribbon (aes (ymin = mean + sd, 
+##                   ymax = mean - sd, 
+##                   y = 0, group = NA), 
+##              alpha = 0.25, 
+##              data = as.t.df (mean_sd (chondro)))
 
 
 ###################################################
-### code chunk number 71: ggplotspccut (eval = FALSE)
+### code chunk number 76: ggplotspccut (eval = FALSE)
 ###################################################
-## df <- paracetamol [,, c( min ~ 1800, 2800 ~ max)] / 1e4
-## df <- as.long.df (df)
-## df$range <- factor (df$.wavelength > 2000)
-## ggplot (df, aes (x = .wavelength, y = spc)) +
-##   geom_line () + 
-##   facet_grid (. ~ range, labeller = function (...) "",
-##               scales = "free", space = "free") +
-##   scale_x_continuous (breaks = seq (0, 3200, 400)) +
-##   theme (strip.background = element_blank ())
+## qplotspc (paracetamol / 1e4, 
+##           wl.range = c( min ~ 1800, 2800 ~ max)) +
+## 	  scale_x_continuous (breaks = seq (0, 3200, 400)) 
 
 
 ###################################################
-### code chunk number 72: ggplot2-do
+### code chunk number 77: ggplot2-do
 ###################################################
 if (require (ggplot2)){
-df <- as.long.df (flu, rownames = TRUE)
-ggplot (df, aes (x = .wavelength, y = spc, 
-                 colour = c, group = .rownames)) + 
-  geom_line () +
-  xlab (labels (flu)$.wavelength) +
-  ylab (labels (flu)$spc) 
+qplotspc (flu) + aes (colour = c)
   ggsave("plotting-fig--ggplotspc.pdf", width = 4, height = 2.6)
-df <- as.long.df (apply (chondro, 1, mean))
-ggplot (df,aes (x = x, y = y, fill = spc)) +
-  geom_tile() + 
-  scale_fill_gradientn ("spc", colours = matlab.palette ()) +
-  scale_x_continuous (expand = c (0, 0)) +
-  scale_y_continuous (expand = c (0, 0)) +
-  coord_equal ()
+qplotmap (chondro) + 
+  scale_fill_gradientn ("spc", colours = matlab.palette ()) 
   ggsave("plotting-fig--ggplotmap.pdf", width = 4, height = 2.6)
-df <- as.t.df (apply (chondro, 2, mean_pm_sd))
-
-ggplot (df, aes (x = .wavelength)) +
-  geom_ribbon (aes (ymin = mean.minus.sd, 
-                    ymax = mean.plus.sd), 
-               alpha = 0.25) +
-  geom_line (aes (y = mean)) +
-  xlab (labels (chondro)$.wavelength) +
-  ylab (labels (chondro)$spc) 
+qplotspc (mean (chondro)) +
+geom_ribbon (aes (ymin = mean + sd, 
+                  ymax = mean - sd, 
+                  y = 0, group = NA), 
+             alpha = 0.25, 
+             data = as.t.df (mean_sd (chondro)))
   ggsave("plotting-fig--ggplotmeansd.pdf", width = 4, height = 2.6)
-df <- paracetamol [,, c( min ~ 1800, 2800 ~ max)] / 1e4
-df <- as.long.df (df)
-df$range <- factor (df$.wavelength > 2000)
-ggplot (df, aes (x = .wavelength, y = spc)) +
-  geom_line () + 
-  facet_grid (. ~ range, labeller = function (...) "",
-              scales = "free", space = "free") +
-  scale_x_continuous (breaks = seq (0, 3200, 400)) +
-  theme (strip.background = element_blank ())
+qplotspc (paracetamol / 1e4, 
+          wl.range = c( min ~ 1800, 2800 ~ max)) +
+	  scale_x_continuous (breaks = seq (0, 3200, 400)) 
   ggsave("plotting-fig--ggplotspccut.pdf", width = 4, height = 2.6)
 } else {
   for (f in c ("ggplotspc", "ggplotmap", "ggplotmeansd", "ggplotspccut")){
@@ -939,25 +942,25 @@ ggplot (df, aes (x = .wavelength, y = spc)) +
 
 
 ###################################################
-### code chunk number 73: plotting.Rnw:824-825 (eval = FALSE)
+### code chunk number 78: plotting.Rnw:838-839 (eval = FALSE)
 ###################################################
 ## spc.identify (plotspc (paracetamol, wl.range = c (600 ~ 1800, 2800 ~ 3200), xoffset = 800))
 
 
 ###################################################
-### code chunk number 74: plotting.Rnw:833-834 (eval = FALSE)
+### code chunk number 79: plotting.Rnw:847-848 (eval = FALSE)
 ###################################################
 ## map.identify (chondro)
 
 
 ###################################################
-### code chunk number 75: plotting.Rnw:841-842 (eval = FALSE)
+### code chunk number 80: plotting.Rnw:855-856 (eval = FALSE)
 ###################################################
 ## map.sel.poly (chondro)
 
 
 ###################################################
-### code chunk number 76: plotting.Rnw:855-858 (eval = FALSE)
+### code chunk number 81: plotting.Rnw:869-872 (eval = FALSE)
 ###################################################
 ## plot (laser, "mat")
 ## trellis.focus ()
@@ -965,9 +968,9 @@ ggplot (df, aes (x = .wavelength, y = spc)) +
 
 
 ###################################################
-### code chunk number 77: bib
+### code chunk number 82: bib
 ###################################################
-make.bib (c("latticeExtra", "rgl", "ggplot2", "playwith", "latticist", "plotrix", "deldir", "tripack"), 
+make.bib (c("latticeExtra", "rgl", "ggplot2", "playwith",  "plotrix", "deldir", "tripack"), 
           file = "plotting-pkg.bib")
 print (as.matrix(Sys.info()))
 sessionInfo ()

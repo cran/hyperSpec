@@ -11,8 +11,7 @@
 ##' @aliases merge,hyperSpec,hyperSpec-method merge
 ##' @param x a hyperSpec object
 ##' @param y a hyperSpec object
-##' @param \dots handed to \code{\link[base]{merge.data.frame}}
-##' @param short,user,date  handed to \code{\link{logentry}}
+##' @param ... handed to \code{\link[base]{merge.data.frame}}
 ##' @author C. Beleites
 ##' @export 
 ##' @rdname merge
@@ -30,10 +29,6 @@
 ##'               by = c("x", "y"), all = TRUE)
 ##' tmp$.
 ##' wl (tmp)
-##' \dontshow{
-##'  stopifnot (nrow (merge (chondro [1:10], chondro [5:15], all = TRUE)) == 15)
-##'  stopifnot (nrow (merge (chondro [1:10], chondro [5:15])) == 6)
-##' }
 ##' 
 ##' ## remove duplicated wavelengths:
 ##' approxfun <- function (y, wl, new.wl){
@@ -51,7 +46,7 @@
 ##' 
 ##' 
 setMethod ("merge", signature = signature (x = "hyperSpec", y = "hyperSpec"),
-           function (x, y, ..., short = "merge", user = NULL, date = NULL){
+           function (x, y, ...){
              validObject (x)
              validObject (y)
 
@@ -60,8 +55,7 @@ setMethod ("merge", signature = signature (x = "hyperSpec", y = "hyperSpec"),
              if (nrow (tmp) == 0 && nrow (x) > 0 && nrow (y) > 0)
                warning ("Merge results in 0 spectra.")
              
-             .logentry (tmp, short = short, long = list (x = as.character (y), ...),
-                        user = user, date = date)
+             tmp
            }
            )
 
@@ -106,3 +100,7 @@ setMethod ("merge", signature = signature (x = "hyperSpec", y = "hyperSpec"),
   x
 }
 
+.test (.merge) <- function (){
+	checkEqualsNumeric (nrow (merge (chondro [1:10], chondro [5:15], all = TRUE)), 15)
+	checkEqualsNumeric (nrow (merge (chondro [1:10], chondro [5:15])), 6)
+}

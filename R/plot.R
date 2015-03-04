@@ -117,7 +117,7 @@ setGeneric ('plot')
 ##' @docType methods
 ##' @param x the \code{hyperSpec} object
 ##' @param y selects what plot should be produced
-##' @param \dots arguments passed to the respective plot function
+##' @param ... arguments passed to the respective plot function
 ##' @author C. Beleites
 ##' @seealso \code{\link{plotspc}} for spectra plots (intensity over
 ##'   wavelength),

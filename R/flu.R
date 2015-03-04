@@ -2,7 +2,7 @@
 ##' Fluorescence spectra of different dilutions of quinine forming a
 ##' calibration set.
 ##' 
-##' See the vignette.
+##' See the vignette: \code{vignette ("flu", package = "hyperSpec")}
 ##' 
 ##' @name flu
 ##' @docType data
@@ -19,6 +19,15 @@
 ##' 
 ##' plotc (flu)
 ##' 
-##' \dontrun{vignette ("flu", package = "hyperSpec")}
-##' 
 NULL
+
+.make.fluNA <- function (){
+	
+	fluNA <- hyperSpec::flu
+	fluNA [[2,]] <- NA
+	fluNA [[,,406]] <- NA
+	
+	fluNA
+}
+
+delayedAssign ("fluNA", .make.fluNA ())

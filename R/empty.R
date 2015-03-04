@@ -14,11 +14,7 @@
 ##' @param nrow number of rows the new object should have
 ##' @param spc value to initialize the new spectra matrix with
 ##' @param extra value to initialize the new extra data with
-##' @param short handed to logentry
-##' @param user handed to logentry
-##' @param date handed to logentry
-empty <- function (x, nrow = 0, spc = NA, extra = NA, 
-                   short = "empty", user = NULL, date = NULL) {
+empty <- function (x, nrow = 0, spc = NA, extra = NA) {
 
   if (nrow (x@data) == 0 && nrow > 0)
     stop ("Empty is not implemented for empty (0 row) objects")
@@ -30,8 +26,5 @@ empty <- function (x, nrow = 0, spc = NA, extra = NA,
     x@data[, ! grepl ("^spc$", colnames (x@data))] <- extra
   }
 
-  .logentry (x, short = short,
-             long = list (x = as.character (x), spc = spc, extra = extra, nrow = nrow),
-             user = user, date = date)
-  
+  x
 }

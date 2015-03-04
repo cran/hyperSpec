@@ -46,7 +46,7 @@
 ##'   character vector with the colnames.  Use \code{wavelength} to specify the
 ##'   wavelengths.
 ##' @param header the file has (shall have) a header line
-##' @param \dots arguments handed to \code{\link[utils]{read.table}} and
+##' @param ... arguments handed to \code{\link[utils]{read.table}} and
 ##'   \code{\link[utils]{write.table}}, respectively.
 ##' @param decreasing logical vector giving the sort order
 ##' @author C. Beleites

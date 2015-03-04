@@ -1,6 +1,3 @@
-## @noRd
-setGeneric ("normalize01", function (x, ...) standardGeneric ("normalize01"))
-
 ##' Normalize numbers -> [0, 1]
 ##'
 ##' The input \code{x} is mapped to [0, 1] by subtracting the minimum and subsequently dividing by
@@ -9,32 +6,39 @@ setGeneric ("normalize01", function (x, ...) standardGeneric ("normalize01"))
 ##' @title normalization for mixed colors
 ##' @name normalize01
 ##' @param x  vector with values to transform
-##' @param eps tolerance level for determining what is 0 and 1
-##' @param \dots additional parameters such as \code{eps} handed down.
+##' @param tolerance tolerance level for determining what is 0 and 1
+##' @param ... additional parameters such as \code{tolerance} handed down.
 ##' @return vector with \code{x} values mapped to the interval [0, 1]
 ##' @author C. Beleites
 ##' @seealso \code{\link[hyperSpec]{wl.eval}}, \code{\link[hyperSpec]{vanderMonde}}
 ##' @export 
-setMethod (normalize01, signature (x = "matrix"), function (x, eps = .Machine$double.eps){
+setGeneric ("normalize01", function (x, ...) standardGeneric ("normalize01"))
+
+##' @export
+##' @rdname normalize01
+setMethod (normalize01, signature (x = "matrix"), 
+           function (x, tolerance = hy.getOption ("tolerance")){
   m <- apply (x, 1, min)
   x <- sweep (x, 1, m, `-`)
   m <- apply (x, 1, max)
   x <- sweep (x, 1, m, `/`)
-  x [m < eps, ] <- 1
+  x [m < tolerance, ] <- 1
   x
 })
 
+##' @export
 ##' @rdname normalize01
-setMethod ("normalize01", signature (x = "numeric"), function (x, eps = .Machine$double.eps){
+setMethod ("normalize01", signature (x = "numeric"), function (x, tolerance = hy.getOption ("tolerance")){
   x <- x - min (x)
 
   m <- max (x)
-  if (m < eps)
+  if (m < tolerance)
     rep (1, length (x))
   else
     x / m
 })
 
+##' @export
 ##' @rdname normalize01
 setMethod (normalize01, signature (x = "hyperSpec"), function (x, ...){
   validObject (x)

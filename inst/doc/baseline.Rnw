@@ -1,16 +1,17 @@
 \documentclass[english, a4paper, 10pt, headings=small, DIV11]{scrartcl}
 \SweaveInput{vignettes.defs}
-\hypersetup{pdftitle={Baselinebelow},
+\hypersetup{pdftitle={baseline},
  pdfauthor={C. Beleites},
  pdfsubject={Vignette on hyperSpec's baselinebelow data set},
  pdfkeywords={hyperSpec, baselinebelow}}
 \SweaveOpts{prefix.string=baseline-fig-}
-% \VignetteIndexEntry{baselinebelow }
-% \VignetteKeywords{hyperspec, baselinebelow}
+% \VignetteIndexEntry{baseline: Vignette explaining hyperSpec's baseline fitting functions.}
+% \VignetteKeywords{hyperspec, baseline}
 % \VignettePackage{hyperSpec}
 \renewcommand{\textfraction}{0.1} 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \title{Fitting Baselines to Spectra}
 \maketitle
 
@@ -24,7 +25,7 @@ fitting functions for polynomial baselines, \Rfunction{spc.fit.poly} and
 method that determines support points by finding the convex hull of each spectrum. The baselines are
 then piecewise linear or (smoothing) splines through the support points.
 
-Please note that a specialized package for baseline fittingm,
+Please note that a specialized package for baseline fitting,
 \Rpackage{baseline}\Sexpr{cite.pkg("baseline")}, exists that provides many more methods to fit
 baselines to spectroscopic data. Using \Rpackage{baseline} with \chy objects is demonstrated in
 \Rcode{vignette ("introduction")}.
@@ -43,11 +44,10 @@ squares fit through the complete spectrum that is given in \Rfunarg{fit.to} wher
 \newlength{\tmplength}
 \subsection{Syntax \& parameters}
 \settowidth{\tmplength}{\Rcode{spc.fit.poly (}}
-\Rcode{spc.fit.poly (fit.to, apply.to = fit.to, poly.order = 1\\
-\hspace*{\tmplength}short = NULL, user = NULL, date = NULL)}\\[1ex]
+\Rcode{spc.fit.poly (fit.to, apply.to = fit.to, poly.order = 1}\\[1ex]
 \settowidth{\tmplength}{\Rcode{spc.fit.poly.below (}}
 \Rcode{spc.fit.poly.below (fit.to, apply.to = fit.to, poly.order = 1, npts.min = NULL,\\
-\hspace*{\tmplength}noise = 0, short = NULL, user = NULL, date = NULL)}
+\hspace*{\tmplength}noise = 0)}
 \begin{labeling}{\Rcode{poly.order}:~~~}
 \item[\Rfunction{fit.to}:] \Robject{hyperSpec} object with the spectra whose baselines are to be
   fitted.
@@ -62,7 +62,6 @@ squares fit through the complete spectrum that is given in \Rfunarg{fit.to} wher
   If \Rfunction{npts.min} $\leq$ {poly.order}, a warning is issued and \Rcode{npts.min <- poly.order
     + 1} is used.
  \item[\Rcode{noise}:] a vector giving the amount of noise, see below.
- \item[\Rcode{short}, \Rcode{user}, \Rcode{date}:] are handed to \Rcode{logentry}
  \end{labeling}
 
 
@@ -85,6 +84,7 @@ Such a baseline can be obtained by restricting the spectra in \Rfunarg{fit.to} t
 points (see figure~\ref{fig:classical}):
 <<classical-bl, fig = TRUE, width = 8, height = 4, include = FALSE>>=
 bl <- spc.fit.poly (chondro [c (1, 101),, c (633, 1788)], chondro [c (1, 101)])
+
 plot (chondro [c (1, 101)], plot.args = list (ylim = c(200, 600)), col = 1 : 2)
 plot (chondro [c (1, 101),, c(633, 1788)], add = TRUE, col = 1:2, 
       lines.args = list (type = "p", pch = 20))
@@ -118,7 +118,8 @@ the resulting baseline than a region with just a few data points. It is up to th
 whether this should be corrected for by selecting appropriate numbers of data points (e.g. by using
 replicates of the shorter spectral region).
 
-\subsection{The mechanism of automatically fitting the baseline in \Rfunction{spc.fit.poly.below}}
+\subsection[The mechanism of automatically fitting the baseline in spc.fit.poly.below]%
+{The mechanism of automatically fitting the baseline in \Rfunction{spc.fit.poly.below}}
 \Rfunction{spc.fit.poly.below} tries to automatically find appropriate spectral regions for baseline
 fitting.  This is done by excluding spectral regions that contain signals from the baseline
 fitting. The idea is that all data points that lie above a fitted polynomial (initially through the
@@ -148,11 +149,12 @@ trace (spc.fit.poly.below, quote ({
 }), at = 12, print = FALSE)
 @
 <<fig1, fig=TRUE, pdf = TRUE, echo = FALSE, results = hide, eps = FALSE, width = 12, height = 4, include = FALSE>>=
-cols <- matlab.dark.palette (9) 
+cols <- matlab.dark.palette (8) 
 
 bl <- chondro [1] + 1
 plot (chondro [1])
 npts <- numeric (length (cols))
+
 for (iter in seq_along (cols)){
 	npts [iter] <- sum (chondro [[1]] < bl [[]])
 	cl <- cols [iter]
@@ -168,12 +170,11 @@ plot (chondro [1], plot.args = list (ylim = range (chondro [1,, c(600 ~ 650, 173
 for (iter in seq_along (cols)){
 	npts <- sum (chondro [[1]] < bl [[]])
 	cl <- cols [iter]
-	#cat ("Iteration", iter, ":", npts, "supporting points\n")
 	bl <- spc.fit.poly.below (chondro [1], poly.order = 1, npts.min = npts - 1)
 }
 plot (chondro [1], add = TRUE)
 @
-\begin{figure}[bh]
+\begin{figure}
 \begin{center}
   \includegraphics[width=\textwidth]{baseline-fig--fig1}
   \includegraphics[width=\textwidth]{baseline-fig--fig2}
@@ -202,7 +203,7 @@ cl <- "blue"
 bl <- spc.fit.poly.below (chondro [3,,1720 ~ 1750], NULL, poly.order = 1)
 abline (bl[[]], col = "blue")
 @
-\begin{figure}[b]
+\begin{figure}
 \begin{center}
 \includegraphics[width = .66\textwidth]{baseline-fig--figspcrange}
 \caption{Influence of \Rcode{fit.to} on the baseline polynomial. The black baseline is fit to the
@@ -216,13 +217,13 @@ It is possible to exclude spectral regions that do not contribute to the baselin
 while the baseline is used for the whole spectrum. This selection of appropriate spectral regions is
 essential for \Rfunction{spc.fit.poly}. But also \Rfunction{spc.fit.poly.below} can benefit from
 narrower spectral ranges: the fitting gains speed. The default value for \Rfunarg{npts.min} depends
-on the number of data points per spectrum. Thus one should consider using more support points than
+on the number of data points per spectrum. Thus one should also consider requiring more support points than
 the default value suggests.
 <<untrace1, echo = FALSE, results = hide>>=
 untrace (spc.fit.poly.below)
 @ 
 <<fit-apply>>=
-system.time (spc.fit.poly.below (chondro[], NULL, npts.min = 20))
+system.time (spc.fit.poly.below (chondro, NULL, npts.min = 20))
 system.time (spc.fit.poly.below (chondro [,, c (min ~ 700, 1700 ~ max)], NULL, npts.min = 20))
 @
 
@@ -248,7 +249,7 @@ for (o in 0 : 3){
 <<untrace2, echo = FALSE, results = hide>>=
 untrace (spc.fit.poly.below)
 @ 
-\begin{figure}[t]
+\begin{figure}
 \begin{center}
 \includegraphics[width=\textwidth]{baseline-fig--figorder}
 \caption{Baseline polynomial fit to the first spectrum of the chondro data set of order 0 (black), 1

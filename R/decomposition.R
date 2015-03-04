@@ -41,8 +41,7 @@
 ##' 
 ##' Columns with different values across the rows will be set to \code{NA} if \code{retain.columns}
 ##' is \code{TRUE}, otherwise they will be deleted.
-##' @param short,user,date ignored: logbook is deprecated
-##' @param \dots ignored.
+##' @param ... ignored.
 ##' @return A \code{hyperSpec} object, updated according to \code{x}
 ##' @author C. Beleites
 ##' @seealso See \code{\link{\%*\%}} for matrix multiplication of \code{hyperSpec} objects.
@@ -65,7 +64,6 @@
 decomposition <- function (object, x, wavelength = seq_len (ncol (x)),
                            label.wavelength, label.spc,
                            scores = TRUE, retain.columns = FALSE,
-                           short = "decomposition", user = NULL, date = NULL,
                            ...){
 #  message ("decomposition will be deprecated: please change your code to use `loadings` or `scores` instead.")
   
@@ -78,21 +76,24 @@ decomposition <- function (object, x, wavelength = seq_len (ncol (x)),
       dim (x) <- c(1, length (x))
 
   if ((nrow (x) == nrow (object)) && scores){
+    ## scores-like object?
 
-    object@data$spc <- I (as.matrix (x))
-
+    object@data$spc <- x 
     .wl (object) <- wavelength
 
-    if (!missing (label.wavelength)) object@label$.wavelength <- label.wavelength
+    if (!missing (label.wavelength)) 
+      object@label$.wavelength <- label.wavelength
 
   } else if (ncol (x) == nwl (object)){
-    spc <- match("spc", colnames(object@data))
+    
+    ## loadings-like object
+    spc <- match ("spc", colnames(object@data))
     
     ## apply changes type of retained columns to character!!!
-    ## must be done in a loop one column after the other or a matrix in a column
-    ## (e.g. for the independent variate of PLS) will cause an error 
+    ## must be done in a loop one column after the other otherwise a matrix or a list in a column
+    ## (e.g. for the independent variate of PLS, POSIXlt) will cause an error 
 
-    cols <- rep (TRUE, ncol (object@data))
+    cols <- rep (TRUE, ncol (object@data)) # columns to keep
 
     for (i in seq_len (ncol (object@data)) [-spc]) {
       tmp <- as.data.frame (lapply (object@data[, i, drop = FALSE], .na.if.different))
@@ -100,11 +101,14 @@ decomposition <- function (object, x, wavelength = seq_len (ncol (x)),
       if (all (is.na (tmp)))
         cols [i] <- FALSE
     }
-    if (!retain.columns) 
+
+    if (!retain.columns) {
+      object@label [colnames (object@data) [!cols]] <- NULL
       object@data <- object@data[, cols, drop = FALSE]
+    }
 
     object@data <- object@data[rep(1, nrow(x)), , drop = FALSE]
-    object@data$spc <- I(as.matrix(x))
+    object@data$spc <- x 
 
   } else {
     stop ("Either rows (if scores == TRUE) or columns (if scores == FALSE) of",
@@ -115,22 +119,46 @@ decomposition <- function (object, x, wavelength = seq_len (ncol (x)),
   
   if (!missing (label.spc)) object@label$spc <- label.spc
   
+  object$spc <- unclass (object$spc)   # remove AsIs
+  
   validObject (object)
 
-  #.logentry (object, short = short,  user = user, date = date)
   object
 }
 
 .test (decomposition) <- function (){
   rm (flu)
-    ## POSIXct
+  
+  ## check scores-like
+  flu$matrix <- cbind (flu$c, flu$c)
+  checkTrue (is.matrix (flu$matrix))
+  
+  tmp <- flu [,, 405 ~ 410]
+  labels (tmp, "spc") <- "spc"
+  tmp@wavelength <- seq_len (nwl (tmp))
+  colnames (tmp@data$spc) <- seq_len (nwl (tmp))
+  
+  scores <- decomposition (flu, flu [[,, 405 ~ 410]])
+  checkEquals (scores, tmp)
+  
+  rm (scores, tmp)
+
+  ## check loadings-like
+
+  tmp <- flu [1, c ("spc"),]
+  tmp@label$spc <- "spc"  
+  loadings <- decomposition (flu, flu [[1,,]])
+  checkEquals (loadings, tmp)
+  
+  
+  ## POSIXct
   flu$ct <- as.POSIXct(Sys.time()) 
   checkEquals (decomposition (flu, flu [[]], scores = FALSE)$ct, flu$ct)
 
   ## POSIXlt
   flu$lt <- as.POSIXlt(Sys.time()) 
   checkEquals (decomposition (flu, flu [[]], scores = FALSE)$lt, flu$lt)
-
+  
   rm (flu)
 }
 

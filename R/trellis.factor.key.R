@@ -13,6 +13,7 @@
 ##' @seealso \code{\link[lattice]{levelplot}}
 ##' @keywords aplot
 ##' @export
+##' @importFrom lattice level.colors
 ##' @examples
 ##' 
 ##' chondro$z <- factor (rep (c("a", "a", "d", "c"),

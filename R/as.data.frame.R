@@ -13,7 +13,6 @@
 ##' @return \code{x@@data} and \code{x@@data$spc} (== \code{x$spc} == \code{x [[]]}), respectively.
 ##' @author C. Beleites
 ##' @method as.data.frame hyperSpec
-##' @S3method as.data.frame hyperSpec
 ##' @export
 ##' @seealso \code{\link[base]{as.data.frame}} 
 ##' @keywords methods
@@ -40,9 +39,8 @@ as.data.frame.hyperSpec <- function (x, row.names = TRUE, optional =  NULL, ...)
   x
 }
 ##' @method as.matrix hyperSpec
-##' @S3method as.matrix hyperSpec
 ##' @rdname asdataframe
-##' @param \dots ignored 
+##' @param ... ignored 
 ##' @aliases as.matrix as.matrix,hyperSpec-method
 ##' @export
 ##' @seealso and \code{\link[base]{as.matrix}}

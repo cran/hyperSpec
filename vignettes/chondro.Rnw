@@ -1,6 +1,6 @@
 % for the real source, see http://hyperspec.r-forge.r-project.org/
 
 
-% \VignetteIndexEntry{Vignette on the chondro data set. Shows common Preprocessing tasks for Raman spectra, principal component analysis (PCA), and hierarchical cluster analysis.}
+% \VignetteIndexEntry{chondro: Vignette demonstrating example workflow using the chondro data set.}
 % \VignetteKeywords{chondro, hyperSpec, cluster analysis, preprocessing, Raman, principal component analysis, PCA}
 % \VignettePackage{hyperSpec}

@@ -8,20 +8,25 @@
 ##' @param filey filename intensity file
 ##' @param points.per.line number of spectra in x direction of the map
 ##' @param lines.per.image number of spectra in y direction
-##' @param ... handed to \code{\link[base]{scan}}
+##' @param ...,quiet handed to \code{\link[base]{scan}}
 ##' @param nwl number of wavelengths, if \code{NULL}, \code{readLines} is used to determine
 ##' \code{nwl} automatically.
+##' @param remove.zerospc WiTEC Control saves spectra consisting of zeros only if e.g. a map was
+##' aborted. The default is to remove these spectra.
 ##' @return a hyperSpec object
 ##' @author Claudia Beleites
-##' @seealso \code{vignette ("fileio")} for more information on file import.
+##' @seealso \code{vignette ("fileio")} for more information on file import and
+##' 
+##' \code{\link{options}} for details on options. 
 ##' @export 
 scan.dat.Witec <- function (filex = stop ("filename or connection needed"),
                             filey = sub ("-x", "-y", filex),
                             points.per.line = NULL,
                             lines.per.image = NULL,
-                            ...){
-  wl <- scan (file = filex, ...)
-  spc <- scan (file = filey, ...)
+                            ..., 
+                            quiet = hy.getOption ("debuglevel") < 1L){
+  wl <- scan (file = filex, ..., quiet = quiet)
+  spc <- scan (file = filey, ..., quiet = quiet)
 
   dim (spc) <- c (length (wl), length (spc) / length (wl))
 
@@ -32,8 +37,9 @@ scan.dat.Witec <- function (filex = stop ("filename or connection needed"),
 
   if (!is.null (points.per.line))
     spc@data$y <- rep (- seq_len (lines.per.image), each = points.per.line)
-
-  spc
+    
+  ## consistent file import behaviour across import functions
+  .fileio.optional (spc, filey)
 }
 
 ##' @rdname scan.dat.Witec
@@ -42,8 +48,9 @@ scan.dat.Witec <- function (filex = stop ("filename or connection needed"),
 scan.txt.Witec <- function (file = stop ("filename or connection needed"),
                             points.per.line = NULL,
                             lines.per.image = NULL,
-                            ...,
-                            nwl = 1024){
+                            nwl = 1024,
+                            remove.zerospc = TRUE,
+                            ...){
 
   if (is.null (nwl)){
     txt <- readLines (file)
@@ -63,5 +70,6 @@ scan.txt.Witec <- function (file = stop ("filename or connection needed"),
   if (!is.null (points.per.line))
     spc@data$y <- rep (- seq_len (lines.per.image), each = points.per.line)
 
-  spc
+  ## consistent file import behaviour across import functions
+  .fileio.optional (spc, file)
 }

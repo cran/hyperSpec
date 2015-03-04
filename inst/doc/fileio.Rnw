@@ -1,5 +1,5 @@
 % for the real source, see http://hyperspec.r-forge.r-project.org/
 
-% \VignetteIndexEntry{Vignette on spectra file import and export for hyperSpec.}
+% \VignetteIndexEntry{fileio: Vignette on spectra file import and export for hyperSpec}
 % \VignetteKeywords{hyperSpec, file, spectra, spectrum, import, export}
 % \VignettePackage{hyperSpec}

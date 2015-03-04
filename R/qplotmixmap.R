@@ -3,13 +3,12 @@
 ##' 
 ##' @title qplotmap with colour mixing for multivariate overlay
 ##' @param object hyperSpec object
-##' @param \dots handed over to \code{\link[hyperSpec]{qmixtile}} and \code{\link[hyperSpec]{qmixlegend}}
+##' @param ... handed over to \code{\link[hyperSpec]{qmixlegend}} and \code{\link[hyperSpec]{qmixtile}}
 ##' @return invisible list with ggplot2 objects map and legend
 ##' @seealso \code{\link[hyperSpec]{qmixtile}}
 ##' @author Claudia Beleites
-##' @importFrom grid pushViewport
-##' @importFrom grid viewport
-##' @importFrom grid popViewport
+##' @importFrom grid pushViewport viewport popViewport grid.layout unit
+##' @import ggplot2
 ##' @export
 ##' @examples
 ##' chondro <- chondro - spc.fit.poly.below (chondro)
@@ -23,9 +22,8 @@
 ##'              purecol = c (colg = "red", Phe = "green", Lipid = "blue"))
 ##' 
 qplotmixmap <- function (object, ...){
-  require (ggplot2)
 
-  p <- qmixtile (object@data, ...) +
+	p <- qmixtile (object@data, ...) +
        coord_equal ()
   
   p <- p +
@@ -66,7 +64,9 @@ legendright <- function (p, l, legend.width = 8, legend.unit = "lines") {
 ##' @param object matrix to be plotted with mixed colour channels
 ##' @param purecol pure component colours, names determine legend labels
 ##' @param mapping see \code{\link[ggplot2]{geom_tile}}
-##' @param \dots \code{qmixtile}: handed to \code{colmix.rgb}
+##' @param ... \code{qmixtile}: handed to \link[hyperSpec]{colmix.rgb}
+##'
+##' \code{qmixlegend} and \code{colmix.rgb} hand further arguments to the \code{normalize} function
 ##' @param map.tileonly if \code{TRUE}, \code{mapping} will be handed to
 ##' \code{\link[ggplot2]{geom_tile}} instead of \code{\link[ggplot2]{ggplot}}.
 ##' 
@@ -75,7 +75,6 @@ qmixtile <- function (object,
                       mapping = aes_string (x = "x", y = "y", fill = "spc"),
                       ...,
                       map.tileonly = FALSE) {
-  require (ggplot2)
 
   ## calculate fill colours
   fill <- colmix.rgb (object  [[as.character (mapping$fill)]], purecol, ...)
@@ -98,7 +97,7 @@ qmixtile <- function (object,
 ##' @param n of colours to produce in legend
 ##' @return list with components ymin, max and fill to specify value and fill colour value (still
 ##' numeric!) for the legend, otherwise the normalized values
-normalize.colrange <- function (x, na.rm = TRUE, legend = FALSE, n = 100){
+normalize.colrange <- function (x, na.rm = TRUE, legend = FALSE, n = 100, ...){
   ## legend
   if (legend){
     y <- apply (x, 2, function (x) seq (min (x), max (x), length.out = n))
@@ -118,7 +117,7 @@ normalize.colrange <- function (x, na.rm = TRUE, legend = FALSE, n = 100){
 ##' @rdname qplotmix
 ##' @export
 ##' 
-normalize.range <- function (x, na.rm = TRUE, legend = FALSE, n = 100){
+normalize.range <- function (x, na.rm = TRUE, legend = FALSE, n = 100, ...){
   if (legend){
     y <- matrix (seq (min (x), max (x), length.out = n), nrow = n, ncol = ncol (x))
      dy2 <- abs (y [2,] - y [1,]) / 2
@@ -132,12 +131,27 @@ normalize.range <- function (x, na.rm = TRUE, legend = FALSE, n = 100){
   }
 }
 
+##' \code{normalize.null} does not touch the values 
+##' @rdname qplotmix
+##' @export
+##' 
+normalize.null <- function (x, na.rm = TRUE, legend = FALSE, n = 100, ...){
+  if (legend){
+    y <- apply (x, 2, function (x) seq (min (x), max (x), length.out = n))
+
+    list (ymin = sweep (y, 2, min),
+          ymax = sweep (y, 2, max),
+          fill = apply (x, 2, function (x) seq (      0,       1, length.out = n)))
+  } else {
+    x 
+  }
+}
 ##' \code{normalize.minmax} normalizes the range of each column j to [min_j, max_j]
 ##' @rdname qplotmix
 ##' @export
 ##' @param min numeric with value corresponding to "lowest" colour for each column
 ##' @param max numeric with value corresponding to "hightest" colour for each column
-normalize.minmax <- function (x, min = 0, max = 1, legend = FALSE, n = 100){
+normalize.minmax <- function (x, min = 0, max = 1, legend = FALSE, n = 100, ...){
   if (legend){
     y <- matrix (seq (0, 1, length.out = n), nrow = n, ncol = ncol (x))
     y <- sweep (y, 2, max - min, `*`)
@@ -165,7 +179,6 @@ normalize.minmax <- function (x, min = 0, max = 1, legend = FALSE, n = 100){
 ##' @param dx width of label bar
 ##' @param ny number of colours in legend
 ##' @param labels component names
-##' @param \dots \code{qmixlegend}: handed to \code{normalize}
 ##' @return ggplot object with legend
 ##' @author Claudia Beleites
 ##' @export 
@@ -179,11 +192,14 @@ qmixlegend <- function (x, purecol, dx = 0.33, ny = 100, labels = names (purecol
   if (is.null (labels))
     labels <- seq_len (ncol (x))
 
-  l <- normalize (x, ..., legend = TRUE)
+  if (! is.null (normalize))
+      l <- normalize (x, ..., legend = TRUE)
+  else
+      l <- x
   
   df <- data.frame ()
   for (column in seq_along (purecol)){
-    tmp <- colmix.rgb (l$fill [, column, drop = FALSE], purecol [column], normalize = NULL)
+    tmp <- colmix.rgb (l$fill [, column, drop = FALSE], purecol [column], normalize = NULL, ...)
     df <- rbind (df, data.frame (column = labels [column],
                                  col = tmp,
                                  ymin = l$ymin [, column],
@@ -211,7 +227,6 @@ qmixlegend <- function (x, purecol, dx = 0.33, ny = 100, labels = names (purecol
 ##' @param against value to mix against (for \code{sub = TRUE} only, 1 = white, 0 = black)
 ##' @param sub subtractive color mixing?
 ##' @param normalize function to normalize the values.
-##' @param \dots \code{colmix.rgb}: handed to \code{normalize}
 ##' @return character with colours
 ##' @author Claudia Beleites
 ##' @export

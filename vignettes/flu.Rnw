@@ -1,12 +1,12 @@
 \documentclass[english, a4paper, 10pt, headings=small, DIV11]{scrartcl}
 \SweaveInput{vignettes.defs}
 \SweaveOpts{prefix.string=flu-fig-}
-\hypersetup{pdftitle={hyperSpec vignette flu},
+\hypersetup{pdftitle={flu},
  pdfauthor={C. Beleites},
  pdfsubject={Vignette on hyperSpec's flu data set},
  pdfkeywords={hyperSpec, flu, calibration}}
 
-% \VignetteIndexEntry{flu: Vignette on the fluorescence data set, how to write an import function, and example of a linear calibration}
+% \VignetteIndexEntry{flu: example work flow for hyperSpec's fluorescence example data set `flu`}
 % \VignetteKeywords{hyperSpec, flu, calibration}
 % \VignettePackage{hyperSpec}
 

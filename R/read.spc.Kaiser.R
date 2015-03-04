@@ -12,10 +12,10 @@
 ##'   specified.
 ##' @param glob If \code{TRUE} the filename is interpreted as a wildcard
 ##'   containing file name pattern and expanded to all matching file names.
-##' @param keys.log2data,\dots All further arguments are handed over directly to \code{\link{read.spc}}.
+##' @param keys.log2data,... All further arguments are handed over directly to \code{\link{read.spc}}.
 ##' @return hyperSpec 
 ##' @examples
-##' ## for examples, please see `vignette ("fileio")`.
+##' ## for examples, please see `vignette ("fileio", package = "hyperSpec")`.
 
 read.spc.Kaiser <- function (files, ..., glob = TRUE) {
     
@@ -30,34 +30,22 @@ read.spc.Kaiser <- function (files, ..., glob = TRUE) {
 	f <- files [1]
 	
 	spc <- read.spc (f, no.object = TRUE, ...)
-
-   data <- spc$data [rep (1L, length (files)),, drop = FALSE]
+	
+	data <- spc$data [rep (1L, length (files)),, drop = FALSE]
 	
 	spc$spc  <- spc$spc  [rep (1L, length (files)), , drop = FALSE]
 	
 	for (f in seq_along (files)){
 		tmp <- read.spc (files [f], no.object = TRUE, ...)
-      
-      data [f, ] <- tmp$data 
+		
+		data [f, ] <- tmp$data 
 		spc$spc  [f, ] <- tmp$spc
 	}
 
-   
-  if (hy.getOption ("log")){
-    warning ("The logbook is deprecated and will soon be removed.")
-    log <- list (short = "read.spc.KaiserMap",
-                 long = list (call = match.call (),
-                   last.header = tmp$log$long$header,
-                   last.log = tmp$log$long$log))
-  } else {
-    log <- NULL
-  }
-   
-   data$file <- files
+	data$file <- files
    
 	new ("hyperSpec", wavelength = spc$wavelength, spc = spc$spc, data = data, 
-			labels = tmp$label,
-			log = log)
+			labels = tmp$label)
 }
 
 ##' \code{read.spc.KaiserMap} is a wrapper for \code{read.spc.Kaiser} with predefined \code{log2data}

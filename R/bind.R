@@ -12,13 +12,11 @@
 ##' \code{bind} does the common work for both column- and row-wise binding.
 ##' 
 ##' @aliases bind
-##' @param \dots The \code{hyperSpec} objects to be combined.
+##' @param ... The \code{hyperSpec} objects to be combined.
 ##' 
 ##' Alternatively, \emph{one} list of \code{hyperSpec} objects can be given to
 ##'   \code{bind}.
-##' @param deparse.level ignored.
 ##' @include paste.row.R
-##' @param short,user,date for the log
 ##' @param direction "r" or "c" to bind rows or columns
 ##' @return a \code{hyperSpec} object, possibly with different row order (for
 ##'   \code{bind ("c", \dots{})} and \code{cbind2}).
@@ -54,8 +52,7 @@
 ##' try (cbind2 (x, y)) # error
 ##' 
 ##' 
-bind <- function (direction = stop ("direction ('c' or 'r') required"),
-                  ..., short = "bind", user = NULL, date = NULL){
+bind <- function (direction = stop ("direction ('c' or 'r') required"), ...){
   dots <- list (...)
 
   if ((length (dots) == 1) & is.list (dots [[1]]))
@@ -70,8 +67,6 @@ bind <- function (direction = stop ("direction ('c' or 'r') required"),
     lapply (dots, chk.hy)
     lapply (dots, validObject)
     
-    logs <- list()
-
     for (i in seq_along (dots) [-1]){
       dots[[1]] <- switch (direction,
                            c = cbind2 (dots[[1]], dots[[i]]),
@@ -79,17 +74,6 @@ bind <- function (direction = stop ("direction ('c' or 'r') required"),
                            stop ("direction must be either 'c' or 'r' for cbind",
                                  "and rbind, respectively.")
                            )
-
-      dots [[1]] <- .logentry (dots [[1]], short = short,
-                               long = list (direction = direction,
-                                 .paste.row (dots [[i]])),
-                               user = user, date = date)
-      ## if (!is.null (short))
-        ## dots[[1]]@log[nrow (dots[[1]]@log), "short.description"] <- paste (short, dots[[1]]@log[nrow (dots[[1]]@log), "short.description"])
-      ## if (!is.null (date))
-        ## dots[[1]]@log[nrow (dots[[1]]@log), "date"] <- date
-      ## if (!is.null (user))
-        ## dots[[1]]@log[nrow (dots[[1]]@log), "user"] <- user
     }
     
     dots [[1]]
@@ -109,7 +93,7 @@ bind <- function (direction = stop ("direction ('c' or 'r') required"),
 ##' @aliases cbind.hyperSpec
 
 ##' 
-cbind.hyperSpec <- function (..., short = "cbind", deparse.level) bind ("c", ..., short = "cbind")
+cbind.hyperSpec <- function (...) bind ("c", ...)
 
 ##'
 ##' \code{rbind2} binds two \code{hyperSpec} objects by row. They need to have
@@ -119,7 +103,7 @@ cbind.hyperSpec <- function (..., short = "cbind", deparse.level) bind ("c", ...
 ##' @rdname bind
 ##' @export 
 ##' @aliases rbind.hyperSpec
-rbind.hyperSpec <- function (..., short = "rbind", deparse.level) bind ("r", ..., short = "rbind")
+rbind.hyperSpec <- function (...) bind ("r", ...)
 
 ##' @rdname bind
 ##' @export 
@@ -155,7 +139,7 @@ setMethod ("cbind2", signature = signature (x = "hyperSpec", y = "hyperSpec"),
              x@data <- cbind (x@data,
                               y@data[, cols, drop = FALSE])
 
-             .logentry (x, short = "cbind2", long = as.character (y))
+             x
            }
            )
 
@@ -179,7 +163,7 @@ setMethod("rbind2",
 
             x@data <- rbind (x@data, y@data)
 
-            .logentry (x, short = "rbind2", long = list (y = as.character (y)))
+            x
           }
           )
 

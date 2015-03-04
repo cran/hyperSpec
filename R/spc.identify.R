@@ -58,7 +58,7 @@
 ##'   point to label, see details.
 ##' @param formatter \code{function (i, wl, spc)} that produces the labels. If
 ##'   \code{NULL}, no labels are displayed.
-##' @param \dots passed to \code{\link[graphics]{text}} in order to produce the
+##' @param ... passed to \code{\link[graphics]{text}} in order to produce the
 ##'   labels
 ##' @param  cex,adj,srt see \code{\link[graphics]{par}}
 ##' @param warn Should the user be warned if no point is in the considered
@@ -86,11 +86,12 @@
 ##' @export
 ##' @examples
 ##' 
-##' \donttest{
+##' if (interactive ()){
 ##' ispc <- sample (nrow (laser), 10)
 ##' ispc
 ##' 
 ##' identified <- spc.identify (plotspc (laser[ispc]))
+##' 
 ##' ## convert to the "real" spectra indices
 ##' ispc [identified$ispc]
 ##' identified$wl
@@ -116,6 +117,10 @@ spc.identify <- function (x, y = NULL, wavelengths = NULL, ispc = NULL,
                           formatter = spc.label.default, # NULL: suppress labels
                           ..., cex = 0.7, adj = c (0, 0.5), srt = 90, # for the label text
                           warn = TRUE){
+	
+	if (! interactive ())
+		stop ("spc.identify works only on interactive graphics devices.")
+		
   if (is.list (x)) {
     if (is.null (wavelengths))
       wavelengths <- x$wavelengths

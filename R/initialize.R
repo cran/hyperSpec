@@ -7,19 +7,8 @@
 
 ##' @include paste.row.R
 ##' @noRd
-.initialize <- function (.Object, spc = NULL, data = NULL, wavelength = NULL, labels = NULL, log = NULL,
-                         ## ...,
-                         short = "initialize", user = NULL, date = NULL){
+.initialize <- function (.Object, spc = NULL, data = NULL, wavelength = NULL, labels = NULL){
   
-  if (is.null (log) && .options$log)    # avoid if no log is needed: involves copy of data
-    long <- list (data       = if (missing (data))       "missing" else .paste.row (data, val = TRUE),
-                  spc        = if (missing (spc))        "missing" else .paste.row (spc, val = TRUE,
-                    range = FALSE),
-                  wavelength = if (missing (wavelength)) "missing" else wavelength,
-                  labels      = if (missing (labels))      "missing" else labels)
-  else
-    long <- list ()
-
   ## do the small stuff first, so we need not be too careful about copies
 
   ## the wavelength axis
@@ -80,22 +69,6 @@
   rm (labels, wavelength)
   if (.options$gc) gc ()
 
-  if (! is.null (log))
-      warning ("The logbook is deprecated and soon be removed.")
-
-  ## even the logbook may be given...
-  if (is.data.frame (log)) {
-    .Object@log <- log
-  } else {
-    .Object@log <- data.frame ()
-    if (is.null (log))
-      log <- list (short = short, long = long, user = user, date = date)
-    
-    .Object <- .logentry (.Object, .entry = log)
-  }
-  rm (log)
-  if (.options$gc) gc ()
-        
   if (! is.null (data$spc) && ! (is.null (spc)))
     warning ("Spectra in data are overwritten by argument spc.")
   
@@ -181,11 +154,6 @@
 ##' 
 ##' If \code{label} is not given, a list containing \code{NULL} for each of the
 ##'   columns of\code{data} and \code{wavelength} is used.
-##' @param log A \code{list} used to fill into the first entry of
-##'   \code{.Object@@log}. The elements \code{log$short}, \code{log$long},
-##'   \code{log$date}, and \code{log$user} are handed down to
-##'   \code{\link{logentry}}.
-##' @param short,user,date passed to \code{\link[hyperSpec]{logentry}}
 ##' @author C.Beleites
 ##' @seealso \code{\link[methods]{new}} for more information on creating and
 ##'   initializing S4 objects.
@@ -219,10 +187,6 @@
 ##' 
 ##' plot (h)
 ##' plotc (h, spc ~ pos)
-##' 
-##' # giving a log entry
-##' new ("hyperSpec", log = list (short = "measurement parameters",
-##'      long = list ("exposure / s" = 10, sample = "327a")))
 ##' 
 setMethod ("initialize", "hyperSpec", .initialize)
 

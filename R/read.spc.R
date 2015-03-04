@@ -134,10 +134,15 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 	
 	if (length (out) > 1L){
      if (firstonly){
-       warning ("multiple strings encountered: ", paste (out, collapse = ", "), " but using only the first one.")
+       
+       message ("multiple strings encountered in spc file ", paste (out, collapse = ", "), ": using only the first one.")
        out <- out [1]
-     } else if (! is.null (paste.collapse)){
-       warning ("multiple strings encountered: ", paste (out, collapse = ", "), " => pasting.")
+     
+       } else if (! is.null (paste.collapse)){
+       
+       if (hy.getOption ("debuglevel") > 2L)
+         message ("multiple strings encountered in spc file ", paste (out, collapse = ", "), " => pasting.")
+       
        out <- paste (out, collapse = paste.collapse)
      }
 	}
@@ -157,7 +162,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 	## NEW.MSB = 76 not supported (neither by many Grams software according to spc doc)
 	## OLD     = 77 not supported (replaced by new format in 1996)
 	if (raw.data [2] != 75)  
-		stop ("Wrong spc file format version.\n",
+		stop ("Wrong spc file format version (or no spc file at all).\n",
 				"Only 'new' spc files (1996 file format) with LSB word order are supported.") 
 	
 	hdr <- list (ftflgs   = readBin          (raw.data [        1], "integer", 1, 1, signed = FALSE),
@@ -195,7 +200,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 	)
 	
 	## R doesn't have unsigned long int .................................
-   if (any (unlist (hdr [c ("flogoff", "fmods", "fzinc", "fwplanes")]) < 0))
+   if (any (unlist (hdr [c ("flogoff", "fmods", "fwplanes")]) < 0))
      stop ("error reading header: R does not support unsigned long integers.",
            "Please contact the maintainer of the package.")
    
@@ -272,37 +277,38 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 	if (hdr$ftflgs ['TMULTI']){
 		## multiple spectra in file
 		if (hdr$fnsub <= 1)
-			warning ("spc file header specifies multiple spectra but only zero or one subfile.")
+      if (hy.getOption ("debuglevel") >= 2L)
+        message ("spc file header specifies multiple spectra but only zero or one subfile.")
 	} else {
 		## single spectrum file
 		if (hdr$fnsub == 0)
 			hdr$fnsub <- 1
 		
 		if (hdr$fnsub >  1) {
-			warning ("spc file header specifies single spectrum file  but", hdr$fnsub,
-					"subfiles (spectra).\nOnly first subfile will be read.")
+			warning ("spc file header specifies single spectrum file  but ", hdr$fnsub,
+					" subfiles (spectra).\nOnly first subfile will be read.")
 			hdr$fnsub <- 1
 		}
 		
 		if (hdr$ftflgs ['TRANDM']) 
-			warning ("spc file header: file type flag TRANDM does not make sense without TMULTI.")
+			message ("spc file header: file type flag TRANDM encountered => Enforcing TMULTI.")
 		
 		if (hdr$ftflgs ['TORDRD'])
-			warning ("spc file header: file type flag TORDRD does not make sense without TMULTI.")
+			message ("spc file header: file type flag TORDRD encountered => Enforcing TMULTI.")
 		
 		if ((hdr$ftflgs ['TRANDM'] || hdr$ftflgs ['TORDRD']) && hdr$fnsub > 1)
 			hdr$ftflgs ['TMULTI'] <- TRUE
 	}
 	
 	if (hdr$ftflgs ['TXYXYS'] && ! hdr$ftflgs ['TXVALS']) {
-		warning ("spc file header: file type flag TXYXYS does not make sense without TXVALS.")
+		warning ("spc file header: file type flag TXYXYS encountered => Enforcing TXVALS.")
 		hdr$ftflgs ['TXVALS'] <- TRUE
 	}
 	
 	if (hdr$fwplanes > 0)
 	warning ("w planes found! This is not yet tested as the developer didn't have access to such files.\n",
-			"Please contact the package maintainer (cbeleites@units.it)",
-			"stating whether the file was imported successfully or not.")
+			"Please contact the package maintainer ", maintainer ("hyperSpec"), 
+			" stating whether the file was imported successfully or not.")
 	
 	hdr
 }
@@ -333,17 +339,17 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 	
 	## checking
 	if (subhdr$subexp == -128 && hdr$fexp != -128)
-		warning ("subfile ", subhdr$subindx,  " specifies data type float, but file header doesn't.",
-				"\nData will be interpreted as float.")
+		message ("subfile ", subhdr$subindx,  " specifies data type float, but file header doesn't.",
+				"\n=> Data will be interpreted as float.")
 	
-	if (subhdr$subnpts > 0 && ! hdr$ftflgs ['TXYXYS'])
-		warning ('subfile ', subhdr$subindx, ": number of points in subfile should be 0 if file",
-				" header flags do not specify TXYXYS.")
+	if (subhdr$subnpts > 0 && subhdr$subnpts != hdr$fnpts && ! hdr$ftflgs ['TXYXYS'])
+		message ('subfile ', subhdr$subindx, ": number of points in file header and subfile header ",
+             "inconsistent. => Going to use subheader.")
 	
 	if (subhdr$subnpts == 0){
 		if (hdr$ftflgs ['TXYXYS'])
-			warning ('subfile ', subhdr$subindx, ': number of data points per spectrum not specified. ',
-					'Using fnpts (', hdr$fnpts, ').')
+			message ('subfile ', subhdr$subindx, ': number of data points per spectrum not specified. ',
+					'=> Using file header information (', hdr$fnpts, ').')
 		subhdr$subnpts <- hdr$fnpts
 	}
 	
@@ -365,8 +371,8 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 	if (! hdr$ftflgs ['TMULTI'])
 		subhdr$subexp <- hdr$fexp
    else if (hdr$fexp == -128 && subhdr$subexp != -128) {
-     warning ("Header file specifies float data format, but subfile uses integer exponent.",
-              " Subfile settings are overwritten.")
+     message ("Header file specifies float data format, but subfile uses integer exponent. ",
+              "=> Using file header settings.")
      subhdr$subexp <- -128
    }
 	
@@ -457,7 +463,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 		log$.log.disk <- raw.data [loghdr$.last.read + loghdr$logbins + seq_len (loghdr$logdsks)]
 	
 	## read text part of log
-	if (log.txt) {
+	if (log.txt & loghdr$logsizd > loghdr$logtxto) {
 		log.txt <- raw.data [pos + loghdr$logtxto + seq_len (loghdr$logsizd - loghdr$logtxto)]
       if (tail (log.txt, 1) ==  .nul)   # throw away nul at the end
         log.txt <- head (log.txt, -1)
@@ -529,9 +535,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 
 
 ##' Import for Thermo Galactic's spc file format
-##' These functions allow to import .spc files.
-##' A detailed description of the .spc file format is available at
-##' \url{https://ftirsearch.com/features/converters/SPCFileFormat.htm}.
+##' These functions allow to import Thermo Galactic/Grams .spc files.
 ##' 
 ##' @param filename The complete file name of the .spc file.
 ##' @param keys.hdr2data,keys.log2data character vectors with the names of parameters in the .spc
@@ -571,8 +575,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE, paste
 ##' @rdname read-spc
 ##' @seealso \code{\link[hyperSpec]{textio}}
 ##' @references Source development kit and file format specification of .spc
-##'   files:
-##'   \url{https://ftirsearch.com/features/converters/SPCFileFormat.htm}.
+##'   files.
 ##' @export
 ##' @keywords IO file
 ##' @examples
@@ -642,19 +645,9 @@ read.spc <- function (filename,
 	tmp <- .spc.log (f, hdr$flogoff,
 			log.bin, log.disk, log.txt,
 			keys.log2data,  keys.log2log)
-
-   if (hy.getOption ("log")){
-      warning ("The logbook is deprecated and will soon be removed.")
-     log <- list (short = "read.spc",
-                  long = list (call = match.call (),
-                    log = tmp$log.long,
-                    header = getbynames (hdr, keys.hdr2log)))
-   } else {
-     log <- NULL  
-   }
+	## TODO: remove keys.log2log data2log
 
 	data <- c (data, tmp$extra.data, getbynames (hdr, keys.hdr2data))
-	
 	
 	## try to preallocate spectra matrix and extra data data.frame
 	## if multispectra file with separate wavelength axes, prepare a list
@@ -705,7 +698,6 @@ read.spc <- function (filename,
 					spc = y$y, 
 					wavelength = wavelength$x,
 					data = data,
-					log = log,
 					labels = label)
 		}
 		
@@ -728,10 +720,10 @@ read.spc <- function (filename,
 	if (hdr$ftflgs ['TXYXYS'] && hdr$ftflgs ['TMULTI']) 
 		spc
 	else if (no.object)
-		list (spc = spc, wavelength = wavelength, data = data, log = log, labels = label)
+		list (spc = spc, wavelength = wavelength, data = data, labels = label)
 	else 
 		new ("hyperSpec",  spc = spc, wavelength = wavelength,
-				data = data [rep (1, hdr$fnsub), ], log = log, labels = label)
+				data = data [rep (1, hdr$fnsub), ], labels = label)
 }
 
 

@@ -16,7 +16,7 @@
 ##' @param keys.hdr2data index vector indicating which header entries should be tranfered into the
 ##' extra data. Usually a character vector of labels (lowercase, without and dashes, blanks,
 ##' underscores). If \code{TRUE}, all header entries are read.
-##' @param \dots further parameters handed to the data import function, e.g.
+##' @param ... further parameters handed to the data import function, e.g.
 ##' \tabular{ll}{
 ##' \code{xtol} \tab tolerance for checking calculated x values against checkpoints at beginning
 ##'                  of line, defaults to XFACTOR\cr
@@ -32,7 +32,11 @@ read.jdx <- function(filename = stop ("filename is needed"), encoding = "",
                      header = list (), keys.hdr2data = FALSE, ...,
                      NA.symbols = c ("NA", "N/A", "N.A."),
                      collapse.multi = TRUE){
-  jdx <- readLines (filename, encoding = encoding)
+  
+  ## see readLines help: this way, encoding is translated to standard encoding on current system.
+  file <- file (filename, "r", encoding = encoding, blocking = FALSE)
+  jdx <- readLines (file)
+  close (file)
   
   ## start & end of spectra header and data
   hdrstart <- grep ("^[[:blank:]]*##TITLE=", jdx)
@@ -143,13 +147,13 @@ read.jdx <- function(filename = stop ("filename is needed"), encoding = "",
   ## check Y values
   miny <- min (spc@data$spc)
   if (! is.null (hdr$miny) && abs (hdr$miny - miny) > ytol)
-      warning (sprintf ("Minimum of spectrum != MINY: difference = %0.3g (%0.3g * YFACTOR)",
+      message (sprintf ("JDX file inconsistency: Minimum of spectrum != MINY: difference = %0.3g (%0.3g * YFACTOR)",
                         miny - hdr$miny,
                         (miny - hdr$miny) / hdr$yfactor))
 
   maxy <- max (spc@data$spc)
   if (! is.null (hdr$maxy) && abs (hdr$maxy - maxy) > ytol)
-      warning (sprintf ("Maximum of spectrum != MAXY: difference = %0.3g (%0.3g * YFACTOR)",
+      message (sprintf ("JDX file inconsistency: Maximum of spectrum != MAXY: difference = %0.3g (%0.3g * YFACTOR)",
                         maxy - hdr$maxy,
                         (maxy - hdr$maxy) / hdr$yfactor))
 
@@ -208,7 +212,7 @@ read.jdx <- function(filename = stop ("filename is needed"), encoding = "",
   x <- as.numeric (x) * hdr$xfactor
   diffx <- abs (wl [c (1, head (cumsum (ny) + 1, -1))] - x)
   if (any (diffx > xtol))
-      warning ("X axis differs from checkpoints. ",
+      message ("JDX file inconsistency: X axis differs from checkpoints. ",
                sprintf ("Maximum difference = %0.2g (%0.2g * XFACTOR)",
                         max (diffx), max (diffx) / hdr$xfactor))
 
@@ -262,7 +266,7 @@ read.jdx <- function(filename = stop ("filename is needed"), encoding = "",
   if (hdr [1] == "(NCU")
       hdr <- hdr [-1]
   else
-      warning ("Unknown type of concentration specification: ", hdr [1], ")")
+      message ("Unknown type of concentration specification in JDX file: ", hdr [1], ")")
 
   hdr <- simplify2array (strsplit (hdr, ","))
   hdr [hdr %in% NA.symbols] <- NA

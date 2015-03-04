@@ -6,15 +6,15 @@
 \usepackage{longtable}
 \usepackage{array}
 
-\hypersetup{pdftitle={hyperSpec plotting functions},
+\hypersetup{pdftitle={plotting},
  pdfauthor={C. Beleites},
  pdfsubject={Introduction on the hyperSpec plotting functions},
  pdfkeywords={hyperSpec}}
 
-% \VignetteIndexEntry{hyperSpec plotting functions}
+% \VignetteIndexEntry{plotting: graphical manual of hyperSpec's plotting functions}
 % \VignetteKeywords{hyperspec}
 % \VignettePackage{hyperSpec}
-% \VignetteDepends{latticeExtra, tripack, deldir, rgl, ggplot2, playwith, latticist}
+% \VignetteDepends{latticeExtra, tripack, deldir, rgl, ggplot2}
 
 \newcommand{\plottab}[2]{
 \vspace{1ex}\tabularnewline
@@ -34,9 +34,9 @@
 \addtolength{\textcol}{-\plotcol}
 \title{\Rpackage{hyperSpec} Plotting functions }
 \maketitle
-\warnbox{Vignette under Development}{
-This file is currently undergoing a thorough revision. Changes may happen frequently.
-}
+% \warnbox{Vignette under Development}{
+% This file is currently undergoing a thorough revision. Changes may happen frequently.
+% }
 \warnbox{Reproducing the Examples in this Vignette}{
 All spectra used in this manual are installed automatically with \phy. 
 
@@ -64,7 +64,7 @@ for (p in required.pkgs [! required.pkgs %in% c("latticeExtra", "deldir")])
   check.req.pkg (p, donothing = "")
 @
 \end{labeling}
-In addition \Rpackage{tripack}, \Rpackage{playwith}, and \Rpackage{latticist} are mentioned, but not
+In addition \Rpackage{tripack}, and \Rpackage{latticist} are mentioned, but not
 used in this vignette.
 }
 \section*{Preliminary Calculations}
@@ -72,8 +72,8 @@ For some plots of the \Robject{chondro} dataset, the pre-processed spectra and t
 averages $\pm$ one standard deviation are more suitable:
 <<preproc-chondro>>=
 chondro.preproc <- chondro - spc.fit.poly.below (chondro)
-chondro.preproc <- sweep (chondro.preproc, 1, mean, "/")
-chondro.preproc <- sweep (chondro.preproc, 2, apply (chondro.preproc, 2, quantile, 0.05), "-")
+chondro.preproc <- chondro.preproc / rowMeans (chondro)
+chondro.preproc <- chondro.preproc - quantile (chondro, 0.05)
 
 cluster.cols <- c ("dark blue", "orange", "#C02020")
 cluster.meansd <- aggregate (chondro.preproc, chondro$clusters, mean_pm_sd)
@@ -628,7 +628,7 @@ Voronoi uses \Rfunction{panel.voronoi} from
 using \Rpackage{deldir}\Sexpr{cite.pkg("deldir")}, but \Rpackage{tripack}\Sexpr{cite.pkg("tripack")}
 can also be used. \Rpackage{tripack} seems to faster in general, but may ``hang'' with certain data
 sets (particularly regular grids with missing spectra as in this example). Furthermore, it is not
-FOSS (free and open source software).
+FOSS (free and open source software), so users are kindly asked to review \Rpackage{tripack}'s license before using it.
 \\
 \plottab{Mark missing spectra}{missing} If the spectra come from a rectangular grid, missing
 positions can be marked with this panel function:
@@ -647,18 +647,49 @@ plotmap (sample (chondro, 865),
          col.regions = matlab.palette(20),
          col = "black",
          panel = mark.missing)
-@ 
+@
+\end{longtable}
+\textbf{Unevenly spaced measurement grid}\\
+The panel function used by \Rfunction{plotmap} defaults to \Rfunction{panel.levelplot.raster} which assumes an evenly spaced measurement grid.
+Even if the spectra are measured on a nominally evenly spaced grid, the actual stage position may be slightly varying due to positioning inaccuracy and some manufacturers (e.\,g. Kaiser) record the position reported by the stage rather than the position requested by the stage control.
+\begin{longtable}{@{}p{\plotcol} p{\textcol}}
+\plottab{}{uneven-I}This leads to weird looking output with holes, and possibly wrong columns: 
+<<uneven-prep, echo=FALSE, results=hide>>=
+uneven <- chondro
+uneven$x <- uneven$x + round (rnorm (nrow (uneven), sd = 0.05), digits = 1)
+uneven$y <- uneven$y + round (rnorm (nrow (uneven), sd = 0.05), digits = 1)
+@
+<<uneven-I, fig = TRUE, width = 4, height = 2.6,include = FALSE >>=
+plotmap (uneven)
+@
+The symptom of this situation are warnings about values in x and/or y not being equispaced; and that the output therefore may be wrong.
+\\\plottab{}{uneven-II} One possibility to obtain a correct map is using \Rfunction{plotvoronoi} instead which will construct a mosaic-like image with the respective ``pixel'' areas being centered around the actually recorded \texttt{\$x} and \texttt{\$y} position:
+<<uneven-II, fig = TRUE, width = 4, height = 2.6,include = FALSE >>=
+plotvoronoi (uneven)
+@
+\\\plottab{}{uneven-III} Another possibility that underlines a point shape of the measurements is switching to \Rfunction{latticeExtra::panel.levelplot.points}:
+<<uneven-III, fig = TRUE, width = 4, height = 2.6,include = FALSE >>=
+plotmap (uneven, panel = panel.levelplot.points, 
+				 cex = 0.75, col.symbol=NA)
+@
+\\\plottab{}{uneven-IV} Alternatively, the measurement raster positions can be rounded to their nominal raster, e.\,g.:
+<<uneven-IV, fig = TRUE, width = 4, height = 2.6,include = FALSE >>=
+rx <- makeraster (uneven$x, start = -11.55, d = 1, tol = 0.3)
+uneven$x <- rx$x
+ry <- makeraster (uneven$y, start = -4.77, d = 1, tol = 0.3)
+uneven$y <- ry$x
+plotmap (uneven)
+@
 \end{longtable}
 
 
 
-\section{3 D (with \Rpackage{rgl})}
-\label{sec:3-d}
 
-3D plots with \Rpackage{rgl}
+\section{3D plots (with \Rpackage{rgl})}
+\label{sec:3-d}
 \begin{longtable}{@{}p{\plotcol} p{\textcol}}
   \vspace{1ex}\tabularnewline
-  \multicolumn{2}{l}{\}}\tabularnewline\nopagebreak
+%  \multicolumn{2}{l}{\}}\tabularnewline\nopagebreak
 \vtop{%
   \vskip-0.9\baselineskip
   \hbox{%
@@ -710,68 +741,51 @@ if (exists (".rgl") && .rgl){        # use extra argument to turn on rgl only on
 \section{Using \Rpackage{ggplot2} with \phy objects}
 \label{sec:ggplot2}
 \chy objects do not yet directly support plotting with \Rpackage{ggplot2}
-\Sexpr{cite.pkg("ggplot2")}. Nevertheless, \Rpackage{ggplot2} graphics can easily be obtained.
+\Sexpr{cite.pkg("ggplot2")}. Nevertheless, \Rpackage{ggplot2} graphics can easily be obtained, and \texttt{qplot*} equivalents to plotspc and plotmap are defined: 
 
-In general, \Rfunction{as.long.df} transforms a \chy object into a long-form \df that is suitable for
-\Rfunction{qplot}, \Rfunction{ggplot}, etc:
 \begin{longtable}{@{}p{\plotcol} p{\textcol}}
   \plottab{plot spectra with \Rfunction{as.long.df}}{ggplotspc} 
 <<ggplotspc, eval = FALSE>>=
-df <- as.long.df (flu, rownames = TRUE)
-ggplot (df, aes (x = .wavelength, y = spc, 
-                 colour = c, group = .rownames)) + 
-  geom_line () +
-  xlab (labels (flu)$.wavelength) +
-  ylab (labels (flu)$spc) 
+qplotspc (flu) + aes (colour = c)
 @ 
+\\
+\plottab{Map with \Rpackage{ggplot2}}{ggplotmap} 
+<<ggplotmap, eval = FALSE>>=
+qplotmap (chondro) + 
+  scale_fill_gradientn ("spc", colours = matlab.palette ()) 
+@
+\\
 The two special columns \Rcode{.wavelength} and \Rcode{.rownames} contain the wavelength axis and
 allow to distinguish the spectra.
 \end{longtable}
 
-Note however, that long \df{}s can be \emph{very} memory consuming as they are of size $nrow \cdot
+For more general plotting, \Rfunction{as.long.df} transforms a \chy object into a long-form \df that is suitable for
+\Rfunction{qplot}, while \Rfunction{as.t.df} produces a \df where each spectrum is one column, and an additional first column gives the wavelength (see ``plotting mean $\pm$ sd'' below for an example). 
+Long \df{}s can be \emph{very} memory consuming as they are of size $nrow \cdot
 nwl \times (ncol + 2)$ with respect to the dimensions of the \chy object. Thus, \eg the
 \Robject{chondro} data set (\Sexpr{round (object.size (chondro) / 1048576, digits = 0)}\,MB) as \chy
 object) needs
 \Sexpr{round (object.size (as.long.df (chondro, rownames = TRUE)) / 1048576, digits = 0)}\,MB as
 long-format \df. It is therefore highly recommended to calculate the particular data to be plotted
-beforehand. Moreover, depending on the particular plot \Rfunction{as.data.frame} or
-\Rfunction{as.t.df} may be more suitable than \Rfunction{as.long.df}:
-\begin{longtable}{@{}p{\plotcol} p{\textcol}}
-  \plottab{Map with \Rpackage{ggplot2}}{ggplotmap} 
-<<ggplotmap, eval = FALSE>>=
-df <- as.long.df (apply (chondro, 1, mean))
-ggplot (df,aes (x = x, y = y, fill = spc)) +
-  geom_tile() + 
-  scale_fill_gradientn ("spc", colours = matlab.palette ()) +
-  scale_x_continuous (expand = c (0, 0)) +
-  scale_y_continuous (expand = c (0, 0)) +
-  coord_equal ()
-@
-\\
-  \plottab{Mean $\pm$ standard deviation with \Rpackage{ggplot2}}{ggplotmeansd} 
-<<ggplotmeansd, eval = FALSE>>=
-df <- as.t.df (apply (chondro, 2, mean_pm_sd))
+beforehand. 
 
-ggplot (df, aes (x = .wavelength)) +
-  geom_ribbon (aes (ymin = mean.minus.sd, 
-                    ymax = mean.plus.sd), 
-               alpha = 0.25) +
-  geom_line (aes (y = mean)) +
-  xlab (labels (chondro)$.wavelength) +
-  ylab (labels (chondro)$spc) 
+\begin{longtable}{@{}p{\plotcol} p{\textcol}}
+\plottab{Mean $\pm$ standard deviation with \Rpackage{ggplot2}}{ggplotmeansd} 
+<<ggplotmeansd, eval = FALSE>>=
+qplotspc (mean (chondro)) +
+geom_ribbon (aes (ymin = mean + sd, 
+                  ymax = mean - sd, 
+                  y = 0, group = NA), 
+             alpha = 0.25, 
+             data = as.t.df (mean_sd (chondro)))
 @
+Note that \Rfunction{qpotspc} specifies aesthetics \texttt{y = spc} and \texttt{groups = .rownames}, which do not have corresponding columns in the \texttt{data.frame} returned by \Rfunction{as.t.df}. These aesthetics must therefore be set manually in the aesthetics definition in \Rfunction{geom\_ribbon} (or any other \Rfunction{geom\_} that uses \Rfunction{as.t.df}). Otherwise, errors occur that object \texttt{spc} (and/or \texttt{.rownames}) cannot be found.
 \\\plottab{Cut spectra with \Rpackage{ggplot2}}{ggplotspccut} %
-Cut axes can be simulated by faceting. A factor is needed that indicates the respective ranges:
+Cut axes can be implemented by faceting:
 <<ggplotspccut, eval = FALSE>>=
-df <- paracetamol [,, c( min ~ 1800, 2800 ~ max)] / 1e4
-df <- as.long.df (df)
-df$range <- factor (df$.wavelength > 2000)
-ggplot (df, aes (x = .wavelength, y = spc)) +
-  geom_line () + 
-  facet_grid (. ~ range, labeller = function (...) "",
-              scales = "free", space = "free") +
-  scale_x_continuous (breaks = seq (0, 3200, 400)) +
-  theme (strip.background = element_blank ())
+qplotspc (paracetamol / 1e4, 
+          wl.range = c( min ~ 1800, 2800 ~ max)) +
+	  scale_x_continuous (breaks = seq (0, 3200, 400)) 
 @
 \end{longtable}
 <<ggplot2-do, echo = FALSE, results = hide>>=
@@ -861,20 +875,13 @@ grid.locator ()
 \Rfunction{identify} (or \Rfunction{panel.identify} for lattice graphics) allows to identify points
 of the plot directly. Note that the returned indices correspond to the plotted object.
 
-\subsection{Interactively changing graphics}
-\label{sec:inter-chang-graph}
-
-\phy's lattice functions work with \Rpackage{playwith}\Sexpr{cite.pkg("playwith")} and
-\Rpackage{latticist} \Sexpr{cite.pkg("latticist")}. These packages allow easy customization of the
-plots and also identification of points.
-
 \bibliographystyle{unsrtnat}
 \bibliography{plotting-pkg}
  
 \section*{Session Info}
 \begin{footnotesize}
 <<bib, echo = FALSE>>=
-make.bib (c("latticeExtra", "rgl", "ggplot2", "playwith", "latticist", "plotrix", "deldir", "tripack"), 
+make.bib (c("latticeExtra", "rgl", "ggplot2", "playwith",  "plotrix", "deldir", "tripack"), 
           file = "plotting-pkg.bib")
 print (as.matrix(Sys.info()))
 <<cleanup>>

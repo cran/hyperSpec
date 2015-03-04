@@ -1,25 +1,19 @@
 citHeader("To cite package 'hyperSpec' please use:")
      
-desc <- packageDescription("hyperSpec")
-year <- sub("^[^-]*-([[:digit:]]{4}).*$", "\\1", desc$Version)
-vers <- paste("R package version", desc$Version)
+year <- sub ("^[^-]*-([[:digit:]]{4}).*$", "\\1", meta$Version)
+vers <- paste ("R package version", meta$Version)
 
-citEntry(entry="Manual", "hyperSpecJSS", 
-         title = "hyperSpec: a package to handle hyperspectral data sets in R",
-         author = personList(as.person("Claudia Beleites"),
-                             as.person("Valter Sergo")),
-         year = year,
-         ##journal = "Journal of Statistical Software",
-         ##note = paste ("in preparation", vers),
-         note = vers,
-         URL = 'http://hyperspec.r-forge.r-project.org',
-         ##DOI = '---doi--',
+citEntry (entry="Manual", "hyperSpecJSS", 
+          title = "hyperSpec: a package to handle hyperspectral data sets in R",
+          author = personList (as.person("Claudia Beleites"),
+                               as.person("Valter Sergo")),
+          year = year,
+          note = vers,
+          URL = 'http://hyperspec.r-forge.r-project.org',
      
-         textVersion =
-         paste("Claudia Beleites and Valter Sergo: ",
-               "`hyperSpec: a package to handle hyperspectral data sets in R', ",
-               ##"in preparation, ",
-               ## "(", year, "). ", 
-               vers, ". http://hyperspec.r-forge.r-project.org", 
-               sep="")
-         )
+          textVersion =
+          paste("Claudia Beleites and Valter Sergo: ",
+                "`hyperSpec: a package to handle hyperspectral data sets in R', ",
+                vers, ". http://hyperspec.r-forge.r-project.org", 
+                sep="")
+)

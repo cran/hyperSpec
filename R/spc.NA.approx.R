@@ -4,13 +4,11 @@
 ##' @rdname spc.NA.linapprox
 ##' @param spc hyperSpec object with spectra matrix containing \code{NA}s
 ##' @param neighbours how many neighbour data points should be used to fit the line
-##' @param \dots ignored
-##' @param short,user,date handed to \code{\link{logentry}}
+##' @param ... ignored
 ##' @return hyperSpec object
 ##' @export
 ##' @author Claudia Beleites
-spc.NA.linapprox <- function (spc, neighbours = 1, ...,
-                              short = "spc.NA.linapprox", user = NULL, date = NULL){
+spc.NA.linapprox <- function (spc, neighbours = 1, ...){
   chk.hy (spc)
   validObject (spc)
   
@@ -37,7 +35,7 @@ spc.NA.linapprox <- function (spc, neighbours = 1, ...,
       xneighbours <- xneighbours [xneighbours > 0]
       xneighbours <- xneighbours [xneighbours < nwl (spc)]
 
-      if (length (xneighbours) == 0) # should not happen as all NA spectra were excluded
+      if (length (xneighbours) == 0) # should not happen as all NA-only spectra were excluded
         stop ("No data to interpolate from.") 
       else if (length (xneighbours) == 1)
         spc@data$spc [i, pts] <- spc@data$spc [i, xneighbours]
@@ -51,6 +49,5 @@ spc.NA.linapprox <- function (spc, neighbours = 1, ...,
     }
   }
 
-  .logentry (spc, short = short, long = list (neighbours = neighbours), user = user,
-             date = date)
+  spc
 }

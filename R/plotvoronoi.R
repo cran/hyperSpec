@@ -14,17 +14,19 @@
 ##' @include levelplot.R
 ##' @export
 ##' @seealso \code{\link[latticeExtra]{panel.voronoi}}
+##' @importFrom latticeExtra panel.voronoi
+##' @importFrom lattice prepanel.default.levelplot
 ##' 
 plotvoronoi <- function (object, model = spc ~ x * y,
                          use.tripack = FALSE, mix = FALSE, ...){
-  if (!require (latticeExtra))
+  if (!requireNamespace ("latticeExtra"))
    stop ("package latticeExtra is needed for Voronoi plots.")
 
   if (use.tripack){
-    if (!require (tripack))
+    if (!requireNamespace ("tripack"))
       stop ("package tripack requested but not available.")
   } else {
-    if (!require (deldir))
+    if (!requireNamespace ("deldir"))
       stop ("package deldir requested but not available.")
   }
  
@@ -33,8 +35,8 @@ plotvoronoi <- function (object, model = spc ~ x * y,
 
   dots <- modifyList (list (object = object,
                             model = model,
-                            panel = "panel.voronoi",
-                            prepanel = "prepanel.default.levelplot",
+                            panel = panel.voronoi,
+                            prepanel = prepanel.default.levelplot,
                             pch = 19, cex = .25,
                             col.symbol = "#00000020",
                             border = "#00000020",

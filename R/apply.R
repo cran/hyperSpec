@@ -85,13 +85,12 @@
 ##' If \code{MARGIN} is missing, the whole spectra matrix is handed to
 ##'   \code{FUN}, see also the examples.
 ##' @param FUN function to compute the summary statistics
-##' @param \dots further arguments passed to \code{FUN}
+##' @param ... further arguments passed to \code{FUN}
 ##' @param label.wl,label.spc new labels for wavelength and spectral intensity
 ##'   axes
 ##' @param new.wavelength for \code{MARGIN = 2}: numeric vector or name of the
 ##'   argument in \dots{} that is to be used (character) as wavelength axis of
 ##'   the resulting object.
-##' @param short,long,user,date aguments passed to \code{logentry}
 ##' @return A \code{hyperSpec} object
 ##' @author C. Beleites
 ##' @seealso \code{\link[base]{apply}}, for applying \code{FUN} to subgroups of
@@ -119,12 +118,8 @@
 ##' 
 setMethod ("apply", signature = signature (X = "hyperSpec"),
            function (X, MARGIN, FUN, ...,
-                     label.wl = NULL, label.spc = NULL, new.wavelength = NULL,
-                     short = "apply", long = NULL, user = NULL, date = NULL){
+                     label.wl = NULL, label.spc = NULL, new.wavelength = NULL){
   validObject (X)
-
-  if (is.null (long))
-    long <- .call.list (match.call (call = sys.call (-1)))
 
   if (missing (MARGIN)){                # apply for functions that the complete spectra matrix
     ## is easier: tmp <- apply (x, , FUN, ...)
@@ -146,7 +141,7 @@ setMethod ("apply", signature = signature (X = "hyperSpec"),
   } else {
     ## the usual: for each row / for each column
 
-    X@data <- .apply(X@data, MARGIN = MARGIN, FUN = FUN, ...)
+    X@data <- .apply (X@data, MARGIN = MARGIN, FUN = FUN, ...)
 
     if (all (MARGIN == 1)) {
       
@@ -187,7 +182,7 @@ setMethod ("apply", signature = signature (X = "hyperSpec"),
 
   validObject (X)
 
-  .logentry(X, short = short, long = long, user = user, date = date)
+  X
 })
 
 

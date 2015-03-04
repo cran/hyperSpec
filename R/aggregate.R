@@ -1,5 +1,6 @@
-##' aggregate
-##' Computes summary statistics for subsets of a \code{hyperSpec} object.
+##' aggregate hyperSpec objects
+##' 
+##' Compute summary statistics for subsets of a \code{hyperSpec} object.
 ##' 
 ##' \code{aggregate} applies \code{FUN} to each of the subgroups given by
 ##' \code{by}. It combines the functionality of \code{\link[stats]{aggregate}},
@@ -16,9 +17,8 @@
 ##' more rows are appended and a warning is issued.
 ##'
 ##' @include hyperspec-class.R
-##' @name aggregate
-##' @title aggregate hyperSpec objects
 ##' @aliases aggregate,hyperSpec-method ave,hyperSpec-method
+##' @name aggregate
 ##' @docType methods
 ##' @param x a \code{hyperSpec} object
 ##' @param by grouping for the rows of \code{x@@data}.
@@ -35,8 +35,7 @@
 ##' @param by.isindex If a list is given in \code{by}: does the list already
 ##'   contain the row indices of the groups? If \code{FALSE}, the list in
 ##'   \code{by} is computed first (as in \code{\link[stats]{aggregate}}).
-##' @param \dots further arguments passed to \code{FUN}
-##' @param short,date,user aguments passed to \code{\link[hyperSpec]{logentry}}
+##' @param ... further arguments passed to \code{FUN}
 ##' @return A \code{hyperSpec} object with an additional column
 ##'   \code{@@data$.aggregate} tracing which group the rows belong to.
 ##' @author C. Beleites
@@ -94,8 +93,7 @@ setMethod ("aggregate", signature = signature (x = "hyperSpec"),
                      FUN = stop ("FUN is needed."),
                      ...,
                      out.rows = NULL, append.rows = NULL,
-                     by.isindex = FALSE,
-                     short = "aggregate", date = NULL, user = NULL){
+                     by.isindex = FALSE){
   validObject (x)
 
   if (!is.list (by) || ! by.isindex)
@@ -147,8 +145,5 @@ setMethod ("aggregate", signature = signature (x = "hyperSpec"),
   if (!is.null (names (by)) && !any (is.na (names (by))))
     levels (x@data[, col.aggregate]) <- names (by)
 
-  .logentry (x,
-             long = list (by = by, FUN = FUN, out.rows = out.rows,
-               append.rows = append.rows, ...),
-             short = short, date = date, user = user)
+  x
 })

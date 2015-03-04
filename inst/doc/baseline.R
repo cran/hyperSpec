@@ -262,6 +262,7 @@ texListFun <- function (pattern){
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 bl <- spc.fit.poly (chondro [c (1, 101),, c (633, 1788)], chondro [c (1, 101)])
+
 plot (chondro [c (1, 101)], plot.args = list (ylim = c(200, 600)), col = 1 : 2)
 plot (chondro [c (1, 101),, c(633, 1788)], add = TRUE, col = 1:2, 
       lines.args = list (type = "p", pch = 20))
@@ -281,11 +282,12 @@ trace (spc.fit.poly.below, quote ({
 ### code chunk number 7: fig1
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-cols <- matlab.dark.palette (9) 
+cols <- matlab.dark.palette (8) 
 
 bl <- chondro [1] + 1
 plot (chondro [1])
 npts <- numeric (length (cols))
+
 for (iter in seq_along (cols)){
 	npts [iter] <- sum (chondro [[1]] < bl [[]])
 	cl <- cols [iter]
@@ -305,7 +307,6 @@ plot (chondro [1], plot.args = list (ylim = range (chondro [1,, c(600 ~ 650, 173
 for (iter in seq_along (cols)){
 	npts <- sum (chondro [[1]] < bl [[]])
 	cl <- cols [iter]
-	#cat ("Iteration", iter, ":", npts, "supporting points\n")
 	bl <- spc.fit.poly.below (chondro [1], poly.order = 1, npts.min = npts - 1)
 }
 plot (chondro [1], add = TRUE)
@@ -344,7 +345,7 @@ untrace (spc.fit.poly.below)
 ###################################################
 ### code chunk number 12: fit-apply
 ###################################################
-system.time (spc.fit.poly.below (chondro[], NULL, npts.min = 20))
+system.time (spc.fit.poly.below (chondro, NULL, npts.min = 20))
 system.time (spc.fit.poly.below (chondro [,, c (min ~ 700, 1700 ~ max)], NULL, npts.min = 20))
 
 
@@ -454,7 +455,7 @@ untrace (spc.fit.poly.below)
 
 
 ###################################################
-### code chunk number 19: baseline.Rnw:370-371
+### code chunk number 19: baseline.Rnw:371-372
 ###################################################
 bl <- spc.rubberband (paracetamol [,, 175 ~ 1800], noise = 300, df = 20)
 
@@ -497,7 +498,7 @@ plot (paracetamol [,, 175 ~ 1800] - bl)
 
 
 ###################################################
-### code chunk number 25: baseline.Rnw:421-424
+### code chunk number 25: baseline.Rnw:422-425
 ###################################################
 make.bib ("baseline", file = "baseline-pkg.bib")
 print (as.matrix(Sys.info()))
