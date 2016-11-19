@@ -11,6 +11,7 @@
 % \VignetteKeywords{hyperSpec, laser, time series}
 % \VignettePackage{hyperSpec}
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \title{Unstable Laser Emission\\
 Vignette for the Data Set \Robject{laser} of the R package \Rpackage{hyperSpec} }
 \maketitle
@@ -185,6 +186,7 @@ require (rgl)
 \Rpackage{rgl}'s \Rfunction{persp3d} plots a surface in 3d defined by points in x, y, and z. Handing over the appropriate data columns of the \chy object is easy (fig.~\ref{fig:laser3d}):
 
 <<rgl-plot, eval = FALSE>>=
+message ("plot chunk")
 laser <- laser [,,404.8 ~ 405.6] / 10000
 laser$t <- laser$t / 3600
 cols <- rep (matlab.palette (nrow (laser)), nwl (laser))
@@ -202,7 +204,6 @@ mtext3d ("lambda / nm",   'y--', line = 2.5)
 mtext3d ("I / a.u.", 'z--', line = 2.5)
 @ 
 <<rgl-do, echo = FALSE, results = hide>>=
-if (exists (".rgl") && .rgl){        # use extra argument to turn on rgl only on local machine as it doesn't work on r-forge.
   if (require (rgl)){
     open3d (windowRect=c(20,20,600, 350))  # this is needed only for automatically 
                                         # producing the snapshot
@@ -221,7 +222,6 @@ if (exists (".rgl") && .rgl){        # use extra argument to turn on rgl only on
     ploterrormsg ("", "rgl")
     dev.off ()
   }
-}
 @
 \begin{figure}[t]
   \centering

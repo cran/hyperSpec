@@ -93,7 +93,7 @@ wl2i <- function (x, wavelength = stop ("wavelengths are required.")){
     if (missing (e2))              # happens with formula ( ~ end)
       stop ("wavelength must be a both-sided formula")
 
-    if (    (Re (e1) < min (x@wavelength) && Re (e2) < min (x@wavelength)) ||
+    if ((Re (e1) < min (x@wavelength) && Re (e2) < min (x@wavelength)) ||
         (Re (e1) > max (x@wavelength) && Re (e2) > max (x@wavelength))){
       NULL                       # wavelengths completely outside the wl. range of x
     } else {
@@ -137,3 +137,5 @@ i2wl <- function (x, i){
   x@wavelength [i]
 }
 
+## check for wrong complex invocation
+## grepl("[(][[:digit:].]+[+-][[:digit:].]+i[)]", deparse (substitute (1i %~% max - 3i | 2800 %~% 3000, list (max = 3000))))

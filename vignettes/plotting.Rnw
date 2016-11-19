@@ -27,6 +27,7 @@
 } &
 }
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \newlength{\plotcol}
 \newlength{\textcol}
 \setlength{\plotcol}{0.4\textwidth}
@@ -714,7 +715,6 @@ mtext3d ("I / a.u.", edge = 'z--', line = 2.5)
 @
 \end{longtable}
 <<rgl-do, echo = FALSE, results = hide>>=
-if (exists (".rgl") && .rgl){        # use extra argument to turn on rgl only on local machine as it doesn't work on r-forge.
   if (require (rgl)){
     open3d (windowRect=c(20,20,600, 350))  # this is needed only for automatically 
                                         # producing the snapshot
@@ -733,7 +733,6 @@ if (exists (".rgl") && .rgl){        # use extra argument to turn on rgl only on
     ploterrormsg ("", "rgl")
     dev.off ()
   }
-}
 @
 
 

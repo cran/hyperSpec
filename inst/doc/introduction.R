@@ -10,7 +10,7 @@ options(SweaveHooks=list(fig=function() {
   trellis.pars <- trellis.par.get ("layout.heights")
   trellis.pars [grep ("padding", names (trellis.pars))] <- 0
   trellis.par.set(layout.heights = trellis.pars)
-  
+
   trellis.pars <- trellis.par.get ("layout.widths")
   trellis.pars [grep ("padding", names (trellis.pars))] <- 0
   trellis.par.set(layout.widths = trellis.pars)
@@ -38,13 +38,13 @@ setMethod ("levelplot", signature (x = "hyperSpec", data = "missing"),
 	}
 )
 
-setMethod ("levelplot", signature (x = "formula", data = "hyperSpec"), 
+setMethod ("levelplot", signature (x = "formula", data = "hyperSpec"),
    function (x, data, ...) print (hyperSpec:::.levelplot (x, data, ...))
 )
 
 plotc <- function (...){
-   call <- match.call () 
-   call [[1]] <- hyperSpec:::plotc 
+   call <- match.call ()
+   call [[1]] <- hyperSpec:::plotc
    print (eval (call))
 }
 
@@ -63,7 +63,7 @@ texterrormsg <- function (fn, pkg) {
 
 nice.paste <- function (...){
   fnames <- c (...)
-  
+
   if (length (fnames) == 2L)
     fnames <- paste (fnames, collapse = " and ")
   if (length (fnames) > 1L){
@@ -74,14 +74,14 @@ nice.paste <- function (...){
   fnames
 }
 
-check.req.pkg <- function (pkg = stop ("pkg needed"), 
+check.req.pkg <- function (pkg = stop ("pkg needed"),
                            texterrors = NULL, ploterrors = NULL, griderrors = NULL,
-                           hynstext = NULL, hynsplot = NULL, hynsgrid = NULL, 
+                           hynstext = NULL, hynsplot = NULL, hynsgrid = NULL,
                            donothing = NULL, special = NULL, v = TRUE){
   if (v) cat ("\\item[\\Rpackage{", pkg, "}:] ", sep = "")
-  
+
   dummies <- list ()
-  
+
   if (pkg.exists (pkg)){
     if (v) cat ("available\n")
   } else {
@@ -93,46 +93,46 @@ check.req.pkg <- function (pkg = stop ("pkg needed"),
       dummies <- c (dummies, bquote (.(fn) <- function (...) griderrormsg (.(fn), .(pkg))))
 
     for (fn in as.character (hynstext))
-      assignInNamespace (x = fn, 
-                         value = eval (bquote (function (...) texterrormsg (.(fn), .(pkg)))), 
+      assignInNamespace (x = fn,
+                         value = eval (bquote (function (...) texterrormsg (.(fn), .(pkg)))),
                          ns = "hyperSpec")
     for (fn in as.character (hynsplot))
-      assignInNamespace (x = fn, 
-                         value = eval (bquote (function (...) ploterrormsg (.(fn), .(pkg)))), 
+      assignInNamespace (x = fn,
+                         value = eval (bquote (function (...) ploterrormsg (.(fn), .(pkg)))),
                          ns = "hyperSpec")
     for (fn in as.character (hynsgrid))
-      assignInNamespace (x = fn, 
-                         value = eval (bquote (function (...) griderrormsg (.(fn), .(pkg)))), 
+      assignInNamespace (x = fn,
+                         value = eval (bquote (function (...) griderrormsg (.(fn), .(pkg)))),
                          ns = "hyperSpec")
 
     fnames <- nice.paste (texterrors, ploterrors, griderrors, hynstext, hynsplot, hynsgrid, names (special))
     if (v && length (fnames) > 0L) cat (fnames, "replaced.")
-    
+
     for (fn in as.character (donothing))
       dummies <- c (dummies, bquote (.(fn) <- function (...) invisible (NULL)))
-    
+
     fnames <- nice.paste (donothing)
     if (v && length (fnames) > 0L) cat (fnames, "missing.")
-    
+
     if (v) cat ("\n")
   }
-  
+
   invisible (dummies)
 }
 
 plotvoronoi <- function (...) print (hyperSpec:::plotvoronoi (...))
 
-# set standardized color palettes 
+# set standardized color palettes
 seq.palette <- colorRampPalette (c ("white", "dark green"), space = "Lab")
 
-YG.palette <- function (n = 20) rgb (colorRamp (c("#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#74C476", 
-                                             "#41AB5D", "#238B45", "#006D2C", "#00441B"), space = "Lab") 
+YG.palette <- function (n = 20) rgb (colorRamp (c("#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#74C476",
+                                             "#41AB5D", "#238B45", "#006D2C", "#00441B"), space = "Lab")
                                 # was: brewer.pal (9, "Greens")
                                 (seq (1/3, 1, length.out = n)^2), maxColorValue = 255)
 
-										  
-div.palette <- colorRampPalette (c("#00008B", "#351C96", "#5235A2", "#6A4CAE", "#8164BA", "#967CC5", 
-                                   "#AC95D1", "#C1AFDC", "#D5C9E8", "#E0E3E3", "#F8F8B0", "#F7E6C2", 
+
+div.palette <- colorRampPalette (c("#00008B", "#351C96", "#5235A2", "#6A4CAE", "#8164BA", "#967CC5",
+                                   "#AC95D1", "#C1AFDC", "#D5C9E8", "#E0E3E3", "#F8F8B0", "#F7E6C2",
 											  "#EFCFC6", "#E6B7AB", "#DCA091", "#D08977", "#C4725E", "#B75B46",
 											  "#A9432F", "#9A2919", "#8B0000"), space = "Lab")
 
@@ -141,16 +141,16 @@ pkgSuggests <- function (...)
 
 pkg.exists <- function (pkg = stop ("package name needed"), lib.loc = NULL){
   dir <- sapply (pkg, function (p) system.file (package = p, lib.loc = lib.loc))
-  nzchar (dir) > 0L 
+  nzchar (dir) > 0L
 }
-  
+
 is.basepkg <- function (pkg){
   pkg.exists (pkg) && grepl ("^base$", packageDescription (pkg, fields = "Priority"))
 }
 
 pkg.or.base <- function (pkg){
   pkg [sapply (pkg, is.basepkg)] <- "base"
-  
+
   pkg
 }
 
@@ -168,12 +168,12 @@ make.cite.keys <- function (pkg, entries){
 
   if (! pkg.exists (pkg))
     return (pkg)
-  
+
   if (missing (entries))
     entries <- citation.or.file (pkg)
-  
+
   keys <- sapply (unclass (entries), attr, "key")
-  
+
   noname <- which (sapply (keys, is.null))
 
   if (length (keys) == 1L && noname == 1L) {
@@ -184,15 +184,15 @@ make.cite.keys <- function (pkg, entries){
   }
 
   keys <- make.unique (unlist (keys))
-  
+
   keys
 }
-  
+
 citation.with.key <- function (pkg = "base"){
   pkg <- pkg.or.base (pkg)
 
   tmp <- citation.or.file (pkg)
-  
+
   keys <- make.cite.keys (pkg, tmp)
 
   for (entry in seq_along (tmp))
@@ -210,10 +210,10 @@ make.bib <- function (..., file = NULL) {
 
   if (length (pkg) == 0L) {
     pkg <- loadedNamespaces()
- 
+
     pkg <- unique (pkg.or.base (pkg))
   }
-  
+
   l <- lapply (pkg, citation.with.key)
   l <- do.call ("c", l [! sapply (l, is.null)])
 
@@ -222,7 +222,7 @@ make.bib <- function (..., file = NULL) {
       cat (NULL, file = file)           # touches file
     else
       cat (toBibtex (l), file = file, sep = "\n")
-  
+
   invisible (l)
 }
 
@@ -231,11 +231,11 @@ make.bib <- function (..., file = NULL) {
 ###################################################
 ### code chunk number 2: mailme
 ###################################################
-cat ("\\newcommand{\\mailme}{\\href{mailto:", 
-     packageDescription ("hyperSpec")$Maintainer, 
-	  "}{\\texttt{", 
+cat ("\\newcommand{\\mailme}{\\href{mailto:",
+     packageDescription ("hyperSpec")$Maintainer,
+	  "}{\\texttt{",
 	  packageDescription ("hyperSpec")$Maintainer,
-	  "}}}\n", 
+	  "}}}\n",
 	  sep = "")
 
 
@@ -306,7 +306,7 @@ library ("hyperSpec")
 ### code chunk number 11: checkCompleteOptionTable
 ###################################################
 stopifnot (all (names (hy.getOptions(TRUE)) %in% c ("debuglevel", "gc", "file.remove.emptyspc", 
-                  "file.keep.name", "tolerance")))
+                  "file.keep.name", "tolerance", "wl.tolerance")))
 
 
 ###################################################
@@ -332,13 +332,13 @@ colnames (chondro)
 
 
 ###################################################
-### code chunk number 15: introduction.Rnw:312-313 (eval = FALSE)
+### code chunk number 15: introduction.Rnw:313-314 (eval = FALSE)
 ###################################################
 ## spc <- new ("hyperSpec", spc = spectra.matrix, wavelength = wavelength.vector, data = extra.data)
 
 
 ###################################################
-### code chunk number 16: introduction.Rnw:334-336
+### code chunk number 16: introduction.Rnw:335-337
 ###################################################
 pcov <- pooled.cov (chondro, chondro$clusters)
 rnd <- rmmvnorm (rep (10, 3), mean = pcov$mean, sigma = pcov$COV)
@@ -499,28 +499,28 @@ wl2i (flu, c (min ~ 406.5, max - 2i ~ max))
 
 
 ###################################################
-### code chunk number 38: introduction.Rnw:560-561
+### code chunk number 38: introduction.Rnw:561-562
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, 2800 ~ 3200])
 
 
 ###################################################
-### code chunk number 39: introduction.Rnw:566-567
+### code chunk number 39: introduction.Rnw:567-568
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, 2800 : 3200, wl.index = TRUE])
 
 
 ###################################################
-### code chunk number 40: introduction.Rnw:576-577
+### code chunk number 40: introduction.Rnw:577-578
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, -(500 : 1000), wl.index = TRUE])
 
 
 ###################################################
-### code chunk number 41: introduction.Rnw:585-586
+### code chunk number 41: introduction.Rnw:586-587
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, c (min ~ 1750, 2800 ~ max)])
@@ -539,13 +539,13 @@ rm (laser)
 
 
 ###################################################
-### code chunk number 43: introduction.Rnw:616-617
+### code chunk number 43: introduction.Rnw:617-618
 ###################################################
 wl (laser, "f / THz") <- frequencies
 
 
 ###################################################
-### code chunk number 44: introduction.Rnw:620-621
+### code chunk number 44: introduction.Rnw:621-622
 ###################################################
 wl (laser) <- list (wl = frequencies, label = "f / THz")
 
@@ -560,7 +560,7 @@ wl (barb)
 
 
 ###################################################
-### code chunk number 46: introduction.Rnw:638-642
+### code chunk number 46: introduction.Rnw:639-643
 ###################################################
 flu <- flu [,,400 ~ 407] # make a small and handy version of the flu data set
 as.data.frame (flu)
@@ -569,51 +569,51 @@ as.data.frame (flu) $ spc
 
 
 ###################################################
-### code chunk number 47: introduction.Rnw:648-650
+### code chunk number 47: introduction.Rnw:649-651
 ###################################################
 flu$.
 flu$..
 
 
 ###################################################
-### code chunk number 48: introduction.Rnw:653-654
+### code chunk number 48: introduction.Rnw:654-655
 ###################################################
 flu [[, c ("c", "spc")]]
 
 
 ###################################################
-### code chunk number 49: introduction.Rnw:663-664
+### code chunk number 49: introduction.Rnw:664-665
 ###################################################
 as.t.df (apply (flu, 2, mean_pm_sd))
 
 
 ###################################################
-### code chunk number 50: introduction.Rnw:669-670
+### code chunk number 50: introduction.Rnw:670-671
 ###################################################
 head (as.long.df (flu), 20)
 
 
 ###################################################
-### code chunk number 51: introduction.Rnw:677-679
+### code chunk number 51: introduction.Rnw:678-680
 ###################################################
 flu [[]]
 class (flu [[]])
 
 
 ###################################################
-### code chunk number 52: introduction.Rnw:682-683
+### code chunk number 52: introduction.Rnw:683-684
 ###################################################
 flu [[1:3,, 406 ~ 407]]
 
 
 ###################################################
-### code chunk number 53: introduction.Rnw:686-687
+### code chunk number 53: introduction.Rnw:687-688
 ###################################################
 flu [[1:3, c ("file", "spc"), 406 ~ 407]]
 
 
 ###################################################
-### code chunk number 54: introduction.Rnw:690-691
+### code chunk number 54: introduction.Rnw:691-692
 ###################################################
 rm (flu)
 
@@ -657,7 +657,7 @@ nrow (chondro.merged)
 
 
 ###################################################
-### code chunk number 60: introduction.Rnw:767-769
+### code chunk number 60: introduction.Rnw:768-770
 ###################################################
 chondro.merged <- merge (chondro.low, chondro.high, all = TRUE)
 nrow (chondro.merged)
@@ -673,7 +673,7 @@ print (levelplot (spc ~ x * y | as.factor (paste (.wavelength, "  1/cm")),
 
 
 ###################################################
-### code chunk number 62: introduction.Rnw:782-786
+### code chunk number 62: introduction.Rnw:783-787
 ###################################################
 png ("introduction-fig--merged.png", width = 500, height = 425, res=100)
 plot (chondro.merged [1 : 100], "mat")
@@ -682,7 +682,7 @@ rm (chondro)
 
 
 ###################################################
-### code chunk number 63: introduction.Rnw:795-797
+### code chunk number 63: introduction.Rnw:796-798
 ###################################################
 merged <- merge (chondro [1:7,, 610 ~ 620], chondro [5:10,, 615 ~ 625], all = TRUE)
 merged$.
@@ -699,7 +699,7 @@ approxfun <- function (y, wl, new.wl){
 
 
 ###################################################
-### code chunk number 65: introduction.Rnw:820-824
+### code chunk number 65: introduction.Rnw:821-825
 ###################################################
 merged <- apply (merged, 1, approxfun, 
                  wl = wl (merged), new.wl = unique (wl (merged)), 
@@ -715,7 +715,7 @@ flu [[,, c (min ~ min + 2i, max - 2i ~ max)]]
 
 
 ###################################################
-### code chunk number 67: introduction.Rnw:879-881
+### code chunk number 67: introduction.Rnw:880-882
 ###################################################
 tmp <- chondro
 wl (tmp) <- wl (tmp) - 10
@@ -738,7 +738,7 @@ interpolate <- function (spc, shift, wl){
 
 
 ###################################################
-### code chunk number 70: introduction.Rnw:904-905
+### code chunk number 70: introduction.Rnw:905-906
 ###################################################
 tmp <- apply (chondro, 1, interpolate, shift = -10, wl = wl (chondro))
 
@@ -767,7 +767,7 @@ plot (tmp, lines.args = list (type = "b", pch = 19, cex = 0.5), add = TRUE, col 
 
 
 ###################################################
-### code chunk number 73: introduction.Rnw:929-934
+### code chunk number 73: introduction.Rnw:930-935
 ###################################################
 shifts <- rnorm (nrow (chondro))
 tmp <- chondro [[]]
@@ -777,7 +777,7 @@ chondro [[]] <- tmp
 
 
 ###################################################
-### code chunk number 74: introduction.Rnw:956-972
+### code chunk number 74: introduction.Rnw:957-973
 ###################################################
 
 find.max <- function (y, x){
@@ -798,14 +798,14 @@ shift1 <- refpos - bandpos
 
 
 ###################################################
-### code chunk number 75: introduction.Rnw:977-979
+### code chunk number 75: introduction.Rnw:978-980
 ###################################################
 chondro <- chondro - spc.fit.poly.below (chondro [,,min+3i ~ max - 3i], chondro)
 chondro <- sweep (chondro, 1, rowMeans (chondro [[]], na.rm = TRUE), "/")
 
 
 ###################################################
-### code chunk number 76: introduction.Rnw:983-994
+### code chunk number 76: introduction.Rnw:984-995
 ###################################################
 targetfn <- function (shift, wl, spc, targetspc){
   error <- spline (wl + shift, spc, xout = wl)$y - targetspc
@@ -832,7 +832,7 @@ plot (histogram (~ shift | method, data = df, breaks = do.breaks(range (df$shift
 
 
 ###################################################
-### code chunk number 78: introduction.Rnw:1023-1027 (eval = FALSE)
+### code chunk number 78: introduction.Rnw:1024-1028 (eval = FALSE)
 ###################################################
 ## ir.spc <- chondro / 1500 ## fake IR data
 ## high.int <- apply (ir.spc > 1, 1, any) # any point above 1 is bad
@@ -841,7 +841,7 @@ plot (histogram (~ shift | method, data = df, breaks = do.breaks(range (df$shift
 
 
 ###################################################
-### code chunk number 79: introduction.Rnw:1031-1040
+### code chunk number 79: introduction.Rnw:1032-1041
 ###################################################
 mean_sd_filter <- function (x, n  = 5) {
   x <- x - mean (x)
@@ -865,7 +865,7 @@ points (wl (chondro) [i [,2]], chondro[[!OK]], pch = 19, col = "red", cex = 0.5)
 
 
 ###################################################
-### code chunk number 81: introduction.Rnw:1059-1062
+### code chunk number 81: introduction.Rnw:1060-1063
 ###################################################
 spc <- chondro [1 : 3,, min ~ min + 15i]
 spc [[cbind (1:3, sample (nwl (spc), 3)), wl.index = TRUE]] <- 0
@@ -873,14 +873,14 @@ spc [[]]
 
 
 ###################################################
-### code chunk number 82: introduction.Rnw:1066-1068
+### code chunk number 82: introduction.Rnw:1067-1069
 ###################################################
 spc [[spc < 1e-4]] <- NA
 spc [[]]
 
 
 ###################################################
-### code chunk number 83: introduction.Rnw:1077-1079
+### code chunk number 83: introduction.Rnw:1078-1080
 ###################################################
 spc.corrected <- spc.NA.linapprox (spc)
 spc.corrected [[]]
@@ -948,7 +948,7 @@ corrected [[]] <- getCorrected (bl)
 
 
 ###################################################
-### code chunk number 91: introduction.Rnw:1198-1202
+### code chunk number 91: introduction.Rnw:1199-1203
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 baseline <- corrected 
@@ -958,14 +958,14 @@ plot (baseline, add = TRUE, col = "red")
 
 
 ###################################################
-### code chunk number 92: introduction.Rnw:1206-1207
+### code chunk number 92: introduction.Rnw:1207-1208
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (corrected, plot.args = list (ylim = range (hyperSpec::chondro [1], 0)))
 
 
 ###################################################
-### code chunk number 93: introduction.Rnw:1215-1216
+### code chunk number 93: introduction.Rnw:1216-1217
 ###################################################
 rm (bl, chondro)
 
@@ -984,7 +984,25 @@ chondro <- sweep (chondro, 1, factors, "*")
 
 
 ###################################################
-### code chunk number 96: centre-flu
+### code chunk number 96: norm-rowmeans
+###################################################
+factors <- 1 / rowMeans (chondro [, , 1600 ~ 1700])
+
+
+###################################################
+### code chunk number 97: norm
+###################################################
+chondro <- chondro * factors
+
+
+###################################################
+### code chunk number 98: areanorm-shortcut
+###################################################
+chondro <- chondro / rowMeans (chondro [, , 1600 ~ 1700])
+
+
+###################################################
+### code chunk number 99: centre-flu
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 flu.centered <- scale (flu, scale = FALSE)
@@ -992,7 +1010,7 @@ plot (flu.centered)
 
 
 ###################################################
-### code chunk number 97: perc
+### code chunk number 100: perc
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 chondro <- scale (chondro, center = quantile (chondro, 0.05), scale = FALSE)
@@ -1000,7 +1018,7 @@ plot (chondro, "spcprctl5")
 
 
 ###################################################
-### code chunk number 98: msc (eval = FALSE)
+### code chunk number 101: msc (eval = FALSE)
 ###################################################
 ## require (pls)
 ## chondro.msc <- chondro
@@ -1008,25 +1026,25 @@ plot (chondro, "spcprctl5")
 
 
 ###################################################
-### code chunk number 99: label (eval = FALSE)
+### code chunk number 102: label (eval = FALSE)
 ###################################################
 ## labels (absorbance.spectra)$spc <- "A"
 
 
 ###################################################
-### code chunk number 100: pca
+### code chunk number 103: pca
 ###################################################
 pca <- prcomp (~ spc, data = chondro$., center = FALSE)
 
 
 ###################################################
-### code chunk number 101: pca-auto
+### code chunk number 104: pca-auto
 ###################################################
 pca <- prcomp (~ spc, data = chondro, center = FALSE)
 
 
 ###################################################
-### code chunk number 102: decomp
+### code chunk number 105: decomp
 ###################################################
 scores <- decomposition (chondro, pca$x, label.wavelength = "PC", 
                          label.spc = "score / a.u.")
@@ -1034,7 +1052,7 @@ scores
 
 
 ###################################################
-### code chunk number 103: loadings
+### code chunk number 106: loadings
 ###################################################
 loadings <- decomposition (chondro, t(pca$rotation), scores = FALSE, 
                            label.spc = "loading I / a.u.")
@@ -1042,7 +1060,7 @@ loadings
 
 
 ###################################################
-### code chunk number 104: retain.col
+### code chunk number 107: retain.col
 ###################################################
 loadings <- decomposition (chondro, t(pca$rotation), scores = FALSE, 
                            retain.columns = TRUE, label.spc = "loading I / a.u.")
@@ -1050,7 +1068,7 @@ loadings[1]$..
 
 
 ###################################################
-### code chunk number 105: retain
+### code chunk number 108: retain
 ###################################################
 chondro$measurement <- 1
 loadings <- decomposition (chondro, t(pca$rotation), scores = FALSE, 
@@ -1059,34 +1077,34 @@ loadings[1]$..
 
 
 ###################################################
-### code chunk number 106: pca-load
+### code chunk number 109: pca-load
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (loadings [1:3], stacked = TRUE)
 
 
 ###################################################
-### code chunk number 107: pca-score
+### code chunk number 110: pca-score
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (scores [,,3], col.regions = div.palette (20))
 
 
 ###################################################
-### code chunk number 108: pca-smooth
+### code chunk number 111: pca-smooth
 ###################################################
 smoothed <- scores [,, 1:10] %*% loadings [1:10]
 
 
 ###################################################
-### code chunk number 109: ggplot (eval = FALSE)
+### code chunk number 112: ggplot (eval = FALSE)
 ###################################################
 ## require (ggplot2)
 ## ggplot (as.long.df (chondro [1]), aes (x = .wavelength, y = spc)) + geom_line ()                           
 
 
 ###################################################
-### code chunk number 110: ggplot-do
+### code chunk number 113: ggplot-do
 ###################################################
 if (require (ggplot2)){
 require (ggplot2)
@@ -1100,46 +1118,46 @@ ggplot (as.long.df (chondro [1]), aes (x = .wavelength, y = spc)) + geom_line ()
 
 
 ###################################################
-### code chunk number 111: hca
+### code chunk number 114: hca
 ###################################################
 dist <- pearson.dist (chondro [[]])
 
 
 ###################################################
-### code chunk number 112: hca-asmatrix
+### code chunk number 115: hca-asmatrix
 ###################################################
 dist <- pearson.dist (chondro) 
 dendrogram <- hclust (dist, method = "ward")
 
 
 ###################################################
-### code chunk number 113: dend
+### code chunk number 116: dend
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (dendrogram)
 
 
 ###################################################
-### code chunk number 114: dendcut
+### code chunk number 117: dendcut
 ###################################################
 chondro$clusters <- as.factor (cutree (dendrogram, k = 3))
 
 
 ###################################################
-### code chunk number 115: clustname
+### code chunk number 118: clustname
 ###################################################
 levels (chondro$clusters) <- c ("matrix", "lacuna", "cell")
 
 
 ###################################################
-### code chunk number 116: clustmap
+### code chunk number 119: clustmap
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (chondro, clusters ~ x * y, col.regions = cluster.cols)
 
 
 ###################################################
-### code chunk number 117: clustmean
+### code chunk number 120: clustmean
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 means <- aggregate (chondro, by = chondro$clusters, mean_pm_sd)
@@ -1147,14 +1165,14 @@ plot (means, col = cluster.cols, stacked = ".aggregate", fill = ".aggregate")
 
 
 ###################################################
-### code chunk number 118: split
+### code chunk number 121: split
 ###################################################
 clusters <- split (chondro, chondro$clusters)
 clusters
 
 
 ###################################################
-### code chunk number 119: speed1
+### code chunk number 122: speed1
 ###################################################
 tmp <- chondro [1 : 50]
 shifts <- rnorm (nrow (tmp))
@@ -1165,7 +1183,7 @@ system.time ({
 
 
 ###################################################
-### code chunk number 120: speed3
+### code chunk number 123: speed3
 ###################################################
 tmp <- chondro [1 : 50]
 system.time ({
@@ -1178,7 +1196,7 @@ system.time ({
 
 
 ###################################################
-### code chunk number 121: tab-fn
+### code chunk number 124: tab-fn
 ###################################################
 make.fn.table <- function (){
 load ("functions.RData")
@@ -1204,7 +1222,7 @@ make.fn.table()
 
 
 ###################################################
-### code chunk number 122: introduction.Rnw:1635-1640
+### code chunk number 125: introduction.Rnw:1652-1657
 ###################################################
 make.bib (c ("baseline", "compiler", "Rcpp", "inline"), file = "introduction-pkg.bib")
 print (as.matrix(Sys.info()))

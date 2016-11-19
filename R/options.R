@@ -1,8 +1,11 @@
+
+
 .options <- list (debuglevel = 0L,              
                   gc = FALSE,                   
                   file.remove.emptyspc = TRUE, 
                   file.keep.name = TRUE,
-                  tolerance = sqrt (.Machine$double.eps)
+                  tolerance = sqrt (.Machine$double.eps),
+									wl.tolerance = sqrt (.Machine$double.eps)
                   )
 
 
@@ -11,13 +14,14 @@
 ##' 
 ##' Currently, the following options are defined:
 ##' \tabular{llll}{
-##' \bold{Name} \tab \bold{Default Value (range)} \tab \bold{Description} \tab \bold{Used by}\cr
-##' debuglevel \ tab 0 (1L 2L) \tab amount of debugging information produced \tab \code{\link{spc.identify}} \code{\link{map.identify}}\cr
-##' \tab \tab  various file import functions\cr
-##' gc \tab FALSE \tab triggers frequent calling of gc () \tab \code{\link{read.ENVI}}, \code{new ("hyperSpec")}\cr
-##' file.remove.emptyspc \tab TRUE \tab remove empty spectra directly on file import \tab  various file import functions\cr
-##' file.keep.name \tab TRUE \tab always create filename column \tab  various file import functions\cr
-##' tolerance \tab \code{sqrt (.Machine$double.eps)} \tab tolerance for numerical comparisons \tab  \code{\link{normalize01}}, file import: \code{file.remove.emptyspc}\cr
+##' \bold{Name}          \tab \bold{Default Value (range)}      \tab \bold{Description}                               \tab \bold{Used by}\cr
+##' debuglevel           \tab 0 (1L 2L)                         \tab amount of debugging information produced         \tab \code{\link{spc.identify}} \code{\link{map.identify}}\cr
+##'                      \tab                                   \tab                                                  \tab various file import functions\cr
+##' gc                   \tab FALSE                             \tab triggers frequent calling of gc ()               \tab \code{\link{read.ENVI}}, \code{new ("hyperSpec")}\cr
+##' file.remove.emptyspc \tab TRUE                              \tab remove empty spectra directly on file import     \tab various file import functions\cr
+##' file.keep.name       \tab TRUE                              \tab always create filename column                    \tab various file import functions\cr
+##' tolerance            \tab \code{sqrt (.Machine$double.eps)} \tab tolerance for numerical comparisons              \tab \code{\link{normalize01}}, file import: \code{file.remove.emptyspc}\cr
+##' wl.tolerance         \tab \code{sqrt (.Machine$double.eps)} \tab tolerance for comparisons of the wavelength axis \tab \code{\link{all.equal}}, \code{\link{collapse}}, \code{\link{rbind}}\cr
 ##' }
 ##' 
 ##' \code{hy.setOptions} will discard any values that were given without a
@@ -65,6 +69,7 @@ hy.getOption <- function (name){
 
 ##' @rdname options
 ##' @export
+##' @importFrom utils modifyList
 hy.setOptions <- function (...){
   new <- list (...)
   names <- nzchar (names (new))
@@ -73,6 +78,9 @@ hy.setOptions <- function (...){
     warning ("options without name are discarded: ", which (! names))
   
   opts <- modifyList (.options, new [names])
+  
+  opts$tolerance <- .checkpos (opts$tolerance, "tolerance")
+  opts$wl.tolerance <- .checkpos (opts$wl.tolerance, "wl.tolerance")
   
   if (sys.parent() == 0) 
     env <- asNamespace ("hyperSpec")
@@ -84,3 +92,14 @@ hy.setOptions <- function (...){
   invisible (opts)
 }
 
+## check particular options that should exist and be finite and strictly positive
+.checkpos <- function (opt, name){
+	if (length (opt) != 1L || ! is.finite (opt) || opt < .Machine$double.eps){
+		warning (name, " must be a strictly positive finite number => set to .Machine$double.eps (", .Machine$double.eps, ").")
+		opt <- .Machine$double.eps
+	}
+
+	opt
+}
+
+## todo unit tests

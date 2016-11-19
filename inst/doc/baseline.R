@@ -10,7 +10,7 @@ options(SweaveHooks=list(fig=function() {
   trellis.pars <- trellis.par.get ("layout.heights")
   trellis.pars [grep ("padding", names (trellis.pars))] <- 0
   trellis.par.set(layout.heights = trellis.pars)
-  
+
   trellis.pars <- trellis.par.get ("layout.widths")
   trellis.pars [grep ("padding", names (trellis.pars))] <- 0
   trellis.par.set(layout.widths = trellis.pars)
@@ -38,13 +38,13 @@ setMethod ("levelplot", signature (x = "hyperSpec", data = "missing"),
 	}
 )
 
-setMethod ("levelplot", signature (x = "formula", data = "hyperSpec"), 
+setMethod ("levelplot", signature (x = "formula", data = "hyperSpec"),
    function (x, data, ...) print (hyperSpec:::.levelplot (x, data, ...))
 )
 
 plotc <- function (...){
-   call <- match.call () 
-   call [[1]] <- hyperSpec:::plotc 
+   call <- match.call ()
+   call [[1]] <- hyperSpec:::plotc
    print (eval (call))
 }
 
@@ -63,7 +63,7 @@ texterrormsg <- function (fn, pkg) {
 
 nice.paste <- function (...){
   fnames <- c (...)
-  
+
   if (length (fnames) == 2L)
     fnames <- paste (fnames, collapse = " and ")
   if (length (fnames) > 1L){
@@ -74,14 +74,14 @@ nice.paste <- function (...){
   fnames
 }
 
-check.req.pkg <- function (pkg = stop ("pkg needed"), 
+check.req.pkg <- function (pkg = stop ("pkg needed"),
                            texterrors = NULL, ploterrors = NULL, griderrors = NULL,
-                           hynstext = NULL, hynsplot = NULL, hynsgrid = NULL, 
+                           hynstext = NULL, hynsplot = NULL, hynsgrid = NULL,
                            donothing = NULL, special = NULL, v = TRUE){
   if (v) cat ("\\item[\\Rpackage{", pkg, "}:] ", sep = "")
-  
+
   dummies <- list ()
-  
+
   if (pkg.exists (pkg)){
     if (v) cat ("available\n")
   } else {
@@ -93,46 +93,46 @@ check.req.pkg <- function (pkg = stop ("pkg needed"),
       dummies <- c (dummies, bquote (.(fn) <- function (...) griderrormsg (.(fn), .(pkg))))
 
     for (fn in as.character (hynstext))
-      assignInNamespace (x = fn, 
-                         value = eval (bquote (function (...) texterrormsg (.(fn), .(pkg)))), 
+      assignInNamespace (x = fn,
+                         value = eval (bquote (function (...) texterrormsg (.(fn), .(pkg)))),
                          ns = "hyperSpec")
     for (fn in as.character (hynsplot))
-      assignInNamespace (x = fn, 
-                         value = eval (bquote (function (...) ploterrormsg (.(fn), .(pkg)))), 
+      assignInNamespace (x = fn,
+                         value = eval (bquote (function (...) ploterrormsg (.(fn), .(pkg)))),
                          ns = "hyperSpec")
     for (fn in as.character (hynsgrid))
-      assignInNamespace (x = fn, 
-                         value = eval (bquote (function (...) griderrormsg (.(fn), .(pkg)))), 
+      assignInNamespace (x = fn,
+                         value = eval (bquote (function (...) griderrormsg (.(fn), .(pkg)))),
                          ns = "hyperSpec")
 
     fnames <- nice.paste (texterrors, ploterrors, griderrors, hynstext, hynsplot, hynsgrid, names (special))
     if (v && length (fnames) > 0L) cat (fnames, "replaced.")
-    
+
     for (fn in as.character (donothing))
       dummies <- c (dummies, bquote (.(fn) <- function (...) invisible (NULL)))
-    
+
     fnames <- nice.paste (donothing)
     if (v && length (fnames) > 0L) cat (fnames, "missing.")
-    
+
     if (v) cat ("\n")
   }
-  
+
   invisible (dummies)
 }
 
 plotvoronoi <- function (...) print (hyperSpec:::plotvoronoi (...))
 
-# set standardized color palettes 
+# set standardized color palettes
 seq.palette <- colorRampPalette (c ("white", "dark green"), space = "Lab")
 
-YG.palette <- function (n = 20) rgb (colorRamp (c("#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#74C476", 
-                                             "#41AB5D", "#238B45", "#006D2C", "#00441B"), space = "Lab") 
+YG.palette <- function (n = 20) rgb (colorRamp (c("#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#74C476",
+                                             "#41AB5D", "#238B45", "#006D2C", "#00441B"), space = "Lab")
                                 # was: brewer.pal (9, "Greens")
                                 (seq (1/3, 1, length.out = n)^2), maxColorValue = 255)
 
-										  
-div.palette <- colorRampPalette (c("#00008B", "#351C96", "#5235A2", "#6A4CAE", "#8164BA", "#967CC5", 
-                                   "#AC95D1", "#C1AFDC", "#D5C9E8", "#E0E3E3", "#F8F8B0", "#F7E6C2", 
+
+div.palette <- colorRampPalette (c("#00008B", "#351C96", "#5235A2", "#6A4CAE", "#8164BA", "#967CC5",
+                                   "#AC95D1", "#C1AFDC", "#D5C9E8", "#E0E3E3", "#F8F8B0", "#F7E6C2",
 											  "#EFCFC6", "#E6B7AB", "#DCA091", "#D08977", "#C4725E", "#B75B46",
 											  "#A9432F", "#9A2919", "#8B0000"), space = "Lab")
 
@@ -141,16 +141,16 @@ pkgSuggests <- function (...)
 
 pkg.exists <- function (pkg = stop ("package name needed"), lib.loc = NULL){
   dir <- sapply (pkg, function (p) system.file (package = p, lib.loc = lib.loc))
-  nzchar (dir) > 0L 
+  nzchar (dir) > 0L
 }
-  
+
 is.basepkg <- function (pkg){
   pkg.exists (pkg) && grepl ("^base$", packageDescription (pkg, fields = "Priority"))
 }
 
 pkg.or.base <- function (pkg){
   pkg [sapply (pkg, is.basepkg)] <- "base"
-  
+
   pkg
 }
 
@@ -168,12 +168,12 @@ make.cite.keys <- function (pkg, entries){
 
   if (! pkg.exists (pkg))
     return (pkg)
-  
+
   if (missing (entries))
     entries <- citation.or.file (pkg)
-  
+
   keys <- sapply (unclass (entries), attr, "key")
-  
+
   noname <- which (sapply (keys, is.null))
 
   if (length (keys) == 1L && noname == 1L) {
@@ -184,15 +184,15 @@ make.cite.keys <- function (pkg, entries){
   }
 
   keys <- make.unique (unlist (keys))
-  
+
   keys
 }
-  
+
 citation.with.key <- function (pkg = "base"){
   pkg <- pkg.or.base (pkg)
 
   tmp <- citation.or.file (pkg)
-  
+
   keys <- make.cite.keys (pkg, tmp)
 
   for (entry in seq_along (tmp))
@@ -210,10 +210,10 @@ make.bib <- function (..., file = NULL) {
 
   if (length (pkg) == 0L) {
     pkg <- loadedNamespaces()
- 
+
     pkg <- unique (pkg.or.base (pkg))
   }
-  
+
   l <- lapply (pkg, citation.with.key)
   l <- do.call ("c", l [! sapply (l, is.null)])
 
@@ -222,7 +222,7 @@ make.bib <- function (..., file = NULL) {
       cat (NULL, file = file)           # touches file
     else
       cat (toBibtex (l), file = file, sep = "\n")
-  
+
   invisible (l)
 }
 
@@ -231,11 +231,11 @@ make.bib <- function (..., file = NULL) {
 ###################################################
 ### code chunk number 2: mailme
 ###################################################
-cat ("\\newcommand{\\mailme}{\\href{mailto:", 
-     packageDescription ("hyperSpec")$Maintainer, 
-	  "}{\\texttt{", 
+cat ("\\newcommand{\\mailme}{\\href{mailto:",
+     packageDescription ("hyperSpec")$Maintainer,
+	  "}{\\texttt{",
 	  packageDescription ("hyperSpec")$Maintainer,
-	  "}}}\n", 
+	  "}}}\n",
 	  sep = "")
 
 

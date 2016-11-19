@@ -1,22 +1,28 @@
 .all.equal <- function (target, current, ..., check.attributes = FALSE, check.names = FALSE, 
-                        check.column.order = FALSE, check.label = FALSE){
+                        check.column.order = FALSE, check.label = FALSE,
+												tolerance = hy.getOption ("tolerance"), wl.tolerance = hy.getOption ("wl.tolerance")){
   validObject (target)
   validObject (current)
+  tolerance    <- .checkpos (   tolerance,    "tolerance")
+  wl.tolerance <- .checkpos (wl.tolerance, "wl.tolerance")
   
   result <- character (0)
   
   cmp <- all.equal (target = target@wavelength, current = current@wavelength, ...,
+  									tolerance = wl.tolerance, 
                     check.attributes = check.attributes, check.names = check.names)
   if (! isTRUE (cmp)) result <- c("@wavelength:", cmp)
   
   if (check.column.order)
     cmp <- all.equal (target = target@data, current = current@data, ...,
+    									tolerance = tolerance,
                       check.attributes = check.attributes)
   else
     cmp <- all.equal (target  = target@data  [order (colnames ( target@data))],
                       current = current@data [order (colnames (current@data))],
                       ...,
-                      check.attributes = check.attributes, check.names = check.names)
+    									tolerance = tolerance,
+    									check.attributes = check.attributes, check.names = check.names)
   if (! isTRUE (cmp)) result <- c (result, "@data:", cmp)
   
   if (check.label){
@@ -69,6 +75,7 @@
 ##'   labels differ only in the order of their entries, they are conidered
 ##'   equal.
 ##' @param check.attributes,check.names see \code{\link[base]{all.equal}}
+##' @param tolerance,wl.tolerance tolerances for checking wavelengths and data, respectively
 ##' @return \code{all.equal} returns either \code{TRUE}, or a character vector describing the
 ##' differences. In conditions, the result must therefore be tested with
 ##' \code{\link[base]{isTRUE}}.

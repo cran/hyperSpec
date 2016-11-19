@@ -29,8 +29,9 @@
 ##' 
 ##' \dontrun{vignette ("baseline", package = "hyperSpec")}
 ##' 
-##' baselines <- spc.fit.poly(chondro[,, c (625 ~ 640, 1785 ~ 1800)], chondro)
-##' plot(chondro - baselines, "spcprctl5")
+##' spc <- chondro [1 : 10]
+##' baselines <- spc.fit.poly(spc [,, c (625 ~ 640, 1785 ~ 1800)], spc)
+##' plot(spc - baselines)
 ##' 
 spc.fit.poly <- function (fit.to, apply.to = NULL, poly.order = 1){
   chk.hy (fit.to)
@@ -73,8 +74,8 @@ spc.fit.poly <- function (fit.to, apply.to = NULL, poly.order = 1){
 ##' @export
 ##' @examples
 ##' 
-##' baselines <- spc.fit.poly.below(chondro)
-##' plot(chondro - baselines, "spcprctl5")
+##' baselines <- spc.fit.poly.below (spc)
+##' plot (spc - baselines)
 ##' 
 spc.fit.poly.below <- function (fit.to, apply.to = fit.to, poly.order = 1,
                                 npts.min = NULL, noise = 0){

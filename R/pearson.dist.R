@@ -16,8 +16,40 @@
 ##' @export
 ##' @examples
 ##' 
-##' dist <- pearson.dist (flu[[]])
-##' dist <- pearson.dist (flu)
+##' pearson.dist (flu [[]])
+##' pearson.dist (flu)
 pearson.dist <- function (x) {
-  as.dist (0.5 - cor (t (as.matrix (x))) / 2)
+	
+  x <- as.matrix (x)
+  
+  ## center & scale *row*s
+  ## (n - 1) factor cancels out between variance scaling and calculating correlation
+  x <- x - rowMeans (x)
+  x <- x / sqrt (rowSums (x^2)) 
+  
+  if (hy.getOption("gc")) gc ()
+  x <-  tcrossprod (x) 
+  
+  ## keep only lower triagonal
+  if (hy.getOption("gc")) gc ()
+  x <- as.dist (x)
+
+  if (hy.getOption("gc")) gc ()
+  0.5 - x / 2
+}
+
+.test (pearson.dist) <- function (){
+	checkEqualsNumeric (
+		pearson.dist (flu),
+		as.dist (0.5 - cor (t (as.matrix (flu))) / 2))
+}
+
+## benchmark
+function (){
+  m <- sample (chondro, 10000) [[]]
+  microbenchmark (
+    cor = as.dist (0.5 - cor (t (as.matrix (m))) / 2),
+    tcross = pearson.dist (m),
+    times = 10L
+  )
 }

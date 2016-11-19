@@ -2,8 +2,8 @@ Package: hyperSpec
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.98-20150304
-Date: 2015-03-04
+Version: 0.98-20161118
+Date: 2016-11-18
 Author: Claudia Beleites
 Maintainer: Claudia Beleites <chemometrie@beleites.de>
 Description: Comfortable ways to work with hyperspectral data sets.
@@ -16,38 +16,41 @@ Description: Comfortable ways to work with hyperspectral data sets.
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
-Depends: R (>= 2.15), methods, utils, lattice, grid, ggplot2 (>=
-        0.9.2), mvtnorm
+Depends: R (>= 2.15), lattice, grid, ggplot2 (>= 2.2.0)
 Suggests: R.matlab, tripack, deldir, rgl, plotrix, testthat, sp,
-        baseline, compiler, inline, Rcpp, MASS, fastcluster, pls
-Imports: latticeExtra, svUnit
+        baseline, compiler, inline, Rcpp, MASS, fastcluster, pls,
+        mvtnorm, digest
+Imports: methods, utils, latticeExtra, svUnit
 URL: http://hyperSpec.r-forge.r-project.org/
-Collate: 'paste.row.R' 'paracetamol.R' 'laser.R' 'flu.R' 'chondro.R'
-        'barbiturates.R' 'hyperspec-package.R' 'validate.R'
-        'hyperspec-class.R' 'Arith.R' 'Compare.R' 'DollarNames.R'
-        'Math.R' 'Summary.R' 'aggregate.R' 'all.equal.R' 'apply.R'
-        'as.data.frame.R' 'bind.R' 'call.list.R' 'chk.hy.R'
-        'colMeans.R' 'collapse.R' 'cov.R' 'decomposition.R' 'dim.R'
-        'dimnames.R' 'empty.R' 'wl2i.R' 'extract.R' 'factor2num.R'
-        'fileio.optional.R' 'getbynames.R' 'initialize.R' 'labels.R'
-        'plotmap.R' 'levelplot.R' 'makeraster.R' 'map.identify.R'
-        'map.sel.poly.R' 'mark.dendrogram.R' 'matlab.palette.R'
+Collate: 'validate.R' 'hyperspec-class.R' 'barbiturates.R'
+        'paracetamol.R' 'laser.R' 'chondro.R' 'flu.R'
+        'hyperspec-package.R' 'paste.row.R' 'Arith.R' 'Compare.R'
+        'DollarNames.R' 'Math.R' 'Summary.R' 'aggregate.R'
+        'all.equal.R' 'apply.R' 'as.data.frame.R' 'bind.R'
+        'call.list.R' 'chk.hy.R' 'colMeans.R' 'collapse.R' 'cov.R'
+        'decomposition.R' 'dim.R' 'dimnames.R' 'empty.R' 'wl2i.R'
+        'extract.R' 'factor2num.R' 'fileio.optional.R' 'getbynames.R'
+        'initialize.R' 'labels.R' 'plotmap.R' 'levelplot.R'
+        'makeraster.R' 'map.identify.R' 'map.sel.poly.R'
+        'mark.dendrogram.R' 'mark.peak.R' 'matlab.palette.R'
         'mean_sd.R' 'merge.R' 'mvtnorm.R' 'normalize01.R' 'options.R'
         'orderwl.R' 'pearson.dist.R' 'plot.R' 'plotc.R' 'plotmat.R'
         'plotspc.R' 'plotvoronoi.R' 'qplot.R' 'qplotmixmap.R'
         'quantile.R' 'rbind.fill.R' 'read.ENVI.Nicolet.R' 'read.ENVI.R'
-        'read.cytomat.R' 'read.ini.R' 'read.jdx.R'
-        'read.jdx.Shimadzu.R' 'read.spc.Kaiser.R' 'read.spc.R'
-        'read.txt.Horiba.R' 'read.txt.Shimadzu.R' 'read.txt.long.R'
-        'read.txt.wide.R' 'replace.R' 'sample.R' 'scale.R'
-        'scan.txt.Renishaw.R' 'scan.txt.Witec.R' 'seq.R' 'show.R'
+        'read.ini.R' 'read.jdx.R' 'read.jdx.Shimadzu.R'
+        'read.mat.Cytospec.R' 'read.mat.Witec.R' 'read.spc.Kaiser.R'
+        'read.spc.R' 'read.spe.R' 'read.txt.Horiba.R'
+        'read.txt.Shimadzu.R' 'read.txt.long.R' 'read.txt.wide.R'
+        'replace.R' 'sample.R' 'scale.R' 'scan.txt.Witec.R'
+        'scan.asc.Andor.R' 'scan.txt.Renishaw.R' 'seq.R' 'show.R'
         'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R' 'spc.identify.R'
         'spc.loess.R' 'spc.rubberband.R' 'spc.spline.R' 'split.R'
         'split.string.R' 'splitdots.R' 'subset.R' 'sweep.R'
         'trellis.factor.key.R' 'units.R' 'unittest.R' 'vandermonde.R'
         'wc.R' 'wl.R' 'wleval.R' 'write.txt.long.R' 'write.txt.wide.R'
         'y-pastenames.R' 'zzz.R'
-Packaged: 2015-03-04 22:13:12 UTC; cb
+RoxygenNote: 5.0.1
 NeedsCompilation: no
+Packaged: 2016-11-18 12:15:58 UTC; cb
 Repository: CRAN
-Date/Publication: 2015-03-05 07:17:32
+Date/Publication: 2016-11-19 10:14:29

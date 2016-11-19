@@ -196,9 +196,10 @@ retrieved with \Rfunction{hy.getOptions} and \Rfunction{hy.getOption}, and chang
     \hline
     \textbf{name} & \textbf{default value} (range) & \textbf{description}                       & \textbf{used by}                                        \\
     \cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-    debuglevel    & 0 (1L 2L)                      & amount of debugging information produced   & \Rfunction{spc.identify}, \Rfunction{map.identify}, various file import functions      \\
+    debuglevel    & 0 (1L 2L)                      & amount of debugging information produced   & \Rfunction{spc.identify}, \Rfunction{map.identify}, \Rfunction{spc.rubberband}, various file import functions      \\
     gc            & FALSE                          & triggers frequent calling of \Rcode{gc ()} & \Rfunction{read.ENVI},\newline\Rcode{new ("hyperSpec")} \\
     tolerance & $\sqrt{\Rcode{.Machine\$.double.eps}}$ & tolerance for numerical comparisons & file import functions (removing empty spectra), \Rfunction{normalize01}\\
+    wl.tolerance & $\sqrt{\Rcode{.Machine\$.double.eps}}$ & tolerance for comparisons of the wavelength axis & \Rfunction{rbind}, \Rfunction{rbind2}, \Rfunction{bind}\Rcode{ ("r", ...)}, \Rfunction{all.equal}, \Rfunction{collapse}\\
     file.remove.emptyspc & TRUE & automatic removing of empty spectra & file import functions, see \Rcode{vignette ("fileio")}\\
     file.keep.name & TRUE & automatic recording of file name in column \Rcode{\$filename} & file import functions, see \Rcode{vignette ("fileio")}\\
     \hline
@@ -210,7 +211,7 @@ retrieved with \Rfunction{hy.getOptions} and \Rfunction{hy.getOption}, and chang
 \end{table}
 <<checkCompleteOptionTable, echo = FALSE, results = hide>>=
 stopifnot (all (names (hy.getOptions(TRUE)) %in% c ("debuglevel", "gc", "file.remove.emptyspc", 
-                  "file.keep.name", "tolerance")))
+                  "file.keep.name", "tolerance", "wl.tolerance")))
 @
 \section{The structure of \Rclass{hyperSpec} objects}
 \label{sec:structure-chy}
@@ -1265,6 +1266,22 @@ If the calculation of the normalization factors is more elaborate, use a two ste
 <<norm>>=
 factors <- 1 / apply (chondro [, , 1600 ~ 1700], 1, mean)
 chondro <- sweep (chondro, 1, factors, "*")
+@
+
+For the special case of area normalization using the \Rcode{mean} spectra, the factors can be more conveniently calculated by
+<<norm-rowmeans>>=
+factors <- 1 / rowMeans (chondro [, , 1600 ~ 1700])
+@
+
+and instead of \Rcode{sweep} the arithmetic operators (here \Rcode{*}) can be used directly with the normalization factor: 
+
+<<norm>>=
+chondro <- chondro * factors
+@
+
+Put together, this results in: 
+<<areanorm-shortcut>>=
+chondro <- chondro / rowMeans (chondro [, , 1600 ~ 1700])
 @
 
 For minimum-maximum-normalization, first do an offset- or baseline correction, then normalize using

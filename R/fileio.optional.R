@@ -4,13 +4,10 @@
 
 .fileio.optional <- function (spc, filename, ..., 
                               file.remove.emptyspc = hy.getOption ("file.remove.emptyspc"),
-                              file.keep.name = hy.getOption ("file.keep.name")){
+                              file.keep.name = hy.getOption ("file.keep.name"),
+															tolerance = hy.getOption ("tolerance")){
   
-	tolerance <- hy.getOption ("tolerance")
-	if (is.null (tolerance)){
-		warning ("hyperSpec option tolerance unset -> setting to .Machine$double.eps (", .Machine$double.eps, ')')
-		hy.setOptions (tolerance = .Machine$double.eps)
-	}
+	tolerance <- .checkpos (tolerance, "tolerance")
 	
   if (file.remove.emptyspc) {
     ## remove spectra consisting of 0 only

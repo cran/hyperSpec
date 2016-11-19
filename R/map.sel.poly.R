@@ -4,10 +4,13 @@
 ##' \code{\link[grid]{grid.locator}}). Polygon will be drawn closed. 
 ##' 
 ##' \code{map.sel.poly} is a convenience wrapper for \code{\link{plotmap}}, \code{sel.poly}, 
-##' and \code{\link[sp]{point.in.polygon}}. If more customized plotting is required, 
-##' \code{sel.poly} should be used (see example).
+##' and \code{\link[sp]{point.in.polygon}}. For custiomized plotting, the plot can be produced by 
+##' \code{\link{plotmap}}, \code{\link{plotvoronoi}} or \code{\link{levelplot}}, and the result of 
+##' that plot command handed over to \code{map.sel.poly}, see the example below.
 ##' 
-##' @param data hyperSpec object for plotting map
+##' If even more customized plotting is required,\code{sel.poly} should be used (see example).
+##' 
+##' @param data hyperSpec object for plotting map or list returned by \code{\link{plotmap}}
 ##' @param pch symbol to display the points of the polygon for \code{\link{sel.poly}}
 ##' @param size size for polygon point symbol for \code{\link{sel.poly}}
 ##' @param ... further arguments for \code{\link[grid]{grid.points}} and
@@ -24,9 +27,13 @@
 ##' map.sel.poly (chondro)
 ##' 
 ##' ## customized version
-##' data <- sample (chondro, 300)
+##' data <- sample (chondro [,, 1004 - 2i ~ 1004 + 2i], 300)
 ##' 
-##' ## plot as needed
+##' plotdata <- plotvoronoi (data, clusters ~ y * x, col.regions = alois.palette ())
+##' print (plotdata)
+##' map.sel.poly (plotdata)
+##' 
+##' ## even more customization:
 ##' plotvoronoi (data)
 ##' 
 ##' ## interactively retrieve polygon
@@ -48,11 +55,23 @@ map.sel.poly <- function (data, pch = 19, size = 0.3, ...){
   if (! requireNamespace ("sp"))  
     stop ("package sp required for point.in.polygon ()")
 
-  print (plotmap (data))
+  if (is (data, "hyperSpec")) { 
+    ## plot hyperSpec object
+    print (plotmap (data))
+    x <- data$x
+    y <- data$y
+  } else if (is (data, "trellis")) { 
+    
+    ## data is list with plotting data of hyperSpec object
+    x <- data$panel.args.common$x
+    y <- data$panel.args.common$y
+  } else {
+    stop ("data must either be a hyperSpec object or a trellis object as returned by plotmap, plotvoronoi, or levelplot")
+  }
   
   poly <- sel.poly (pch = pch, size = size, ...)
   
-  pts <- sp::point.in.polygon (data$x, data$y, poly [, 1], poly [, 2]) 
+  pts <- sp::point.in.polygon (x, y, poly [, 1], poly [, 2]) 
 
   ind <- pts > 0
 
@@ -71,6 +90,7 @@ map.sel.poly <- function (data, pch = 19, size = 0.3, ...){
 ##' @keywords iplot
 ##' @rdname map-sel-poly
 ##' @importFrom grid grid.lines grid.points
+##' @importFrom utils tail
 sel.poly <- function (pch = 19, size = 0.3, ...){
 	if (! interactive ())
 		stop ("sel.poly works only on interactive graphics devices.")

@@ -1,4 +1,8 @@
 .rmmvnorm <- function (n, mean, sigma) {
+  
+  if (! requireNamespace("mvtnorm"))
+      stop ("package 'mvtnorm' needed to generate multivariate normal random data.")
+  
   .group <- rep.int (seq_along (n), n)
 
    ## make indices so that pooled or individual covariance matrices can be used.
@@ -39,15 +43,16 @@ setGeneric ("rmmvnorm", .rmmvnorm)
 ##'
 ##' \code{\link[hyperSpec]{cov}} and \code{\link[hyperSpec]{pooled.cov}} about calculating  covariance of hyperSpec objects.
 ##' @rdname rmmvnorm
-##' @importFrom mvtnorm rmvnorm
 ##' @aliases rmmvnorm rmmvnorm,hyperSpec-method
 ##' @docType methods
 ##' @examples
 ##' ## multiple groups, common covariance matrix
 ##' 
-##' pcov <- pooled.cov (chondro, chondro$clusters)
-##' rnd <- rmmvnorm (rep (10, 3), mean = pcov$mean, sigma = pcov$COV)
-##' plot (rnd, col = rnd$.group)
+##' if (require ("mvtnorm")){
+##'    pcov <- pooled.cov (chondro, chondro$clusters)
+##'    rnd <- rmmvnorm (rep (10, 3), mean = pcov$mean, sigma = pcov$COV)
+##'    plot (rnd, col = rnd$.group)
+##' }
 
 setMethod ("rmmvnorm", signature (n = "numeric", mean = "hyperSpec", sigma = "matrix"),
            function (n, mean, sigma){
@@ -86,9 +91,6 @@ setMethod ("rmmvnorm", signature (n = "numeric", mean = "matrix", sigma = "matri
 ##' @export
 setMethod ("rmmvnorm", signature (n = "numeric", mean = "matrix", sigma = "array"),
            .rmmvnorm)
-
-
-
 
 ## produces matrices instead of hyperSpec objects. 
 ## mapply (rmvnorm, n = 1:3, mean = pcov$mean, MoreArgs= list (sigma = pcov$COV), SIMPLIFY = FALSE))

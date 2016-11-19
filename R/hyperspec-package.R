@@ -16,7 +16,7 @@
 ##' @docType package
 ##' @author C. Beleites
 ##' 
-##' Maintainer: Claudia Beleites <chemometrie@@beleites.de>
+##' Maintainer: Claudia Beleites <claudia.beleites@@chemometrix.eu>
 ##' @seealso \code{citation ("hyperSpec")} produces the correct citation.
 ##' 
 ##' \code{package?hyperSpec} for information about the package
