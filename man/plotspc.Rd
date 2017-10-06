@@ -9,15 +9,17 @@ wavelength. Instead of the intensity values of the spectra matrix summary
 values calculated from these may be used.}
 \usage{
 plotspc(object, wl.range = NULL, wl.index = FALSE, wl.reverse = FALSE,
-  spc.nmax = 50, func = NULL, func.args = list(), stacked = NULL,
-  stacked.args = list(), add = FALSE, bty = "l", plot.args = list(),
-  col = "black", lines.args = list(), xoffset = 0, yoffset = 0,
-  nxticks = 10, axis.args = list(), break.args = list(),
-  title.args = list(), fill = NULL, fill.col = NULL, border = NA,
-  polygon.args = list(), zeroline = list(lty = 2, col = col))
+  spc.nmax = hy.getOption("plot.spc.nmax"), func = NULL,
+  func.args = list(), stacked = NULL, stacked.args = list(),
+  add = FALSE, bty = "l", plot.args = list(), col = "black",
+  lines.args = list(), xoffset = 0, yoffset = 0, nxticks = 10,
+  axis.args = list(), break.args = list(), title.args = list(),
+  fill = NULL, fill.col = NULL, border = NA, polygon.args = list(),
+  zeroline = list(lty = 2, col = col),
+  debuglevel = hy.getOption("debuglevel"))
 
 stacked.offsets(x, stacked = TRUE, min.zero = FALSE, add.factor = 0.05,
-  add.sum = 0, .spc = NULL)
+  add.sum = 0, .spc = NULL, debuglevel = hy.getOption("debuglevel"))
 }
 \arguments{
 \item{object}{the \code{hyperSpec} object}
@@ -118,6 +120,9 @@ line color \code{col} to \code{NA} in order see the effect.}
 \code{NA} suppresses plotting of the line.  The line is by default turned
   off if \code{yoffset} is not 0.}
 
+\item{debuglevel}{if > 0, additional debug output is produced,
+see \code{\link[hyperSpec]{options}} for details}
+
 \item{x}{a \code{hyperSpec} object}
 
 \item{min.zero}{if \code{TRUE}, the lesser of zero and the minimum intensity of the spectrum is
@@ -181,9 +186,9 @@ plotspc (chondro [sample (nrow (chondro), 50)], wl.reverse = TRUE)
 
 plotspc (laser[(0:4)*20+1,,], stacked = TRUE)
 
-plotspc (laser, func = mean_pm_sd, 
+plotspc (laser, func = mean_pm_sd,
          col = c(NA, "red", "black"), lines.args = list (lwd = 2),
-         fill = c (1, NA, 1), 
+         fill = c (1, NA, 1),
          fill.col = "yellow", border = "blue",
          polygon.args = list (lty = 2, lwd = 4),
          title.args = list (xlab = expression (lambda[emission] / nm),
@@ -191,7 +196,7 @@ plotspc (laser, func = mean_pm_sd,
                             col.lab = "darkgreen"),
          axis.args = list (x = list (col = "magenta"), y = list (las = 1))
         )
-        
+
 mean.pm.sd <- aggregate (chondro, chondro$clusters, mean_pm_sd)
 plot (mean.pm.sd, col = matlab.palette (3), fill = ".aggregate", stacked = ".aggregate")
 
@@ -201,7 +206,7 @@ mean.pm.sd <- aggregate (chondro, chondro$clusters, mean_pm_sd)
 offset <- stacked.offsets (mean.pm.sd, ".aggregate")
 plot (mean.pm.sd, fill.col = matlab.palette (3), fill = ".aggregate",
       stacked = ".aggregate")
- 	
+
 plot (aggregate (chondro, chondro$clusters, mean), yoffset = offset$offsets,
       lines.args = list (lty = 2, lwd = 2), add = TRUE)
 
@@ -210,11 +215,6 @@ plot (barb, lines.args = list (type = "h"), stacked = TRUE,
       stacked.args = list (add.factor = .2))
 
 
-}
-\author{
-C. Beleites
-
-C. Beleites
 }
 \seealso{
 \code{\link[graphics]{plot}}, \code{\link[graphics]{axis}},
@@ -232,5 +232,9 @@ See \code{\link{plot}} for some predefined spectra plots such as mean
 
 \code{\link[hyperSpec]{plotspc}}
 }
-\keyword{hplot}
+\author{
+C. Beleites
 
+C. Beleites
+}
+\keyword{hplot}

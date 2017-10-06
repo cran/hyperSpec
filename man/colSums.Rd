@@ -2,8 +2,8 @@
 % Please edit documentation in R/colMeans.R
 \docType{methods}
 \name{colSums}
-\alias{colMeans,hyperSpec-method}
 \alias{colSums}
+\alias{colMeans,hyperSpec-method}
 \alias{colSums,hyperSpec-method}
 \alias{rowMeans,hyperSpec-method}
 \alias{rowSums,hyperSpec-method}
@@ -41,4 +41,3 @@ rowSums (flu)
 \seealso{
 \link[base]{colSums}
 }
-

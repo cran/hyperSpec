@@ -2,12 +2,12 @@
 % Please edit documentation in R/initialize.R
 \docType{methods}
 \name{initialize}
-\alias{create}
-\alias{create,hyperSpec-method}
 \alias{initialize}
 \alias{initialize,hyperSpec-method}
-\alias{new}
+\alias{create}
+\alias{create,hyperSpec-method}
 \alias{new,hyperSpec-method}
+\alias{new}
 \title{Creating a hyperSpec Object
 Like other S4 objects, a hyperSpec object can be created by \code{new}. The
 hyperSpec object is then \code{initialize}d using the given parameters.}
@@ -75,9 +75,6 @@ plot (h)
 plotc (h, spc ~ pos)
 
 }
-\author{
-C.Beleites
-}
 \seealso{
 \code{\link[methods]{new}} for more information on creating and
   initializing S4 objects.
@@ -87,6 +84,8 @@ C.Beleites
 
 \code{\link{hy.setOptions}}
 }
+\author{
+C.Beleites
+}
 \keyword{datagen}
 \keyword{methods}
-

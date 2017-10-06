@@ -1,4 +1,5 @@
 ### R code from vignette source 'baseline.Rnw'
+### Encoding: UTF-8
 
 ###################################################
 ### code chunk number 1: startup
@@ -232,9 +233,9 @@ make.bib <- function (..., file = NULL) {
 ### code chunk number 2: mailme
 ###################################################
 cat ("\\newcommand{\\mailme}{\\href{mailto:",
-     packageDescription ("hyperSpec")$Maintainer,
+     maintainer ("hyperSpec"),
 	  "}{\\texttt{",
-	  packageDescription ("hyperSpec")$Maintainer,
+	  maintainer ("hyperSpec"),
 	  "}}}\n",
 	  sep = "")
 
@@ -270,198 +271,78 @@ plot (bl, add = TRUE, col = 1 : 2)
 
 
 ###################################################
-### code chunk number 6: trace
-###################################################
-trace (spc.fit.poly.below, quote ({
-  plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (pch = 20, type = "p"));
-  lines (fit.to@wavelength, bl, col = cl);
-}), at = 12, print = FALSE)
-
-
-###################################################
-### code chunk number 7: fig1
+### code chunk number 6: fig1
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-cols <- matlab.dark.palette (8) 
-
-bl <- chondro [1] + 1
-plot (chondro [1])
-npts <- numeric (length (cols))
-
-for (iter in seq_along (cols)){
-	npts [iter] <- sum (chondro [[1]] < bl [[]])
-	cl <- cols [iter]
-	text (750, max (chondro [1]), paste ("Iter. ", iter, ": ", npts [iter], " support pts.", sep = ""),
-			 pos = 1, col = cols [iter], offset = iter - 1)
-	bl <- spc.fit.poly.below (chondro [1], poly.order = 1, npts.min = npts[iter]  - 1)
-}
-plot (chondro [1], add = TRUE)
+bl <- spc.fit.poly.below (chondro [1], poly.order = 1, max.iter = 8, npts.min = 2, debuglevel = 3L)
 
 
 ###################################################
-### code chunk number 8: fig2
+### code chunk number 7: figspcrange
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-bl <- chondro [1] + 1
-plot (chondro [1], plot.args = list (ylim = range (chondro [1,, c(600 ~ 650, 1730 ~ 1800)])))
-for (iter in seq_along (cols)){
-	npts <- sum (chondro [[1]] < bl [[]])
-	cl <- cols [iter]
-	bl <- spc.fit.poly.below (chondro [1], poly.order = 1, npts.min = npts - 1)
-}
-plot (chondro [1], add = TRUE)
-
-
-###################################################
-### code chunk number 9: trace
-###################################################
-	trace (spc.fit.poly.below, quote ({ls ();
-	plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (pch = pch, type = "p"), zeroline = NA);
-	}), at = 12, print = FALSE)
-
-
-###################################################
-### code chunk number 10: figspcrange
-###################################################
-getOption("SweaveHooks")[["fig"]]()
-plot (chondro [3,,1700 ~ 1750], plot.args = list (ylim = range (chondro [3,,1700 ~ 1750]) + c(-50, 0)))
-cl <- "black"
-pch = 1
+plot (chondro [3,,1700 ~ 1750], lines.args = list(type = "b"), plot.args = list (ylim = range (chondro [3,,1700 ~ 1750]) + c(-50, 0)))
 bl <- spc.fit.poly.below (chondro [3,,1700 ~ 1750], NULL, poly.order = 1)
-pch = 20
-plot (chondro [3,,1720 ~ 1750], col = "blue", add = TRUE, lines.args = list (lwd = 2))
-abline (bl[[]], col = "black")
-cl <- "blue"
+abline (bl[[]], col ="black")
+
+plot (chondro [3,,1720 ~ 1750], lines.args = list(type = "p", pch = 19, cex = .6), col = "blue", add=T)
 bl <- spc.fit.poly.below (chondro [3,,1720 ~ 1750], NULL, poly.order = 1)
-abline (bl[[]], col = "blue")
+abline (bl[[]], col ="blue")
 
 
 ###################################################
-### code chunk number 11: untrace1
-###################################################
-untrace (spc.fit.poly.below)
-
-
-###################################################
-### code chunk number 12: fit-apply
+### code chunk number 8: fit-apply
 ###################################################
 system.time (spc.fit.poly.below (chondro, NULL, npts.min = 20))
 system.time (spc.fit.poly.below (chondro [,, c (min ~ 700, 1700 ~ max)], NULL, npts.min = 20))
 
 
 ###################################################
-### code chunk number 13: trace2
-###################################################
-	trace (spc.fit.poly.below, quote ({ls ();
-	plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (pch = pch, type = "p"), zeroline = NA);
-	lines (fit.to@wavelength, bl, col = cl);
-	}), at = 12, print = FALSE)
-
-
-###################################################
-### code chunk number 14: figorder
+### code chunk number 9: figorder0
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-plot (chondro [1], lines.args = list (type = "n"))
-cols <- c ("black", "blue", "#008000", "red")
-for (o in 0 : 3){
-		cl <- cols [o + 1]
-		bl <- spc.fit.poly.below (chondro [1], poly.order = o)
-	}
-	plot (chondro [1], add = TRUE)
+bl <- spc.fit.poly.below (chondro [1], poly.order = 0, debuglevel = 2, max.iter = 5)
 
 
 ###################################################
-### code chunk number 15: untrace2
-###################################################
-untrace (spc.fit.poly.below)
-
-
-###################################################
-### code chunk number 16: fig3
+### code chunk number 10: figorder1
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-spc <- new ("hyperSpec", spc = matrix (rnorm (30, mean = 100, sd = 2), ncol = 30))
-noise <- 10
-plot (spc)
-trace (spc.fit.poly.below, quote ({
-					plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (pch = 20, type = "p"), zeroline = NA);
-					lines (fit.to@wavelength, bl, col = cl);
-					lines (fit.to@wavelength, bl + noise, col = cl, lty = 2)
-				}), at = 12, print = FALSE)
-
-cols <- matlab.dark.palette (2)
-
-bl <- spc + 15
-for (iter in seq_along (cols)){
-	npts <- sum (spc [[]] < (bl [[]] + noise))
-	cl <- cols [iter]
-	bl <- spc.fit.poly.below (spc, poly.order = 0, npts.min = npts, noise = noise)
-	text (5, max (spc[]), paste ("Iter. ", iter, ": ", npts, " support pts.", sep = ""),
-			pos = 1, col = cols [iter], offset = iter - 1)
-}
-cl <- "black"
-trace (spc.fit.poly.below, quote ({
-					plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (type = "p"), zeroline = NA);
-					lines (fit.to@wavelength, bl, col = cl);
-				}), at = 12, print = FALSE)
-bl <- spc.fit.poly.below (spc, poly.order = 0)
+bl <- spc.fit.poly.below (chondro [1], poly.order = 1, debuglevel = 2, max.iter = 5)
 
 
 ###################################################
-### code chunk number 17: fig4
+### code chunk number 11: figorder2
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-trace (spc.fit.poly.below, quote ({
-					plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (pch = 20, type = "p"), zeroline = NA);
-					lines (fit.to@wavelength, bl, col = cl);
-					lines (fit.to@wavelength, bl + noise, col = cl, lty = 2)
-				}), at = 12, print = FALSE)
-cols <- matlab.dark.palette (10)
-
-bl <- chondro [1] + 15
-plot (chondro [1])
-for (iter in seq_along (cols)){
-	npts <- sum (chondro [[1]] < bl [[]] + noise)
-	cl <- cols [iter]
-	text (750, max (chondro [1]), paste ("Iter. ", iter, ": ", npts, " support pts.", sep = ""),
-			pos = 1, offset = iter-1, col = cols [iter])
-	bl <- spc.fit.poly.below (chondro [1], poly.order = 1, npts.min = npts - 1, noise = noise)
-}
-plot (chondro [1], add = TRUE)
+bl <- spc.fit.poly.below (chondro [1], poly.order = 2, debuglevel = 2, max.iter = 5)
 
 
 ###################################################
-### code chunk number 18: fig5
+### code chunk number 12: fig3
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-trace (spc.fit.poly.below, quote ({
-					plot (fit.to[,, use.old], col = cl, add = TRUE, lines.args = list (pch = 20, type = "p"));
-					lines (fit.to@wavelength, bl, col = cl);
-					lines (fit.to@wavelength, bl + noise, col = cl, lty = 2)
-				}), at = 12, print = FALSE)
-cols <- matlab.dark.palette (10)
-
-bl <- chondro [1] + 15
-plot (chondro [1], plot.args = list (ylim = range (chondro [1,, c(600 ~ 650, 1730 ~ 1800)])))
-for (iter in seq_along (cols)){
-	npts <- sum (chondro [[1]] < bl [[]] + noise)
-	cl <- cols [iter]
-	cat ("Iteration", iter, ":", npts, "supporting points\n")
-	bl <- spc.fit.poly.below (chondro [1], poly.order = 1, npts.min = npts - 1, noise = noise)
-}
-plot (chondro [1], add = TRUE)
-untrace (spc.fit.poly.below)
+spc <- new ("hyperSpec", spc = matrix (rnorm (100, mean = 100, sd = 2), ncol = 100))
+noise = 4
+spc.fit.poly.below (spc, poly.order = 0, noise = noise, debuglevel = 2)
+plot (spc.fit.poly.below (spc, poly.order = 0), col = "black", add = T)
 
 
 ###################################################
-### code chunk number 19: baseline.Rnw:371-372
+### code chunk number 13: fig4
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+bl <- spc.fit.poly.below (chondro [1], poly.order = 1, noise = 15, max.iter = 8, debuglevel = 3L)
+
+
+###################################################
+### code chunk number 14: baseline.Rnw:263-264
 ###################################################
 bl <- spc.rubberband (paracetamol [,, 175 ~ 1800], noise = 300, df = 20)
 
 
 ###################################################
-### code chunk number 20: rubberband-raw
+### code chunk number 15: rubberband-raw
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, 175 ~ 1800])
@@ -469,21 +350,21 @@ plot (bl, add = TRUE, col = 2)
 
 
 ###################################################
-### code chunk number 21: rubberband
+### code chunk number 16: rubberband
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, 175 ~ 1800] - bl)
 
 
 ###################################################
-### code chunk number 22: bent-rubberband
+### code chunk number 17: bent-rubberband
 ###################################################
 bend <- 5e4 * wl.eval (paracetamol [,, 175 ~ 1800], function (x) x^2, normalize.wl=normalize01)
 bl <- spc.rubberband (paracetamol [,, 175 ~ 1800] + bend) - bend
 
 
 ###################################################
-### code chunk number 23: rubberband-bent-raw
+### code chunk number 18: rubberband-bent-raw
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, 175 ~ 1800] + bend)
@@ -491,17 +372,16 @@ plot (bl + bend, add = T, col = 2)
 
 
 ###################################################
-### code chunk number 24: rubberband-bent-corrected
+### code chunk number 19: rubberband-bent-corrected
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [,, 175 ~ 1800] - bl)
 
 
 ###################################################
-### code chunk number 25: baseline.Rnw:422-425
+### code chunk number 20: baseline.Rnw:314-316
 ###################################################
 make.bib ("baseline", file = "baseline-pkg.bib")
-print (as.matrix(Sys.info()))
 sessionInfo ()
 rm (list = ls ())
 library (tools)

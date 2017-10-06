@@ -2,8 +2,8 @@
 % Please edit documentation in R/scale.R
 \docType{methods}
 \name{scale,hyperSpec-method}
-\alias{scale}
 \alias{scale,hyperSpec-method}
+\alias{scale}
 \alias{scale-methods}
 \title{Center and scale hyperSpec object}
 \usage{
@@ -49,13 +49,12 @@ plot (tmp, "spcmeansd")
 tmp <- scale (tmp, center = quantile (tmp, .05), scale = FALSE)
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{scale}}
 
 package scale.
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

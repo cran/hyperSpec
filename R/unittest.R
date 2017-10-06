@@ -1,45 +1,60 @@
 ##' hyperSpec unit tests
-##' If \code{\link[svUnit]{svUnit}} is available, run the unit tests and
+##'
+##' If \code{\link[testthat]{testthat}} is available, run the unit tests and
 ##' display the results.
-##' 
 ##'
 ##' @rdname unittests
-##' @return \code{NA} if \code{\link[svUnit]{svUnit}} is not available,
-##'   otherwise \code{TRUE} if all tests are passed successfully. If a test
-##'   fails, \code{hy.unittest} stops with an error.
-##' @author C. Beleites
-##' @seealso \code{\link[svUnit]{svUnit}}
+##' @return Invisibly returns a data frame with the test results
+##'
+##' @author Claudia Beleites
+##'
 ##' @keywords programming utilities
-##' @import svUnit 
+##' @import testthat
 ##' @export
 ##' @examples
-##' 
-##' if (require (svUnit)){
-##'   hy.unittest ()
-##' }
-##' 
+##'
+##' hy.unittest ()
+##'
 hy.unittest <- function (){
-  if (! requireNamespace ("svUnit", quietly = TRUE)){
-    warning ("svUnit required to run the unit tests.")
-    return (NA)
+  if (!requireNamespace("testthat", quietly=TRUE)) {
+    warning("testthat required to run the unit tests.")
+    return(NA)
   }
+  if (! "package:testthat" %in% search ())
+    attachNamespace("testthat")
 
-  tests <- unlist (eapply (env = getNamespace ("hyperSpec"), FUN = svUnit::is.test, all.names = TRUE))
-  tests <- names (tests [tests])
-  tests <- sapply (tests, get, envir = getNamespace ("hyperSpec"))
+  tests <- eapply(env = getNamespace ("hyperSpec"), FUN = get.test, all.names=TRUE)
+  tests <- tests [! sapply (tests, is.null)]
 
-  clearLog ()
-  warnlevel <- options()$warn
-  options (warn = 0)
-  for (t in seq_along (tests))
-  	runTest (tests [[t]], names (tests) [t])
-  options (warn = warnlevel)
+  reporter <- SummaryReporter$new()
+  lister <- ListReporter$new()
+  reporter <- MultiReporter$new(reporters = list(reporter, lister))
 
-  if (interactive ())
-    print (stats (Log()))
-  else
-    print (stats (Log ())[,c ("kind", "msg")])
+  with_reporter(reporter = reporter, start_end_reporter = TRUE, {
+    for (t in seq_along(tests)){
+      lister$start_file(names (tests [t]))
+      tests [[t]] ()
+    }
+    get_reporter()$.end_context()
+  })
 
-  errorLog (summarize = FALSE)
-  invisible (TRUE)
+  invisible(lister$get_results())
 }
+
+##' @noRd
+{
+  `.test<-` <- function (f, value) {
+    attr (f, "test") <- value
+    f
+  }
+  
+  skip_if_not_fileio_available <- function () {
+    skip_if_not (file.exists("fileio"), message = "file import test files not installed")
+  }
+}
+
+##' get test that is attached to object as "test" attribute
+##' @noRd
+get.test <- function (object)
+  attr (object, "test")
+

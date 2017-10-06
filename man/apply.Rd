@@ -77,13 +77,12 @@ apply (flu [,,405:407], , print) [[]]
 apply (flu [,,405:407], 1 : 2, print) [[]]
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{apply}}, for applying \code{FUN} to subgroups of
   the \code{hyperSpec} object: \code{\link[hyperSpec]{aggregate}}.
 }
+\author{
+C. Beleites
+}
 \keyword{iteration}
 \keyword{methods}
-

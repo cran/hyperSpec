@@ -5,7 +5,8 @@
 \title{Spectra plotting with ggplot2}
 \usage{
 qplotspc(x, wl.range, ..., mapping = aes_string(x = ".wavelength", y = "spc",
-  group = ".rownames"), spc.nmax = 10, map.lineonly = FALSE)
+  group = ".rownames"), spc.nmax = hy.getOption("ggplot.spc.nmax"),
+  map.lineonly = FALSE, debuglevel = hy.getOption("debuglevel"))
 }
 \arguments{
 \item{x}{hyperSpec object}
@@ -20,6 +21,8 @@ qplotspc(x, wl.range, ..., mapping = aes_string(x = ".wavelength", y = "spc",
 
 \item{map.lineonly}{if \code{TRUE}, \code{mapping} will be handed to
 \code{\link[ggplot2]{geom_line}} instead of \code{\link[ggplot2]{ggplot}}.}
+
+\item{debuglevel}{if > 0, additional debug output is produced}
 }
 \value{
 a \code{\link[ggplot2]{ggplot}} object
@@ -33,7 +36,7 @@ These functions are still experimental and may change substantially in future.
 \examples{
 
   qplotspc (chondro)
-  
+
   qplotspc (paracetamol, c (2800 ~ max, min ~ 1800)) + scale_x_reverse (breaks = seq (0, 3200, 400))
 
   qplotspc (aggregate (chondro, chondro$clusters, mean),
@@ -44,12 +47,11 @@ These functions are still experimental and may change substantially in future.
             mapping = aes (x = .wavelength, y = spc, colour = clusters, group = .rownames)) +
     facet_grid (clusters ~ .)
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link{plotspc}}
 
 \code{\link[ggplot2]{ggplot}}\code{\link[ggplot2]{geom_line}}
 }
-
+\author{
+Claudia Beleites
+}

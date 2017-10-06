@@ -2,8 +2,8 @@
 % Please edit documentation in R/read.txt.Horiba.R
 \name{read.txt.Horiba}
 \alias{read.txt.Horiba}
-\alias{read.txt.Horiba.t}
 \alias{read.txt.Horiba.xy}
+\alias{read.txt.Horiba.t}
 \title{Import Horiba Labspec exported ASCII files}
 \usage{
 read.txt.Horiba(file, cols = c(spc = "I / a.u.", .wavelength =
@@ -34,4 +34,3 @@ Read ASCII (.txt) files exported by Horiba's Labspec software (LabRAM spectromet
 \author{
 C. Beleites
 }
-

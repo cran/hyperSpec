@@ -36,12 +36,11 @@ plot (smooth, col = "red", add = TRUE)
 plot (p - smooth)
 
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{spc.loess}}
 
 \code{\link[stats]{smooth.spline}}
 }
-
+\author{
+Claudia Beleites
+}

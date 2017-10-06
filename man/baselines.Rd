@@ -6,10 +6,13 @@
 \title{Polynomial Baseline Fitting
 These functions fit polynomal baselines.}
 \usage{
-spc.fit.poly(fit.to, apply.to = NULL, poly.order = 1)
+spc.fit.poly(fit.to, apply.to = NULL, poly.order = 1,
+  offset.wl = !(is.null(apply.to)))
 
 spc.fit.poly.below(fit.to, apply.to = fit.to, poly.order = 1,
-  npts.min = NULL, noise = 0)
+  npts.min = max(round(nwl(fit.to) * 0.05), 3 * (poly.order + 1)),
+  noise = 0, offset.wl = FALSE, max.iter = nwl(fit.to),
+  stop.on.increase = FALSE, debuglevel = hy.getOption("debuglevel"))
 }
 \arguments{
 \item{fit.to}{\code{hyperSpec} object on which the baselines are fitted}
@@ -20,10 +23,24 @@ coefficients rather than evaluted baselines is returned.}
 
 \item{poly.order}{order of the polynomial to be used}
 
-\item{npts.min}{minmal number of points used for fitting the polynomial}
+\item{offset.wl}{should the wavelength range be mapped to -> [0, delta wl]?
+This enhances numerical stability.}
+
+\item{npts.min}{minimal number of points used for fitting the polynomial}
 
 \item{noise}{noise level to be considered during the fit. It may be given
 as one value for all the spectra, or for each spectrum separately.}
+
+\item{max.iter}{stop at the latest after so many iterations.}
+
+\item{stop.on.increase}{additional stopping rule: stop if the number of support points would increase, 
+regardless whether npts.min was reached or not.}
+
+\item{debuglevel}{additional output:
+\code{1} shows \code{npts.min}, 
+\code{2} plots support points for the final baseline of 1st spectrum, 
+\code{3} plots support points for 1st spectrum,
+\code{4} plots support points for all spectra.}
 }
 \value{
 \code{hyperspec} object containing the baselines in the spectra
@@ -57,16 +74,21 @@ plot(spc - baselines)
 baselines <- spc.fit.poly.below (spc)
 plot (spc - baselines)
 
-}
-\author{
-C. Beleites
+spc.fit.poly.below(chondro [1:3], debuglevel = 1)
+spc.fit.poly.below(chondro [1:3], debuglevel = 2)
+spc.fit.poly.below(chondro [1:3], debuglevel = 3, noise = sqrt (rowMeans (chondro [[1:3]])))
+
 }
 \seealso{
 \code{vignette ("baseline", package = "hyperSpec")}
+
+see \code{\link[hyperSpec]{options}} for more on \code{debuglevel}
+}
+\author{
+C. Beleites
 }
 \concept{
 baseline
 }
 \keyword{datagen}
 \keyword{manip}
-

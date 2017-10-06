@@ -3,14 +3,14 @@
 \docType{methods}
 \name{as.data.frame}
 \alias{as.data.frame}
-\alias{as.data.frame,hyperSpec-method}
 \alias{as.data.frame.hyperSpec}
-\alias{as.long.df}
+\alias{as.data.frame,hyperSpec-method}
+\alias{as.matrix.hyperSpec}
 \alias{as.matrix}
 \alias{as.matrix,hyperSpec-method}
-\alias{as.matrix.hyperSpec}
-\alias{as.t.df}
 \alias{as.wide.df}
+\alias{as.long.df}
+\alias{as.t.df}
 \title{Conversion of a hyperSpec object into a data.frame or matrix
 \code{as.data.frame} returns \code{x@data} (as data.frame) \code{as.matrix}
 returns the spectra matrix \code{x@data$spc} as matrix}
@@ -96,9 +96,6 @@ if (require (ggplot2)){
     geom_line (aes (y = mean))
 }
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{as.data.frame}}
 
@@ -109,5 +106,7 @@ and \code{\link[base]{as.matrix}}
 \code{\link[utils]{stack}} and \code{\link[reshape]{melt}} or \code{\link[reshape2]{melt}} for
 other functions producing long-format data.frames.
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

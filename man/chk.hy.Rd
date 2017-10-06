@@ -22,11 +22,10 @@ Check whether an object is a hyperSpec object and validate the object
 chk.hy (chondro)
 validObject (chondro)
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[methods]{validObject}}
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

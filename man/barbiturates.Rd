@@ -32,11 +32,10 @@ plotc (apply (barb [,, 42.9~43.2], 1, sum, na.rm = TRUE), spc ~ z,
        panel = panel.lines, ylab = expression (I[m/z == 43] / "a.u."))
 
 }
-\author{
-C. Beleites and Thermo Galactic
-}
 \references{
 The raw data is available at \url{http://hyperspec.r-forge.r-project.org/blob/fileio.zip}
 }
+\author{
+C. Beleites and Thermo Galactic
+}
 \keyword{datasets}
-

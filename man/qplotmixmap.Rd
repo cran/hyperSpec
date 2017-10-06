@@ -29,10 +29,9 @@ qplotmixmap (chondro [,,c (940, 1002, 1440)],
              purecol = c (colg = "red", Phe = "green", Lipid = "blue"))
 
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{qmixtile}}
 }
-
+\author{
+Claudia Beleites
+}

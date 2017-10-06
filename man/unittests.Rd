@@ -2,35 +2,24 @@
 % Please edit documentation in R/unittest.R
 \name{hy.unittest}
 \alias{hy.unittest}
-\title{hyperSpec unit tests
-If \code{\link[svUnit]{svUnit}} is available, run the unit tests and
-display the results.}
+\title{hyperSpec unit tests}
 \usage{
 hy.unittest()
 }
 \value{
-\code{NA} if \code{\link[svUnit]{svUnit}} is not available,
-  otherwise \code{TRUE} if all tests are passed successfully. If a test
-  fails, \code{hy.unittest} stops with an error.
+Invisibly returns a data frame with the test results
 }
 \description{
-hyperSpec unit tests
-If \code{\link[svUnit]{svUnit}} is available, run the unit tests and
+If \code{\link[testthat]{testthat}} is available, run the unit tests and
 display the results.
 }
 \examples{
 
-if (require (svUnit)){
-  hy.unittest ()
-}
+hy.unittest ()
 
 }
 \author{
-C. Beleites
-}
-\seealso{
-\code{\link[svUnit]{svUnit}}
+Claudia Beleites
 }
 \keyword{programming}
 \keyword{utilities}
-

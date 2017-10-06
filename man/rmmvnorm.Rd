@@ -3,11 +3,12 @@
 \docType{methods}
 \name{rmmvnorm}
 \alias{rmmvnorm}
+\alias{rmmvnorm,numeric,hyperSpec,matrix-method}
+\alias{rmmvnorm}
 \alias{rmmvnorm,hyperSpec-method}
 \alias{rmmvnorm,numeric,hyperSpec,array-method}
-\alias{rmmvnorm,numeric,hyperSpec,matrix-method}
-\alias{rmmvnorm,numeric,matrix,array-method}
 \alias{rmmvnorm,numeric,matrix,matrix-method}
+\alias{rmmvnorm,numeric,matrix,array-method}
 \title{Multivariate normal random numbers}
 \usage{
 rmmvnorm(n, mean, sigma)
@@ -49,4 +50,3 @@ if (require ("mvtnorm")){
 
 \code{\link[hyperSpec]{cov}} and \code{\link[hyperSpec]{pooled.cov}} about calculating  covariance of hyperSpec objects.
 }
-

@@ -26,14 +26,13 @@ values range from 0 (prefectly correlated) over 0.5 (uncorrelated) to 1
 pearson.dist (flu [[]])
 pearson.dist (flu)
 }
-\author{
-C. Beleites
-}
 \references{
 S. Theodoridis and K. Koutroumbas: Pattern Recognition, 3rd ed., p. 495
 }
 \seealso{
 \code{\link[stats]{as.dist}}
 }
+\author{
+C. Beleites
+}
 \keyword{cluster}
-

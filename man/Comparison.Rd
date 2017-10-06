@@ -2,22 +2,26 @@
 % Please edit documentation in R/Compare.R, R/all.equal.R
 \docType{methods}
 \name{Comparison}
-\alias{!=,hyperSpec,hyperSpec-method}
-\alias{<,hyperSpec,hyperSpec-method}
-\alias{<=,hyperSpec,hyperSpec-method}
-\alias{==,hyperSpec,hyperSpec-method}
-\alias{>,hyperSpec,hyperSpec-method}
-\alias{>=,hyperSpec,hyperSpec-method}
-\alias{Compare,hyperSpec,hyperSpec-method}
-\alias{Compare,hyperSpec,matrix-method}
-\alias{Compare,hyperSpec,numeric-method}
-\alias{Compare,hyperSpec-method}
-\alias{Compare,matrix,hyperSpec-method}
-\alias{Compare,numeric,hyperSpec-method}
 \alias{Comparison}
 \alias{Operators}
-\alias{all.equal}
+\alias{Compare,hyperSpec-method}
+\alias{Compare,hyperSpec,hyperSpec-method}
+\alias{<,hyperSpec,hyperSpec-method}
+\alias{>,hyperSpec,hyperSpec-method}
+\alias{<=,hyperSpec,hyperSpec-method}
+\alias{>=,hyperSpec,hyperSpec-method}
+\alias{==,hyperSpec,hyperSpec-method}
+\alias{!=,hyperSpec,hyperSpec-method}
+\alias{Compare,hyperSpec,matrix-method}
+\alias{Compare,hyperSpec,numeric-method}
+\alias{Compare,matrix,hyperSpec-method}
+\alias{Compare,numeric,hyperSpec-method}
+\alias{Compare,hyperSpec,numeric-method}
+\alias{Compare,hyperSpec,matrix-method}
+\alias{Compare,numeric,hyperSpec-method}
+\alias{Compare,matrix,hyperSpec-method}
 \alias{all.equal,hyperSpec,hyperSpec-method}
+\alias{all.equal}
 \title{Comparison of hyperSpec objects}
 \usage{
 \S4method{Compare}{hyperSpec,hyperSpec}(e1, e2)
@@ -96,9 +100,6 @@ flu [,,445 ~ 450] > 300
 all (flu == flu[[]])
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{sweep-methods}} for calculations involving
   a vector and the spectral matrix.
@@ -113,6 +114,8 @@ C. Beleites
 
 \code{\link[base]{all.equal}} and \code{\link[base]{isTRUE}}
 }
+\author{
+C. Beleites
+}
 \keyword{arith}
 \keyword{methods}
-

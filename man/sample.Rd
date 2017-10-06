@@ -2,9 +2,9 @@
 % Please edit documentation in R/sample.R
 \docType{methods}
 \name{sample,hyperSpec-method}
+\alias{sample,hyperSpec-method}
 \alias{isample}
 \alias{sample,data.frame-method}
-\alias{sample,hyperSpec-method}
 \alias{sample,matrix-method}
 \title{Random Samples and Permutations
 Take a sample of the specified size from the elements of x with or without
@@ -64,12 +64,11 @@ isample (flu, 8, replace = TRUE)
 sample (cars, 2)
 sample (matrix (1:24, 6), 2)
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{sample}}
 }
+\author{
+C. Beleites
+}
 \keyword{distribution}
 \keyword{methods}
-

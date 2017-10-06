@@ -54,7 +54,7 @@ always empty.
 \item \code{spe.showcalpoints}: Plot the WinSpec SPE file (version 2.5) and show the
 calibration points stored inside of it (x-axis calibration)
 }}
+
 \author{
 R. Kiselev, C. Beleites
 }
-

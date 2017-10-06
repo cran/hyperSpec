@@ -2,25 +2,36 @@
 % Please edit documentation in R/Arith.R
 \docType{methods}
 \name{Arith}
-\alias{*,hyperSpec,hyperSpec-method}
+\alias{Arith}
+\alias{Arith,hyperSpec-method}
+\alias{Arith,hyperSpec,hyperSpec-method}
 \alias{+,hyperSpec,hyperSpec-method}
 \alias{-,hyperSpec,hyperSpec-method}
+\alias{*,hyperSpec,hyperSpec-method}
+\alias{^,hyperSpec,hyperSpec-method}
+\alias{\%\%,hyperSpec,hyperSpec-method}
+\alias{\%/\%,hyperSpec,hyperSpec-method}
 \alias{/,hyperSpec,hyperSpec-method}
-\alias{Arith}
-\alias{Arith,hyperSpec,hyperSpec-method}
 \alias{Arith,hyperSpec,matrix-method}
-\alias{Arith,hyperSpec,missing-method}
 \alias{Arith,hyperSpec,numeric-method}
-\alias{Arith,hyperSpec-method}
+\alias{Arith,hyperSpec,missing-method}
 \alias{Arith,matrix,hyperSpec-method}
 \alias{Arith,numeric,hyperSpec-method}
 \alias{\%*\%}
 \alias{\%*\%,hyperSpec,hyperSpec-method}
+\alias{\%*\%,matrix,hyperSpec-method}
+\alias{\%*\%,hyperSpec,matrix-method}
+\alias{Arith,hyperSpec,numeric-method}
+\alias{Arith,hyperSpec,matrix-method}
+\alias{Arith,hyperSpec,missing-method}
+\alias{Arith,numeric,hyperSpec-method}
+\alias{Arith,matrix,hyperSpec-method}
+\alias{\%*\%,hyperSpec,hyperSpec-method}
+\alias{\%*\%}
+\alias{\%*\%,matrix,hyperSpec-method}
+\alias{\%*\%,hyperSpec,matrix-method}
 \alias{\%*\%,hyperSpec,matrix-method}
 \alias{\%*\%,matrix,hyperSpec-method}
-\alias{\%/\%,hyperSpec,hyperSpec-method}
-\alias{\%\%,hyperSpec,hyperSpec-method}
-\alias{^,hyperSpec,hyperSpec-method}
 \title{Arithmetical Operators for hyperSpec objects}
 \usage{
 \S4method{Arith}{hyperSpec,hyperSpec}(e1, e2)
@@ -79,7 +90,7 @@ have their usual meaning (see \code{\link[base]{Arithmetic}}).  The operators wo
 of the \code{hyperSpec} object.
 
 With numeric vectors \code{\link[hyperSpec]{sweep}} is most probably more appropriate.
-  
+
 If you want to calculate on the extra data as well, use the data.frame \code{hyperSpec@data}
 directly or \code{\link[hyperSpec]{as.data.frame} (x)}.
 }
@@ -90,22 +101,22 @@ all((flu + flu - 2 * flu)[[]] == 0)
 -flu
 flu / flu$c
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{sweep-methods}} for calculations involving a vector and
   the spectral matrix.
-  
+
   \code{\link[methods]{S4groupGeneric}} for group generic methods.
 
   \code{\link[base]{Arithmetic}} for the base arithmetic functions.
 
-  \code{\link[hyperSpec]{Comparison}} for comparison operators, 
-  \code{\link[hyperSpec]{Math}} for mathematical group generic 
+  \code{\link[hyperSpec]{Comparison}} for comparison operators,
+  \code{\link[hyperSpec]{Math}} for mathematical group generic
   functions (Math and Math2 groups) working on \code{hyperSpec} objects.
 
 \code{\link[base]{matmult}} for matrix multiplications with \code{\%*\%}.
+}
+\author{
+C. Beleites
 }
 \concept{
 hyperSpec arithmetic
@@ -122,4 +133,3 @@ hyperSpec matrix multiplication
 }
 \keyword{arith}
 \keyword{methods}
-

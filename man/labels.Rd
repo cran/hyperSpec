@@ -2,9 +2,9 @@
 % Please edit documentation in R/labels.R
 \docType{methods}
 \name{labels<-}
-\alias{labels,hyperSpec-method}
 \alias{labels<-}
 \alias{labels<-,hyperSpec-method}
+\alias{labels,hyperSpec-method}
 \title{Get and Set Labels of a hyperSpec Object
 \code{value} may be a list or vector of labels giving the new label for
 each of the entries specified by \code{which}.}
@@ -54,10 +54,9 @@ labels (flu, "c") <- expression ("/" ("c", "mg / l"))
 labels (chondro)
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{labels}}
 }
-
+\author{
+C. Beleites
+}

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{sweep}
 \alias{sweep}
-\alias{sweep,hyperSpec-method}
 \alias{sweep-methods}
+\alias{sweep,hyperSpec-method}
 \title{Sweep Summary Statistic out of an hyperSpec Object
 \code{\link[base]{sweep}} for \code{hyperSpec} objects.}
 \usage{
@@ -73,11 +73,10 @@ plot (mm.corrected2)
 stopifnot (all (mm.corrected2 == mm.corrected))
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{sweep}}
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

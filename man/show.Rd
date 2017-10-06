@@ -2,14 +2,14 @@
 % Please edit documentation in R/show.R
 \docType{methods}
 \name{as.character,hyperSpec-method}
-\alias{as.character}
 \alias{as.character,hyperSpec-method}
-\alias{print}
-\alias{print,hyperSpec-method}
+\alias{as.character}
 \alias{show}
 \alias{show,hyperSpec-method}
-\alias{summary}
+\alias{print,hyperSpec-method}
+\alias{print}
 \alias{summary,hyperSpec-method}
+\alias{summary}
 \title{Convert a hyperSpec object to character strings for Display
 \code{print}, \code{show}, and \code{summary} show the result of
 \code{as.character}.}
@@ -79,4 +79,3 @@ print (chondro, range = TRUE)
 }
 \keyword{methods}
 \keyword{print}
-

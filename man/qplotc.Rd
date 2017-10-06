@@ -34,12 +34,11 @@ These functions are still experimental and may change substantially in future.
 qplotc (flu)
 qplotc (flu) + geom_smooth (method = "lm")
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link{plotc}}
 
 \code{\link[ggplot2]{ggplot}}\code{\link[ggplot2]{geom_point}}
 }
-
+\author{
+Claudia Beleites
+}

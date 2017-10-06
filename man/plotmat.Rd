@@ -43,10 +43,9 @@ plotmat (laser, "t")
 
 plotmat (laser, laser$t / 3600, ylab = "t / h")
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[graphics]{image}}, \code{\link[graphics]{contour}}, \code{\link[hyperSpec]{levelplot}}
 }
-
+\author{
+Claudia Beleites
+}

@@ -25,4 +25,3 @@ plotc (flu)
 M. Kammer and C. Beleites
 }
 \keyword{datasets}
-

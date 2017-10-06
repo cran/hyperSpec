@@ -2,11 +2,12 @@
 % Please edit documentation in R/plot.R
 \docType{methods}
 \name{plot-methods}
+\alias{plot-methods}
 \alias{plot}
 \alias{plot,ANY,ANY-method}
 \alias{plot,hyperSpec,character-method}
 \alias{plot,hyperSpec,missing-method}
-\alias{plot-methods}
+\alias{plot,hyperSpec,character-method}
 \title{Plotting hyperSpec Objects}
 \usage{
 \S4method{plot}{hyperSpec,missing}(x, y, ...)
@@ -80,9 +81,6 @@ plot (spc, "spcprctile")
 plot (spc, "spcmeansd")
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link{plotspc}} for spectra plots (intensity over
   wavelength),
@@ -94,6 +92,8 @@ C. Beleites
 
 \code{\link[graphics]{plot}}
 }
+\author{
+C. Beleites
+}
 \keyword{hplot}
 \keyword{methods}
-

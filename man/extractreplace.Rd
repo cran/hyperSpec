@@ -2,18 +2,18 @@
 % Please edit documentation in R/extract.R, R/replace.R
 \docType{methods}
 \name{[,hyperSpec-method}
-\alias{$}
-\alias{$,hyperSpec-method}
-\alias{$<-}
-\alias{$<-,hyperSpec-method}
-\alias{[}
 \alias{[,hyperSpec-method}
+\alias{[}
+\alias{[[,hyperSpec-method}
+\alias{[[}
+\alias{$,hyperSpec-method}
+\alias{$}
 \alias{[<-}
 \alias{[<-,hyperSpec-method}
-\alias{[[}
-\alias{[[,hyperSpec-method}
 \alias{[[<-}
 \alias{[[<-,hyperSpec-method}
+\alias{$<-}
+\alias{$<-,hyperSpec-method}
 \title{Extract and Replace parts of hyperSpec objects}
 \usage{
 \S4method{[}{hyperSpec}(x, i, j, l, ..., wl.index = FALSE, drop = FALSE)
@@ -244,4 +244,3 @@ spc$z <- list (1 : 6, "z / a.u.")
 }
 \keyword{manip}
 \keyword{methods}
-

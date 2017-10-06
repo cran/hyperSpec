@@ -62,4 +62,3 @@ mark.dendrogram (dend, cut (laser [[,, 405.36]], 100), alois.palette (100),
 \author{
 Claudia Beleites
 }
-

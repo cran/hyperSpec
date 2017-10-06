@@ -37,14 +37,13 @@ qplotmap (chondro)
 qplotmap (chondro) + scale_fill_gradientn (colours = alois.palette ())
 
 ## works also with discrete x or y axis:
-qplotmap (chondro, mapping = aes (x = x, y = as.factor (y), fill = spc)) 
-}
-\author{
-Claudia Beleites
+qplotmap (chondro, mapping = aes (x = x, y = as.factor (y), fill = spc))
 }
 \seealso{
 \code{\link{plotmap}}
 
 \code{\link[ggplot2]{ggplot}}\code{\link[ggplot2]{geom_tile}}
 }
-
+\author{
+Claudia Beleites
+}

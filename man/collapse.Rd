@@ -21,9 +21,9 @@ collapse/bind several hyperSpec objects into one object
 }
 \details{
 The spectra from all objects will be put into one object.
-The resulting object has all wavelengths that occur in any of the input objects, 
-\code{wl.tolerance} is used to determine which difference in the wavelengths is 
-tolerated as equal. The returned object has wavelengths rounded according to the 
+The resulting object has all wavelengths that occur in any of the input objects,
+\code{wl.tolerance} is used to determine which difference in the wavelengths is
+tolerated as equal. The returned object has wavelengths rounded according to the
 precision indicated by \code{wl.tolerance}.
 
 Data points corresponding to wavelengths not in the original spectrum will be set to NA.
@@ -47,12 +47,11 @@ collapse (a, b, c)
 
 
 }
+\seealso{
+\code{\link[base]{merge}} to merge hyperSpec objects that share wavelengths but contain
+  different spectra,  \code{\link[base]{rbind}}, and  \code{\link[plyr]{rbind.fill}} for
+}
 \author{
 C. Beleites
 }
-\seealso{
-\code{\link[base]{merge}} to merge hyperSpec objects that share wavelengths but contain 
-  different spectra,  \code{\link[base]{rbind}}, and  \code{\link[plyr]{rbind.fill}} for
-}
 \keyword{manip}
-

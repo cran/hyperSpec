@@ -98,14 +98,13 @@ plot (agg, "spc",  add = TRUE, col = color[agg$.aggregate],
       lines.args = list (lwd = 3, lty = 2))
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{tapply}}, \code{\link[stats]{aggregate}},
   \code{\link[stats]{ave}}
 }
+\author{
+C. Beleites
+}
 \keyword{array}
 \keyword{category}
 \keyword{methods}
-

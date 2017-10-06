@@ -43,10 +43,9 @@ lines (seq_len(nwl(spc)), spc[[]], type = "l", col = "red")
 spc[[]]
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{order}}
 }
-
+\author{
+C. Beleites
+}

@@ -2,16 +2,16 @@
 % Please edit documentation in R/dimnames.R
 \docType{methods}
 \name{dimnames,hyperSpec-method}
-\alias{colnames}
-\alias{colnames,hyperSpec-method}
-\alias{colnames<-}
-\alias{colnames<-,hyperSpec-method}
-\alias{dimnames}
 \alias{dimnames,hyperSpec-method}
-\alias{rownames}
+\alias{dimnames}
 \alias{rownames,hyperSpec-method}
+\alias{rownames}
 \alias{rownames<-}
 \alias{rownames<-,hyperSpec-method}
+\alias{colnames,hyperSpec-method}
+\alias{colnames}
+\alias{colnames<-}
+\alias{colnames<-,hyperSpec-method}
 \title{dimnames for hyperSpec objects}
 \usage{
 \S4method{dimnames}{hyperSpec}(x)
@@ -43,9 +43,6 @@ dimnames (flu)
 rownames (flu)
 colnames (chondro)
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link{wl}} for the wavelength dimension
 
@@ -55,5 +52,7 @@ C. Beleites
 
 \code{\link[base]{colnames}}
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

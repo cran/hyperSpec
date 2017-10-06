@@ -23,4 +23,3 @@ wc uses the system command wc
 \author{
 C. Beleites
 }
-

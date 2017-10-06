@@ -63,9 +63,6 @@ examples.  If no label is given, a warning will be issued.
 	plot (chondro [1])
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{signif}}
 
@@ -75,4 +72,6 @@ interpolation along the spectral axis: \code{\link[hyperSpec]{spc.loess}}
 
 spectral binning: \code{\link[hyperSpec]{spc.bin}}
 }
-
+\author{
+C. Beleites
+}

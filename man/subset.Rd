@@ -19,10 +19,9 @@ hyperSpec object containing the respective subset of spectra.
 \description{
 subset for hyperSpec object
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[base]{subset}}
 }
-
+\author{
+Claudia Beleites
+}

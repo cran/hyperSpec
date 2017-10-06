@@ -39,11 +39,10 @@ plotmap (chondro[, , c( 728, 782, 1098, 1240, 1482, 1577)],
        col.regions = colorRampPalette (c ("white", "gold", "dark green"), space = "Lab") (20))
 
 }
-\author{
-A. Bonifacio and C. Beleites
-}
 \references{
 The raw data is available at \url{http://hyperspec.r-forge.r-project.org/blob/chondro.zip}
 }
+\author{
+A. Bonifacio and C. Beleites
+}
 \keyword{datasets}
-

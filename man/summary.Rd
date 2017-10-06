@@ -6,12 +6,12 @@
 \alias{Summary,hyperSpec-method}
 \alias{all,hyperSpec-method}
 \alias{any,hyperSpec-method}
-\alias{is.na,hyperSpec-method}
-\alias{max,hyperSpec-method}
-\alias{min,hyperSpec-method}
-\alias{prod,hyperSpec-method}
-\alias{range,hyperSpec-method}
 \alias{sum,hyperSpec-method}
+\alias{prod,hyperSpec-method}
+\alias{min,hyperSpec-method}
+\alias{max,hyperSpec-method}
+\alias{range,hyperSpec-method}
+\alias{is.na,hyperSpec-method}
 \title{The functions}
 \usage{
 \S4method{Summary}{hyperSpec}(x, ..., na.rm = FALSE)
@@ -57,4 +57,3 @@ is.na (flu [,, 405 ~ 410]);
 
 \code{\link[base]{all.equal}} and \code{\link[base]{isTRUE}}
 }
-

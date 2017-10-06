@@ -3,9 +3,9 @@
 \docType{methods}
 \name{split}
 \alias{split}
+\alias{split-methods}
 \alias{split,ANY-method}
 \alias{split,hyperSpec-method}
-\alias{split-methods}
 \title{Split a hyperSpec object according to groups
 \code{split} divides the \code{hyperSpec} object into a list of
 \code{hyperSpec} objects according to the groups given by \code{f}.}
@@ -42,11 +42,10 @@ plot (apply (clusters[[2]], 2, mean) - apply (clusters[[1]], 2, mean))
 
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{split}}
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

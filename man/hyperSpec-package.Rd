@@ -19,11 +19,6 @@ More generally, any data that is recorded over a discretized variable, e.g.
 absorbance = f (wavelength), stored as a vector of absorbance values for
 discrete wavelengths is suitable.
 }
-\author{
-C. Beleites
-
-Maintainer: Claudia Beleites <claudia.beleites@chemometrix.eu>
-}
 \seealso{
 \code{citation ("hyperSpec")} produces the correct citation.
 
@@ -32,5 +27,9 @@ Maintainer: Claudia Beleites <claudia.beleites@chemometrix.eu>
 \code{class?hyperSpec} for details on the S4 class provided by this
   package.
 }
-\keyword{package}
+\author{
+C. Beleites
 
+Maintainer: Claudia Beleites <claudia.beleites@chemometrix.eu>
+}
+\keyword{package}

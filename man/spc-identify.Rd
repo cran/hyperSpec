@@ -8,6 +8,12 @@
 \alias{spc.point.max}
 \alias{spc.point.min}
 \alias{spc.point.sqr}
+\alias{spc.point.max}
+\alias{spc.point.default}
+\alias{spc.point.min}
+\alias{spc.point.sqr}
+\alias{spc.label.default}
+\alias{spc.label.wlonly}
 \title{Identifying Spectra and Spectral Data Points
 This function allows to identify the spectrum and the wavelength of a point
 in a plot produced by \code{\link{plotspc}}.}
@@ -155,14 +161,13 @@ spc.identify (plot (-paracetamol, wl.reverse = TRUE),
 }
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[graphics]{locator}}, \code{\link{plotspc}},
   \code{\link[hyperSpec:options]{hyperSpec options}}
 
 \code{\link{map.identify}} \code{\link{map.sel.poly}}
 }
+\author{
+C. Beleites
+}
 \keyword{iplot}
-

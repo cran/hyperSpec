@@ -3,9 +3,9 @@
 \docType{methods}
 \name{normalize01}
 \alias{normalize01}
-\alias{normalize01,hyperSpec-method}
 \alias{normalize01,matrix-method}
 \alias{normalize01,numeric-method}
+\alias{normalize01,hyperSpec-method}
 \title{normalization for mixed colors}
 \usage{
 normalize01(x, ...)
@@ -33,10 +33,9 @@ Normalize numbers -> [0, 1]
 The input \code{x} is mapped to [0, 1] by subtracting the minimum and subsequently dividing by
 the maximum. If all elements of \code{x} are equal, 1 is returned.
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{wl.eval}}, \code{\link[hyperSpec]{vanderMonde}}
 }
-
+\author{
+C. Beleites
+}

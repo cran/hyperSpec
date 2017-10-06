@@ -1,4 +1,5 @@
 ### R code from vignette source 'flu.Rnw'
+### Encoding: UTF-8
 
 ###################################################
 ### code chunk number 1: startup
@@ -232,9 +233,9 @@ make.bib <- function (..., file = NULL) {
 ### code chunk number 2: mailme
 ###################################################
 cat ("\\newcommand{\\mailme}{\\href{mailto:",
-     packageDescription ("hyperSpec")$Maintainer,
+     maintainer ("hyperSpec"),
 	  "}{\\texttt{",
-	  packageDescription ("hyperSpec")$Maintainer,
+	  maintainer ("hyperSpec"),
 	  "}}}\n",
 	  sep = "")
 
@@ -260,8 +261,8 @@ texListFun <- function (pattern){
 ###################################################
 ### code chunk number 5: read.txt.PE
 ###################################################
-source ("scan.txt.PerkinElmer.R")
-flu <- scan.txt.PerkinElmer ("rawdata/flu?.txt", skip = 54)
+source ("read.txt.PerkinElmer.R")
+flu <- read.txt.PerkinElmer (Sys.glob ("rawdata/flu?.txt"), skip = 54)
 
 
 ###################################################
@@ -295,7 +296,7 @@ flu$c
 ###################################################
 ### code chunk number 10: delcol
 ###################################################
-flu$file <- NULL
+flu$filename <- NULL
 
 
 ###################################################
@@ -366,14 +367,6 @@ panel.ci <-  function (x, y, ...,
 
 plotc (flu, panel = panel.ci,
        intensity = int$spc, ci.lwr = ci [, 2], ci.upr = ci [, 3])
-## # extrapolate to lower intensities
-## int <- list (spc = as.matrix(0 : min (flu)))
-## ci <- predict (calibration, newdata = int, interval = "confidence", level = 0.99)
-## matlines (ci, int$spc, col = c ("red","#606060","#606060"), lty = 3)
-
-# our example
-#lines (conc[-1], rep(I, 2), col = "blue")
-#points (conc[1], I, col = "blue", pch = 4, cex = 0.5)
 
 
 ###################################################
@@ -392,7 +385,7 @@ tmp <- tmp [rep (seq (tmp, index = TRUE), 3)]
 tmp$c <- as.numeric (ci)
 tmp$type <- rep (colnames (ci), each = 25)
 
-flu <- rbind (flu, tmp)
+flu <- collapse (flu, tmp)
 
 
 ###################################################
@@ -421,7 +414,7 @@ plotc (flu, groups = type, type = c("l", "p"),
 
 
 ###################################################
-### code chunk number 22: flu.Rnw:239-240
+### code chunk number 22: flu.Rnw:231-232
 ###################################################
 sessionInfo ()
 rm (list = ls ())

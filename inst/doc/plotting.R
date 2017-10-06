@@ -233,9 +233,9 @@ make.bib <- function (..., file = NULL) {
 ### code chunk number 2: mailme
 ###################################################
 cat ("\\newcommand{\\mailme}{\\href{mailto:",
-     packageDescription ("hyperSpec")$Maintainer,
+     maintainer ("hyperSpec"),
 	  "}{\\texttt{",
-	  packageDescription ("hyperSpec")$Maintainer,
+	  maintainer ("hyperSpec"),
 	  "}}}\n",
 	  sep = "")
 
@@ -281,7 +281,7 @@ for (p in required.pkgs [! required.pkgs %in% c("latticeExtra", "deldir")])
 ###################################################
 chondro.preproc <- chondro - spc.fit.poly.below (chondro)
 chondro.preproc <- chondro.preproc / rowMeans (chondro)
-chondro.preproc <- chondro.preproc - quantile (chondro, 0.05)
+chondro.preproc <- chondro.preproc - quantile (chondro.preproc, 0.05)
 
 cluster.cols <- c ("dark blue", "orange", "#C02020")
 cluster.meansd <- aggregate (chondro.preproc, chondro$clusters, mean_pm_sd)
@@ -296,7 +296,7 @@ plotspc (flu)
 
 
 ###################################################
-### code chunk number 8: plotspc
+### code chunk number 8: plotmat-flu
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmat (flu)
@@ -714,12 +714,41 @@ plotmap (chondro, clusters ~ x * y)
 ### code chunk number 59: plotmap-col
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-print (plotmap (chondro, clusters ~ x * y,
-                col.regions = cluster.cols))
+plotmap (chondro, clusters ~ x * y,
+                col.regions = cluster.cols)
 
 
 ###################################################
-### code chunk number 60: plotmap-wave
+### code chunk number 60: lattice-params
+###################################################
+my.theme = trellis.par.get()
+names(my.theme)       # note how many parameters are tunable
+
+
+###################################################
+### code chunk number 61: plotmap-col-default
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+my.theme$regions$col = grDevices::terrain.colors
+plotmap (chondro, par.settings = my.theme)
+
+
+###################################################
+### code chunk number 62: lattice-settings
+###################################################
+getOption("SweaveHooks")[["fig"]]()
+show.settings(my.theme)
+
+
+###################################################
+### code chunk number 63: lattice-settings-dummy
+###################################################
+# Display current trellis parameters
+show.settings()
+
+
+###################################################
+### code chunk number 64: plotmap-wave
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (chondro.preproc [, , c(728, 782, 1098, 
@@ -728,7 +757,7 @@ plotmap (chondro.preproc [, , c(728, 782, 1098,
 
 
 ###################################################
-### code chunk number 61: plotmap-pca
+### code chunk number 65: plotmap-pca
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (chondro, 
@@ -737,7 +766,7 @@ plotmap (chondro,
 
 
 ###################################################
-### code chunk number 62: plotmap-pca2
+### code chunk number 66: plotmap-pca2
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 pca <- prcomp (~ spc, data = chondro.preproc$.)
@@ -751,7 +780,7 @@ plotmap (scores [,,1:2],
 
 
 ###################################################
-### code chunk number 63: plotmap-pca3
+### code chunk number 67: plotmap-pca3
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 levelplot (spc ~ y * x | as.factor(.wavelength), 
@@ -761,7 +790,7 @@ levelplot (spc ~ y * x | as.factor(.wavelength),
 
 
 ###################################################
-### code chunk number 64: voronoi-2
+### code chunk number 68: voronoi-2
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotvoronoi (sample (chondro, 300), clusters ~ x * y, 
@@ -769,7 +798,7 @@ plotvoronoi (sample (chondro, 300), clusters ~ x * y,
 
 
 ###################################################
-### code chunk number 65: missing
+### code chunk number 69: missing
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 mark.missing <- function (x, y, z, ...){
@@ -782,14 +811,14 @@ mark.missing <- function (x, y, z, ...){
   panel.xyplot (miss [, 1], miss [, 2], pch = 4, ...)
 }
 
-plotmap (sample (chondro, 865), 
+plotmap (sample (chondro, length(chondro) - 20),
          col.regions = matlab.palette(20),
          col = "black",
          panel = mark.missing)
 
 
 ###################################################
-### code chunk number 66: uneven-prep
+### code chunk number 70: uneven-prep
 ###################################################
 uneven <- chondro
 uneven$x <- uneven$x + round (rnorm (nrow (uneven), sd = 0.05), digits = 1)
@@ -797,21 +826,21 @@ uneven$y <- uneven$y + round (rnorm (nrow (uneven), sd = 0.05), digits = 1)
 
 
 ###################################################
-### code chunk number 67: uneven-I
+### code chunk number 71: uneven-I
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (uneven)
 
 
 ###################################################
-### code chunk number 68: uneven-II
+### code chunk number 72: uneven-II
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotvoronoi (uneven)
 
 
 ###################################################
-### code chunk number 69: uneven-III
+### code chunk number 73: uneven-III
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (uneven, panel = panel.levelplot.points, 
@@ -819,7 +848,7 @@ plotmap (uneven, panel = panel.levelplot.points,
 
 
 ###################################################
-### code chunk number 70: uneven-IV
+### code chunk number 74: uneven-IV
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 rx <- makeraster (uneven$x, start = -11.55, d = 1, tol = 0.3)
@@ -830,7 +859,7 @@ plotmap (uneven)
 
 
 ###################################################
-### code chunk number 71: rgl-plot (eval = FALSE)
+### code chunk number 75: rgl-plot (eval = FALSE)
 ###################################################
 ## laser <- laser [,,404.8 ~ 405.6] / 10000
 ## laser$t <- laser$t / 3600
@@ -846,7 +875,7 @@ plotmap (uneven)
 
 
 ###################################################
-### code chunk number 72: rgl-do
+### code chunk number 76: rgl-do
 ###################################################
   if (require (rgl)){
     open3d (windowRect=c(20,20,600, 350))  # this is needed only for automatically 
@@ -879,20 +908,20 @@ mtext3d ("I / a.u.", edge = 'z--', line = 2.5)
 
 
 ###################################################
-### code chunk number 73: ggplotspc (eval = FALSE)
+### code chunk number 77: ggplotspc (eval = FALSE)
 ###################################################
 ## qplotspc (flu) + aes (colour = c)
 
 
 ###################################################
-### code chunk number 74: ggplotmap (eval = FALSE)
+### code chunk number 78: ggplotmap (eval = FALSE)
 ###################################################
 ## qplotmap (chondro) + 
 ##   scale_fill_gradientn ("spc", colours = matlab.palette ()) 
 
 
 ###################################################
-### code chunk number 75: ggplotmeansd (eval = FALSE)
+### code chunk number 79: ggplotmeansd (eval = FALSE)
 ###################################################
 ## qplotspc (mean (chondro)) +
 ## geom_ribbon (aes (ymin = mean + sd, 
@@ -903,7 +932,7 @@ mtext3d ("I / a.u.", edge = 'z--', line = 2.5)
 
 
 ###################################################
-### code chunk number 76: ggplotspccut (eval = FALSE)
+### code chunk number 80: ggplotspccut (eval = FALSE)
 ###################################################
 ## qplotspc (paracetamol / 1e4, 
 ##           wl.range = c( min ~ 1800, 2800 ~ max)) +
@@ -911,7 +940,7 @@ mtext3d ("I / a.u.", edge = 'z--', line = 2.5)
 
 
 ###################################################
-### code chunk number 77: ggplot2-do
+### code chunk number 81: ggplot2-do
 ###################################################
 if (require (ggplot2)){
 qplotspc (flu) + aes (colour = c)
@@ -940,25 +969,25 @@ qplotspc (paracetamol / 1e4,
 
 
 ###################################################
-### code chunk number 78: plotting.Rnw:837-838 (eval = FALSE)
+### code chunk number 82: plotting.Rnw:886-887 (eval = FALSE)
 ###################################################
 ## spc.identify (plotspc (paracetamol, wl.range = c (600 ~ 1800, 2800 ~ 3200), xoffset = 800))
 
 
 ###################################################
-### code chunk number 79: plotting.Rnw:846-847 (eval = FALSE)
+### code chunk number 83: plotting.Rnw:895-896 (eval = FALSE)
 ###################################################
 ## map.identify (chondro)
 
 
 ###################################################
-### code chunk number 80: plotting.Rnw:854-855 (eval = FALSE)
+### code chunk number 84: plotting.Rnw:903-904 (eval = FALSE)
 ###################################################
 ## map.sel.poly (chondro)
 
 
 ###################################################
-### code chunk number 81: plotting.Rnw:868-871 (eval = FALSE)
+### code chunk number 85: plotting.Rnw:917-920 (eval = FALSE)
 ###################################################
 ## plot (laser, "mat")
 ## trellis.focus ()
@@ -966,7 +995,7 @@ qplotspc (paracetamol / 1e4,
 
 
 ###################################################
-### code chunk number 82: bib
+### code chunk number 86: bib
 ###################################################
 make.bib (c("latticeExtra", "rgl", "ggplot2", "playwith",  "plotrix", "deldir", "tripack"), 
           file = "plotting-pkg.bib")

@@ -62,15 +62,14 @@ i.sel <- which (point.in.polygon (data$x, data$y, polygon [, 1], polygon [, 2]) 
 grid.points (unit (data$x [i.sel], "native"), unit (data$y [i.sel], "native"))
 }
 }
-\author{
-Claudia Beleites, Sebastian Mellor
-
-Claudia Beleites
-}
 \seealso{
 \code{\link[grid]{grid.locator}}, \code{\link{map.identify}}
 
 \code{\link[grid]{grid.locator}}
 }
-\keyword{iplot}
+\author{
+Claudia Beleites, Sebastian Mellor
 
+Claudia Beleites
+}
+\keyword{iplot}

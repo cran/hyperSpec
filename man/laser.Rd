@@ -31,4 +31,3 @@ plotc (laser [,, wl], spc ~ t, groups = .wavelength, type = "b",
 C. Beleites
 }
 \keyword{datasets}
-

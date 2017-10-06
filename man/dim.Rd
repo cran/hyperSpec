@@ -2,11 +2,11 @@
 % Please edit documentation in R/dim.R
 \docType{methods}
 \name{ncol,hyperSpec-method}
-\alias{dim,hyperSpec-method}
-\alias{length,hyperSpec-method}
 \alias{ncol,hyperSpec-method}
 \alias{nrow,hyperSpec-method}
 \alias{nwl}
+\alias{dim,hyperSpec-method}
+\alias{length,hyperSpec-method}
 \title{The Number of Rows (Spectra), Columns, and Data Points per Spectrum of an
 hyperSpec Object)}
 \usage{
@@ -54,9 +54,6 @@ nwl  (chondro)
 dim (chondro)
 length (chondro)
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{ncol}}
 
@@ -66,5 +63,7 @@ C. Beleites
 
 \code{\link[base]{length}}
 }
+\author{
+C. Beleites
+}
 \keyword{methods}
-

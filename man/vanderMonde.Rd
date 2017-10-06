@@ -39,12 +39,11 @@ plot (vanderMonde (flu, 2, normalize.wl = I))
 
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{wl.eval}} for calculating arbitrary functions of the wavelength,
 
 \code{\link[hyperSpec]{normalize01}}
 }
-
+\author{
+C. Beleites
+}

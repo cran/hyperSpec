@@ -4,12 +4,15 @@
 \alias{read.ini}
 \title{Read INI files}
 \usage{
-read.ini(con = stop("Connection con needed."), skip = NULL)
+read.ini(con = stop("Connection con needed."), skip = NULL,
+  encoding = "unknown")
 }
 \arguments{
 \item{con}{connection or file name}
 
 \item{skip}{number of lines to skip before first \code{[section]} starts}
+
+\item{encoding}{see \code{\link[base]{readLines}}}
 }
 \value{
 a list with one element per section in the .ini file, each containing a list with elements
@@ -32,4 +35,3 @@ C. Beleites
 }
 \keyword{IO}
 \keyword{file}
-

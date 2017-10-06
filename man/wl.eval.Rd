@@ -23,12 +23,11 @@ This is useful for generating certain types of baseline "reference spectra".
 \examples{
 plot (wl.eval (laser, exp = function (x) exp (-x)))
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{vanderMonde}} for  polynomials,
 
-\code{\link[hyperSpec]{normalize01}} to normalize the wavnumbers before evaluating the function
+\code{\link[hyperSpec]{normalize01}} to normalize the wavenumbers before evaluating the function
 }
-
+\author{
+C. Beleites
+}

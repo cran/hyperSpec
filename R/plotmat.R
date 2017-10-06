@@ -69,7 +69,7 @@ plotmat <- function (object, y = ".row", ylab, col = alois.palette (20), ...,
     par (mar = mar)
 
     ## color legend
-    if (requireNamespace ("plotrix")){
+    if (requireNamespace ("plotrix", quietly = TRUE)){
 
       usr <- par()$usr
 
@@ -91,13 +91,19 @@ plotmat <- function (object, y = ".row", ylab, col = alois.palette (20), ...,
 
 }
 
+##' @include unittest.R
 .test (plotmat) <- function (){
-  ## test non-increasing wavelength axis
+  context ("plotmat")
 
-  tmp <- flu
-  tmp [[]] <- tmp [[,, max ~ min]]
-  tmp@wavelength <- rev (tmp@wavelength)
+  test_that ("non-increasing wavelength axis", {
+    tmp <- flu
+    tmp [[]] <- tmp [[,, max ~ min]]
+    tmp@wavelength <- rev (tmp@wavelength)
 
-  plotmat (tmp)
+    expect_silent (plotmat (tmp))
+  })
+
+  ## TODO vdiffr
+
 
 }

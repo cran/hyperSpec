@@ -4,23 +4,25 @@
 \name{bind}
 \alias{bind}
 \alias{cbind.hyperSpec}
+\alias{bind}
+\alias{rbind.hyperSpec}
+\alias{cbind2,hyperSpec,hyperSpec-method}
+\alias{rbind2,hyperSpec,hyperSpec-method}
+\alias{cbind2,hyperSpec,missing-method}
+\alias{rbind2,hyperSpec,missing-method}
+\alias{rbind.hyperSpec}
 \alias{cbind2,hyperSpec,hyperSpec-method}
 \alias{cbind2,hyperSpec,missing-method}
-\alias{rbind.hyperSpec}
 \alias{rbind2,hyperSpec,hyperSpec-method}
 \alias{rbind2,hyperSpec,missing-method}
-\title{Binding hyperSpec Objects
-Two S3 functions \code{cbind.hyperSpec} and \code{rbind.hyperSpec} act as
-an interfaces to \code{cbind2} and \code{rbind2} because neither
-\code{\link[Matrix]{rBind}} and \code{\link[Matrix]{cBind}} nor S4 versions
-of \code{cbind} and \code{rbind} do work at the moment.}
+\title{Binding hyperSpec Objects}
 \usage{
 bind(direction = stop("direction ('c' or 'r') required"), ...,
   wl.tolerance = hy.getOption("wl.tolerance"))
 
-cbind.hyperSpec(...)
+\method{cbind}{hyperSpec}(...)
 
-rbind.hyperSpec(...)
+\method{rbind}{hyperSpec}(...)
 
 \S4method{cbind2}{hyperSpec,hyperSpec}(x, y)
 
@@ -39,7 +41,7 @@ rbind.hyperSpec(...)
 Alternatively, \emph{one} list of \code{hyperSpec} objects can be given to
   \code{bind}.}
 
-\item{wl.tolerance}{\code{rbind} and \code{rbind2} check for equal wavelengths 
+\item{wl.tolerance}{\code{rbind} and \code{rbind2} check for equal wavelengths
 with this tolerance.}
 
 \item{x, y}{\code{hyperSpec} objects}
@@ -49,10 +51,10 @@ a \code{hyperSpec} object, possibly with different row order (for
   \code{bind ("c", \dots{})} and \code{cbind2}).
 }
 \description{
-While it is now possible to do S4 despatch on \code{\dots{}}, defining such
-S4 methods for \code{cbind} and \code{rbind} breaks the binding of
-\code{Matrix} objects. Therefore, two S3 methods \code{rbind.hyperSpec} and
-\code{cbind.hyperSpec} are defined.
+Two S3 functions \code{cbind.hyperSpec} and \code{rbind.hyperSpec} act as
+an interfaces to \code{cbind2} and \code{rbind2} because neither
+\code{\link[Matrix]{rBind}} and \code{\link[Matrix]{cBind}} nor S4 versions
+of \code{cbind} and \code{rbind} do work at the moment.
 
 \code{cbind2} binds the spectral matrices of two \code{hyperSpec} objects by column. All columns
 besides \code{spc} with the same name in \code{x@data} and \code{y@data} must have the same
@@ -62,6 +64,11 @@ elements.  Rows are ordered before checking.
 the same columns.
 }
 \details{
+While it is now possible to do S4 despatch on \code{\dots{}}, defining such
+S4 methods for \code{cbind} and \code{rbind} breaks the binding of
+\code{Matrix} objects. Therefore, two S3 methods \code{rbind.hyperSpec} and
+\code{cbind.hyperSpec} are defined.
+
 \code{bind} does the common work for both column- and row-wise binding.
 }
 \note{
@@ -90,9 +97,6 @@ try (cbind2 (x, y)) # error
 
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[Matrix]{rBind}}, \code{\link[Matrix]{cBind}}
 \code{\link[methods]{rbind2}}, \code{\link[methods]{cbind2}}
@@ -101,6 +105,8 @@ C. Beleites
 \code{\link{merge}} and \code{\link{collapse}} for combining objects that do not share spectra
 or wavelengths, respectively.
 }
+\author{
+C. Beleites
+}
 \keyword{manip}
 \keyword{methods}
-

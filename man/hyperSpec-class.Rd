@@ -29,20 +29,20 @@ the special element \code{.wavelength}.}
 
 \item{\code{log}}{deprecated.}
 }}
+
 \note{
 Please note that the logbook is now removed.
 }
 \examples{
 
 showClass("hyperSpec")
-\dontrun{vignette ("introduction")}
+\dontrun{vignette ("hyperspec")}
+}
+\seealso{
+See the vignette "hyperspec" for an introduction to hyperSpec
+  from a spectroscopic point of view.
 }
 \author{
 C. Beleites
 }
-\seealso{
-See the vignette "introduction" for an introduction to hyperSpec
-  from a spectroscopic point of view.
-}
 \keyword{classes}
-

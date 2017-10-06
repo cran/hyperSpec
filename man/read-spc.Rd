@@ -77,9 +77,6 @@ plot (spc [[1]], lines.args = list (type = "h"))
 }
 
 }
-\author{
-C. Beleites
-}
 \references{
 Source development kit and file format specification of .spc
   files.
@@ -87,6 +84,8 @@ Source development kit and file format specification of .spc
 \seealso{
 \code{\link[hyperSpec]{textio}}
 }
+\author{
+C. Beleites
+}
 \keyword{IO}
 \keyword{file}
-

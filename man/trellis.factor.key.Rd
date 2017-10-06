@@ -40,11 +40,10 @@ plotmap (chondro, z ~ x * y,
          col.regions = c ("gray", "red", "blue", "dark green"))
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[lattice]{levelplot}}
 }
+\author{
+C. Beleites
+}
 \keyword{aplot}
-

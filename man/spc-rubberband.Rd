@@ -39,9 +39,6 @@ plot (bl, add = TRUE, col = 2)
 
 plot (paracetamol [,, 175 ~ 1800] - bl)
 }
-\author{
-Claudia Beleites
-}
 \seealso{
 \code{\link[hyperSpec]{spc.fit.poly}}, \code{\link[hyperSpec]{spc.fit.poly.below}}
 
@@ -49,4 +46,6 @@ Claudia Beleites
 
 \code{\link[hyperSpec]{hy.setOptions}}
 }
-
+\author{
+Claudia Beleites
+}

@@ -2,8 +2,8 @@
 % Please edit documentation in R/merge.R
 \docType{methods}
 \name{merge,hyperSpec,hyperSpec-method}
-\alias{merge}
 \alias{merge,hyperSpec,hyperSpec-method}
+\alias{merge}
 \title{Merge hyperSpec objects}
 \usage{
 \S4method{merge}{hyperSpec,hyperSpec}(x, y, ...)
@@ -42,15 +42,12 @@ approxfun <- function (y, wl, new.wl){
 
 merged <- merge (chondro [1:7,, 610 ~ 620], chondro [5:10,, 615 ~ 625], all = TRUE)
 merged$.
-merged <- apply (merged, 1, approxfun, 
-                 wl = wl (merged), new.wl = unique (wl (merged)), 
+merged <- apply (merged, 1, approxfun,
+                 wl = wl (merged), new.wl = unique (wl (merged)),
                  new.wavelength = "new.wl")
 merged$.
 
 
-}
-\author{
-C. Beleites
 }
 \seealso{
 \code{\link[base]{merge}}.
@@ -58,5 +55,7 @@ C. Beleites
 \code{\link{collapse}} combines hyperSpec objects that do not share the wavelength axis.
 \code{\link{rbind}}, and \code{\link{cbind}} for combining hyperSpec objects that.
 }
+\author{
+C. Beleites
+}
 \keyword{manip}
-

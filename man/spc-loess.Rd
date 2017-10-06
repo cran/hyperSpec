@@ -36,12 +36,11 @@ smooth [[, ]]
 plot (smooth, add = TRUE, col = "blue")
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[stats]{loess}}, \code{\link[stats]{loess.control}}
 }
+\author{
+C. Beleites
+}
 \keyword{datagen}
 \keyword{manip}
-

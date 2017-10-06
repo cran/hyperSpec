@@ -233,9 +233,9 @@ make.bib <- function (..., file = NULL) {
 ### code chunk number 2: mailme
 ###################################################
 cat ("\\newcommand{\\mailme}{\\href{mailto:",
-     packageDescription ("hyperSpec")$Maintainer,
+     maintainer ("hyperSpec"),
 	  "}{\\texttt{",
-	  packageDescription ("hyperSpec")$Maintainer,
+	  maintainer ("hyperSpec"),
 	  "}}}\n",
 	  sep = "")
 
@@ -265,15 +265,21 @@ check.req.pkg ("rgl", donothing = "")
 
 
 ###################################################
-### code chunk number 6: rawspc
+### code chunk number 6: loadlaser
+###################################################
+laser <- read.txt.Renishaw ("rawdata/laser.txt.gz", data = "ts")
+
+
+###################################################
+### code chunk number 7: rawspc
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
-laser <- scan.txt.Renishaw ("rawdata/laser.txt.gz", data = "ts")
+laser <- read.txt.Renishaw ("rawdata/laser.txt.gz", data = "ts")
 plot (laser, "spcprctl5") 
 
 
 ###################################################
-### code chunk number 7: cut
+### code chunk number 8: cut
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 laser <- laser [,,-75~0]
@@ -281,13 +287,13 @@ plot (laser, "spcprctl5")
 
 
 ###################################################
-### code chunk number 8: wlspc1
+### code chunk number 9: wlspc1
 ###################################################
 wl (laser) <- wl (laser) + 50
 
 
 ###################################################
-### code chunk number 9: wlcalc
+### code chunk number 10: wlcalc
 ###################################################
 wl (laser) <- list (
    wl = 1e7 / (1/405e-7 - wl (laser)),
@@ -296,33 +302,33 @@ wl (laser) <- list (
 
 
 ###################################################
-### code chunk number 10: wlspc
+### code chunk number 11: wlspc
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (laser, "spcprctl5") 
 
 
 ###################################################
-### code chunk number 11: save
+### code chunk number 12: save
 ###################################################
 save (laser, file = "laser.rda") 
 laser
 
 
 ###################################################
-### code chunk number 12: locator (eval = FALSE)
+### code chunk number 13: locator (eval = FALSE)
 ###################################################
 ## wls <- locator()$x
 
 
 ###################################################
-### code chunk number 13: laser.Rnw:120-121
+### code chunk number 14: laser.Rnw:124-125
 ###################################################
 wls <-  c(405.0063, 405.1121, 405.2885, 405.3591)
 
 
 ###################################################
-### code chunk number 14: markspc
+### code chunk number 15: markspc
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (laser, "spcmeansd")
@@ -331,41 +337,41 @@ abline (v = wls, col = cols )
 
 
 ###################################################
-### code chunk number 15: ts
+### code chunk number 16: ts
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotc (laser [,, wls], spc ~ t, groups = .wavelength, type = "b",  cex = 0.3, col = cols)
 
 
 ###################################################
-### code chunk number 16: tsextra
+### code chunk number 17: tsextra
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotc (laser [,, wls], spc ~ t | .wavelength, type = "b", cex = 0.3, col = "black")
 
 
 ###################################################
-### code chunk number 17: plotmatr
+### code chunk number 18: plotmatr
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (laser, "mat", contour = TRUE, col = "#00000060")
 
 
 ###################################################
-### code chunk number 18: plotmatt
+### code chunk number 19: plotmatt
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 levelplot (spc ~ .wavelength * t, laser, contour = TRUE, col ="#00000080")
 
 
 ###################################################
-### code chunk number 19: libraryrgl
+### code chunk number 20: libraryrgl
 ###################################################
 require (rgl)
 
 
 ###################################################
-### code chunk number 20: rgl-plot (eval = FALSE)
+### code chunk number 21: rgl-plot (eval = FALSE)
 ###################################################
 ## message ("plot chunk")
 ## laser <- laser [,,404.8 ~ 405.6] / 10000
@@ -386,7 +392,7 @@ require (rgl)
 
 
 ###################################################
-### code chunk number 21: rgl-do
+### code chunk number 22: rgl-do
 ###################################################
   if (require (rgl)){
     open3d (windowRect=c(20,20,600, 350))  # this is needed only for automatically 
@@ -424,13 +430,13 @@ mtext3d ("I / a.u.", 'z--', line = 2.5)
 
 
 ###################################################
-### code chunk number 22: makebib
+### code chunk number 23: makebib
 ###################################################
 make.bib (file = "laser-pkg.bib")
 
 
 ###################################################
-### code chunk number 23: laser.Rnw:241-243
+### code chunk number 24: laser.Rnw:245-247
 ###################################################
 make.bib (file = "laser-pkg.bib") 
 sessionInfo ()

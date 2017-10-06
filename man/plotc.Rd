@@ -84,11 +84,10 @@ plotc (laser [,, wl], spc ~ t, groups = .wavelength, type = "b",
        col = cols)
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[lattice]{xyplot}}
 }
+\author{
+C. Beleites
+}
 \keyword{hplot}
-

@@ -2,15 +2,15 @@
 % Please edit documentation in R/mean_sd.R, R/quantile.R
 \docType{methods}
 \name{mean_sd,numeric-method}
-\alias{mean,hyperSpec-method}
-\alias{mean_pm_sd}
-\alias{mean_pm_sd,hyperSpec-method}
-\alias{mean_pm_sd,matrix-method}
-\alias{mean_pm_sd,numeric-method}
-\alias{mean_sd}
-\alias{mean_sd,hyperSpec-method}
-\alias{mean_sd,matrix-method}
 \alias{mean_sd,numeric-method}
+\alias{mean_sd}
+\alias{mean_sd,matrix-method}
+\alias{mean_sd,hyperSpec-method}
+\alias{mean_pm_sd,numeric-method}
+\alias{mean_pm_sd}
+\alias{mean_pm_sd,matrix-method}
+\alias{mean_pm_sd,hyperSpec-method}
+\alias{mean,hyperSpec-method}
 \alias{quantile,hyperSpec-method}
 \title{Mean and Standard Deviation
 Calculate mean and standard deviation, and mean, mean \eqn{\pm}{+-} one
@@ -89,9 +89,6 @@ plot (mean (chondro))
 
 plot (quantile (chondro))
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[base]{mean}}, \code{\link[stats]{sd}}
 
@@ -99,6 +96,8 @@ C. Beleites
 
 \code{\link[stats]{quantile}}
 }
+\author{
+C. Beleites
+}
 \keyword{multivar}
 \keyword{univar}
-

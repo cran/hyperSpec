@@ -1,11 +1,25 @@
 Package: hyperSpec
+Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.98-20161118
-Date: 2016-11-18
-Author: Claudia Beleites
+Version: 0.99-20171005
+Date: 2017-10-05
 Maintainer: Claudia Beleites <chemometrie@beleites.de>
+Authors@R: c(
+    person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "chemometrie@beleites.de"),
+    person("Valter",    "Sergo",     role = c("aut")),
+    person("Alois",     "Bonifacio", role = c ("ctb", "dtc")),
+    person("Marcel",    "Dahms",     role = "ctb"),
+    person("Björn",     "Egert",     role = "ctb"),
+    person("Simon",     "Fuller",    role = "ctb"),
+    person("Rustam",    "Guliev",    role = "ctb"),
+    person("Bryan",     "Hanson",    role = "ctb"),
+    person("Michael",   "Hermes",    role = "ctb"),
+    person("Martin",    "Kammer",    role = "dtc"),
+    person("Roman",     "Kiselev",   role = "ctb"),
+    person("Sebastian", "Mellor",    role = "ctb")
+    )
 Description: Comfortable ways to work with hyperspectral data sets.
     I.e. spatially or time-resolved spectra, or spectra with any other kind
     of information associated with each of the spectra. The spectra can be data
@@ -17,40 +31,54 @@ License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
 Depends: R (>= 2.15), lattice, grid, ggplot2 (>= 2.2.0)
-Suggests: R.matlab, tripack, deldir, rgl, plotrix, testthat, sp,
-        baseline, compiler, inline, Rcpp, MASS, fastcluster, pls,
-        mvtnorm, digest
-Imports: methods, utils, latticeExtra, svUnit
+Suggests: R.matlab, tripack, deldir, rgl, plotrix, sp, baseline,
+        compiler, inline, Rcpp, MASS, fastcluster, pls, mvtnorm,
+        digest, reshape, devtools, R.rsp
+Imports: testthat, methods, utils, latticeExtra
 URL: http://hyperSpec.r-forge.r-project.org/
-Collate: 'validate.R' 'hyperspec-class.R' 'barbiturates.R'
-        'paracetamol.R' 'laser.R' 'chondro.R' 'flu.R'
-        'hyperspec-package.R' 'paste.row.R' 'Arith.R' 'Compare.R'
-        'DollarNames.R' 'Math.R' 'Summary.R' 'aggregate.R'
-        'all.equal.R' 'apply.R' 'as.data.frame.R' 'bind.R'
-        'call.list.R' 'chk.hy.R' 'colMeans.R' 'collapse.R' 'cov.R'
-        'decomposition.R' 'dim.R' 'dimnames.R' 'empty.R' 'wl2i.R'
-        'extract.R' 'factor2num.R' 'fileio.optional.R' 'getbynames.R'
-        'initialize.R' 'labels.R' 'plotmap.R' 'levelplot.R'
-        'makeraster.R' 'map.identify.R' 'map.sel.poly.R'
-        'mark.dendrogram.R' 'mark.peak.R' 'matlab.palette.R'
-        'mean_sd.R' 'merge.R' 'mvtnorm.R' 'normalize01.R' 'options.R'
-        'orderwl.R' 'pearson.dist.R' 'plot.R' 'plotc.R' 'plotmat.R'
-        'plotspc.R' 'plotvoronoi.R' 'qplot.R' 'qplotmixmap.R'
-        'quantile.R' 'rbind.fill.R' 'read.ENVI.Nicolet.R' 'read.ENVI.R'
-        'read.ini.R' 'read.jdx.R' 'read.jdx.Shimadzu.R'
+BugReports: https://github.com/cbeleites/hyperSpec/issues
+VignetteBuilder: R.rsp
+Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
+        'Arith.R' 'Compare.R' 'DollarNames.R' 'Math.R' 'Summary.R'
+        'aggregate.R' 'all.equal.R' 'apply.R' 'as.data.frame.R'
+        'barbiturates.R' 'bind.R' 'call.list.R' 'chk.hy.R' 'chondro.R'
+        'colMeans.R' 'collapse.R' 'cov.R' 'decomposition.R'
+        'deprecated.R' 'dim.R' 'dimnames.R' 'droplevels.R' 'empty.R'
+        'wl2i.R' 'extract.R' 'factor2num.R' 'fileio.optional.R' 'flu.R'
+        'getbynames.R' 'options.R' 'regexps.R' 'guesswavelength.R'
+        'paracetamol.R' 'laser.R' 'hyperspec-package.R' 'initialize.R'
+        'labels.R' 'plotmap.R' 'levelplot.R' 'makeraster.R'
+        'map.identify.R' 'map.sel.poly.R' 'mark.dendrogram.R'
+        'mark.peak.R' 'matlab.palette.R' 'mean_sd.R' 'merge.R'
+        'mvtnorm.R' 'normalize01.R' 'orderwl.R' 'pearson.dist.R'
+        'plot.R' 'plotc.R' 'plotmat.R' 'plotspc.R' 'plotvoronoi.R'
+        'qplot.R' 'qplotmixmap.R' 'quantile.R' 'rbind.fill.R'
+        'read.ENVI.Nicolet.R' 'read.ENVI.R' 'read.txt.Witec.R'
+        'read.asc.Andor.R' 'read.ini.R' 'read.jdx.R'
         'read.mat.Cytospec.R' 'read.mat.Witec.R' 'read.spc.Kaiser.R'
         'read.spc.R' 'read.spe.R' 'read.txt.Horiba.R'
-        'read.txt.Shimadzu.R' 'read.txt.long.R' 'read.txt.wide.R'
-        'replace.R' 'sample.R' 'scale.R' 'scan.txt.Witec.R'
-        'scan.asc.Andor.R' 'scan.txt.Renishaw.R' 'seq.R' 'show.R'
-        'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R' 'spc.identify.R'
-        'spc.loess.R' 'spc.rubberband.R' 'spc.spline.R' 'split.R'
-        'split.string.R' 'splitdots.R' 'subset.R' 'sweep.R'
-        'trellis.factor.key.R' 'units.R' 'unittest.R' 'vandermonde.R'
-        'wc.R' 'wl.R' 'wleval.R' 'write.txt.long.R' 'write.txt.wide.R'
-        'y-pastenames.R' 'zzz.R'
-RoxygenNote: 5.0.1
+        'read.txt.Renishaw.R' 'read.txt.Shimadzu.R' 'read.txt.long.R'
+        'read.txt.wide.R' 'replace.R' 'sample.R' 'scale.R' 'seq.R'
+        'show.R' 'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R'
+        'spc.identify.R' 'spc.loess.R' 'spc.rubberband.R'
+        'spc.spline.R' 'split.R' 'split.string.R' 'splitdots.R'
+        'subset.R' 'sweep.R' 'trellis.factor.key.R' 'units.R'
+        'vandermonde.R' 'wc.R' 'wl.R' 'wleval.R' 'write.txt.long.R'
+        'write.txt.wide.R' 'y-pastenames.R' 'zzz.R'
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2016-11-18 12:15:58 UTC; cb
+Packaged: 2017-10-05 15:45:45 UTC; cb
+Author: Claudia Beleites [aut, cre, dtc],
+  Valter Sergo [aut],
+  Alois Bonifacio [ctb, dtc],
+  Marcel Dahms [ctb],
+  Björn Egert [ctb],
+  Simon Fuller [ctb],
+  Rustam Guliev [ctb],
+  Bryan Hanson [ctb],
+  Michael Hermes [ctb],
+  Martin Kammer [dtc],
+  Roman Kiselev [ctb],
+  Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2016-11-19 10:14:29
+Date/Publication: 2017-10-06 07:50:51 UTC

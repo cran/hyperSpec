@@ -29,4 +29,3 @@ markpeak (chondro [7], 1662)
 \author{
 R. Kiselev
 }
-

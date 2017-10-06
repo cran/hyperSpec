@@ -2,8 +2,8 @@
 % Please edit documentation in R/read.spc.Kaiser.R
 \name{read.spc.Kaiser}
 \alias{read.spc.Kaiser}
-\alias{read.spc.KaiserLowHigh}
 \alias{read.spc.KaiserMap}
+\alias{read.spc.KaiserLowHigh}
 \title{read Kaiser .spc files}
 \usage{
 read.spc.Kaiser(files, ..., glob = TRUE)
@@ -47,4 +47,3 @@ conveniently import specialized sets of .spc files.
 \examples{
 ## for examples, please see `vignette ("fileio", package = "hyperSpec")`.
 }
-

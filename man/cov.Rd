@@ -39,10 +39,9 @@ plot (pcov$means)
 image (pcov$COV)
 
 }
-\author{
-C. Beleites
-}
 \seealso{
 \code{\link[stats]{cov}}
 }
-
+\author{
+C. Beleites
+}
