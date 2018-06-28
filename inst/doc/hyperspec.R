@@ -721,21 +721,49 @@ merged$.
 
 
 ###################################################
-### code chunk number 68: cut.wl
+### code chunk number 68: hyperspec.Rnw:860-862
+###################################################
+flu.ref <- data.frame (filename = rep (flu$filename[1:2], each = 2), cref = rep (flu$c [1:2], each = 2) + rnorm (4, sd = 0.01))
+flu.ref
+
+
+###################################################
+### code chunk number 69: hyperspec.Rnw:867-869
+###################################################
+flu.merged <- merge (flu, flu.ref)
+flu.merged$..
+
+
+###################################################
+### code chunk number 70: hyperspec.Rnw:874-876
+###################################################
+flu.merged <- merge (flu, flu.ref, all.x = TRUE)
+flu.merged$..
+
+
+###################################################
+### code chunk number 71: hyperspec.Rnw:881-883
+###################################################
+merge (flu, flu.ref)
+merge (flu.ref, flu)
+
+
+###################################################
+### code chunk number 72: cut.wl
 ###################################################
 flu [,, min ~ 408.5]
 flu [[,, c (min ~ min + 2i, max - 2i ~ max)]]
 
 
 ###################################################
-### code chunk number 69: hyperspec.Rnw:907-909
+### code chunk number 73: hyperspec.Rnw:939-941
 ###################################################
 tmp <- chondro
 wl (tmp) <- wl (tmp) - 10
 
 
 ###################################################
-### code chunk number 70: shift-wl
+### code chunk number 74: shift-wl
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (chondro [135])
@@ -743,7 +771,7 @@ plot (tmp [135,,], add = TRUE, col = "red")
 
 
 ###################################################
-### code chunk number 71: fun-interpolate
+### code chunk number 75: fun-interpolate
 ###################################################
 interpolate <- function (spc, shift, wl){
   spline (wl + shift, spc, xout = wl, method = "natural")$y
@@ -751,13 +779,13 @@ interpolate <- function (spc, shift, wl){
 
 
 ###################################################
-### code chunk number 72: hyperspec.Rnw:932-933
+### code chunk number 76: hyperspec.Rnw:964-965
 ###################################################
 tmp <- apply (chondro, 1, interpolate, shift = -10, wl = wl (chondro))
 
 
 ###################################################
-### code chunk number 73: shift-interp
+### code chunk number 77: shift-interp
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (chondro [135])
@@ -765,7 +793,7 @@ plot (tmp [135], add = TRUE, col = "red")
 
 
 ###################################################
-### code chunk number 74: shift-untsch
+### code chunk number 78: shift-untsch
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 tmp <- chondro [135,, 990 ~ 1010]
@@ -780,7 +808,7 @@ plot (tmp, lines.args = list (type = "b", pch = 19, cex = 0.5), add = TRUE, col 
 
 
 ###################################################
-### code chunk number 75: hyperspec.Rnw:957-962
+### code chunk number 79: hyperspec.Rnw:989-994
 ###################################################
 shifts <- rnorm (nrow (chondro))
 tmp <- chondro [[]]
@@ -790,7 +818,7 @@ chondro [[]] <- tmp
 
 
 ###################################################
-### code chunk number 76: hyperspec.Rnw:984-1000
+### code chunk number 80: hyperspec.Rnw:1018-1034
 ###################################################
 
 find.max <- function (y, x){
@@ -811,14 +839,14 @@ shift1 <- refpos - bandpos
 
 
 ###################################################
-### code chunk number 77: hyperspec.Rnw:1005-1007
+### code chunk number 81: hyperspec.Rnw:1039-1041
 ###################################################
 chondro <- chondro - spc.fit.poly.below (chondro [,,min+3i ~ max - 3i], chondro)
 chondro <- sweep (chondro, 1, rowMeans (chondro [[]], na.rm = TRUE), "/")
 
 
 ###################################################
-### code chunk number 78: hyperspec.Rnw:1011-1022
+### code chunk number 82: hyperspec.Rnw:1045-1056
 ###################################################
 targetfn <- function (shift, wl, spc, targetspc){
   error <- spline (wl + shift, spc, xout = wl)$y - targetspc
@@ -834,7 +862,7 @@ for (i in 1 : nrow (chondro))
 
 
 ###################################################
-### code chunk number 79: shift-fit
+### code chunk number 83: shift-fit
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 df <- data.frame (shift = c (shifts, shifts + shift1, shifts + shift2),
@@ -845,7 +873,7 @@ plot (histogram (~ shift | method, data = df, breaks = do.breaks(range (df$shift
 
 
 ###################################################
-### code chunk number 80: hyperspec.Rnw:1051-1055 (eval = FALSE)
+### code chunk number 84: hyperspec.Rnw:1085-1089 (eval = FALSE)
 ###################################################
 ## ir.spc <- chondro / 1500 ## fake IR data
 ## high.int <- apply (ir.spc > 1, 1, any) # any point above 1 is bad
@@ -854,7 +882,7 @@ plot (histogram (~ shift | method, data = df, breaks = do.breaks(range (df$shift
 
 
 ###################################################
-### code chunk number 81: hyperspec.Rnw:1059-1068
+### code chunk number 85: hyperspec.Rnw:1093-1102
 ###################################################
 mean_sd_filter <- function (x, n  = 5) {
   x <- x - mean (x)
@@ -868,7 +896,7 @@ spc.OK <- chondro [apply (OK, 1, all)]
 
 
 ###################################################
-### code chunk number 82: filter
+### code chunk number 86: filter
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 
@@ -878,7 +906,7 @@ points (wl (chondro) [i [,2]], chondro[[!OK]], pch = 19, col = "red", cex = 0.5)
 
 
 ###################################################
-### code chunk number 83: hyperspec.Rnw:1087-1090
+### code chunk number 87: hyperspec.Rnw:1121-1124
 ###################################################
 spc <- chondro [1 : 3,, min ~ min + 15i]
 spc [[cbind (1:3, sample (nwl (spc), 3)), wl.index = TRUE]] <- 0
@@ -886,14 +914,14 @@ spc [[]]
 
 
 ###################################################
-### code chunk number 84: hyperspec.Rnw:1094-1096
+### code chunk number 88: hyperspec.Rnw:1128-1130
 ###################################################
 spc [[spc < 1e-4]] <- NA
 spc [[]]
 
 
 ###################################################
-### code chunk number 85: hyperspec.Rnw:1105-1108
+### code chunk number 89: hyperspec.Rnw:1139-1142
 ###################################################
 if (!exists("spc.NA.approx")){
   spc.NA.approx <- spc.NA.linapprox
@@ -901,14 +929,14 @@ if (!exists("spc.NA.approx")){
 
 
 ###################################################
-### code chunk number 86: hyperspec.Rnw:1111-1113
+### code chunk number 90: hyperspec.Rnw:1145-1147
 ###################################################
 spc.corrected <- spc.NA.approx (spc)
 spc.corrected [[]]
 
 
 ###################################################
-### code chunk number 87: bad
+### code chunk number 91: bad
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 spc [[is.na (spc)]] <- 0
@@ -918,7 +946,7 @@ plot (spc.NA.approx (spc), add = TRUE, col = "blue", lines.args = list (type = "
 
 
 ###################################################
-### code chunk number 88: fig-loess
+### code chunk number 92: fig-loess
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol, wl.range = c (300 ~ 1800, 2800 ~ max), xoffset = 850)
@@ -930,7 +958,7 @@ plot (b, wl.range = c (300 ~ 1800, 2800 ~ max), xoffset = 850,
 
 
 ###################################################
-### code chunk number 89: fig-loess-kl
+### code chunk number 93: fig-loess-kl
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (paracetamol [, , 1600 ~ 1670])
@@ -939,27 +967,27 @@ plot (b [, , 1600 ~ 1670], col = "blue", add = TRUE)
 
 
 ###################################################
-### code chunk number 90: ofs
+### code chunk number 94: ofs
 ###################################################
 offsets <- apply (chondro, 1, min)
 chondro.offset.corrected <- sweep (chondro, 1, offsets, "-")
 
 
 ###################################################
-### code chunk number 91: ofs2
+### code chunk number 95: ofs2
 ###################################################
 chondro.offset.corrected <- sweep (chondro, 1, min, "-")
 
 
 ###################################################
-### code chunk number 92: bl
+### code chunk number 96: bl
 ###################################################
 bl <- spc.fit.poly.below (chondro)
 chondro <- chondro - bl
 
 
 ###################################################
-### code chunk number 93: do-bl
+### code chunk number 97: do-bl
 ###################################################
 corrected <- hyperSpec::chondro [1] # start with the unchanged data set
 
@@ -969,7 +997,7 @@ corrected [[]] <- getCorrected (bl)
 
 
 ###################################################
-### code chunk number 94: hyperspec.Rnw:1232-1236
+### code chunk number 98: hyperspec.Rnw:1266-1270
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 baseline <- corrected
@@ -979,51 +1007,51 @@ plot (baseline, add = TRUE, col = "red")
 
 
 ###################################################
-### code chunk number 95: hyperspec.Rnw:1240-1241
+### code chunk number 99: hyperspec.Rnw:1274-1275
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (corrected, plot.args = list (ylim = range (hyperSpec::chondro [1], 0)))
 
 
 ###################################################
-### code chunk number 96: hyperspec.Rnw:1249-1250
+### code chunk number 100: hyperspec.Rnw:1283-1284
 ###################################################
 rm (bl, chondro)
 
 
 ###################################################
-### code chunk number 97: normalize1
+### code chunk number 101: normalize1
 ###################################################
 chondro <- sweep (chondro, 1, mean, "/")
 
 
 ###################################################
-### code chunk number 98: norm
+### code chunk number 102: norm
 ###################################################
 factors <- 1 / apply (chondro [, , 1600 ~ 1700], 1, mean)
 chondro <- sweep (chondro, 1, factors, "*")
 
 
 ###################################################
-### code chunk number 99: norm-rowmeans
+### code chunk number 103: norm-rowmeans
 ###################################################
 factors <- 1 / rowMeans (chondro [, , 1600 ~ 1700])
 
 
 ###################################################
-### code chunk number 100: norm
+### code chunk number 104: norm
 ###################################################
 chondro <- chondro * factors
 
 
 ###################################################
-### code chunk number 101: areanorm-shortcut
+### code chunk number 105: areanorm-shortcut
 ###################################################
 chondro <- chondro / rowMeans (chondro [, , 1600 ~ 1700])
 
 
 ###################################################
-### code chunk number 102: centre-flu
+### code chunk number 106: centre-flu
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 flu.centered <- scale (flu, scale = FALSE)
@@ -1031,7 +1059,7 @@ plot (flu.centered)
 
 
 ###################################################
-### code chunk number 103: perc
+### code chunk number 107: perc
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 chondro <- scale (chondro, center = quantile (chondro, 0.05), scale = FALSE)
@@ -1039,7 +1067,7 @@ plot (chondro, "spcprctl5")
 
 
 ###################################################
-### code chunk number 104: msc (eval = FALSE)
+### code chunk number 108: msc (eval = FALSE)
 ###################################################
 ## require (pls)
 ## chondro.msc <- chondro
@@ -1047,25 +1075,25 @@ plot (chondro, "spcprctl5")
 
 
 ###################################################
-### code chunk number 105: label (eval = FALSE)
+### code chunk number 109: label (eval = FALSE)
 ###################################################
 ## labels (absorbance.spectra)$spc <- "A"
 
 
 ###################################################
-### code chunk number 106: pca
+### code chunk number 110: pca
 ###################################################
 pca <- prcomp (~ spc, data = chondro$., center = FALSE)
 
 
 ###################################################
-### code chunk number 107: pca-auto
+### code chunk number 111: pca-auto
 ###################################################
 pca <- prcomp (~ spc, data = chondro, center = FALSE)
 
 
 ###################################################
-### code chunk number 108: decomp
+### code chunk number 112: decomp
 ###################################################
 scores <- decomposition (chondro, pca$x, label.wavelength = "PC",
                          label.spc = "score / a.u.")
@@ -1073,7 +1101,7 @@ scores
 
 
 ###################################################
-### code chunk number 109: loadings
+### code chunk number 113: loadings
 ###################################################
 loadings <- decomposition (chondro, t(pca$rotation), scores = FALSE,
                            label.spc = "loading I / a.u.")
@@ -1081,7 +1109,7 @@ loadings
 
 
 ###################################################
-### code chunk number 110: retain.col
+### code chunk number 114: retain.col
 ###################################################
 loadings <- decomposition (chondro, t(pca$rotation), scores = FALSE,
                            retain.columns = TRUE, label.spc = "loading I / a.u.")
@@ -1089,7 +1117,7 @@ loadings[1]$..
 
 
 ###################################################
-### code chunk number 111: retain
+### code chunk number 115: retain
 ###################################################
 chondro$measurement <- 1
 loadings <- decomposition (chondro, t(pca$rotation), scores = FALSE,
@@ -1098,34 +1126,34 @@ loadings[1]$..
 
 
 ###################################################
-### code chunk number 112: pca-load
+### code chunk number 116: pca-load
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (loadings [1:3], stacked = TRUE)
 
 
 ###################################################
-### code chunk number 113: pca-score
+### code chunk number 117: pca-score
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (scores [,,3], col.regions = div.palette (20))
 
 
 ###################################################
-### code chunk number 114: pca-smooth
+### code chunk number 118: pca-smooth
 ###################################################
 smoothed <- scores [,, 1:10] %*% loadings [1:10]
 
 
 ###################################################
-### code chunk number 115: ggplot (eval = FALSE)
+### code chunk number 119: ggplot (eval = FALSE)
 ###################################################
 ## require (ggplot2)
 ## ggplot (as.long.df (chondro [1]), aes (x = .wavelength, y = spc)) + geom_line ()
 
 
 ###################################################
-### code chunk number 116: ggplot-do
+### code chunk number 120: ggplot-do
 ###################################################
 if (require (ggplot2)){
 require (ggplot2)
@@ -1139,46 +1167,46 @@ ggplot (as.long.df (chondro [1]), aes (x = .wavelength, y = spc)) + geom_line ()
 
 
 ###################################################
-### code chunk number 117: hca
+### code chunk number 121: hca
 ###################################################
 dist <- pearson.dist (chondro [[]])
 
 
 ###################################################
-### code chunk number 118: hca-asmatrix
+### code chunk number 122: hca-asmatrix
 ###################################################
 dist <- pearson.dist (chondro)
 dendrogram <- hclust (dist, method = "ward.D")
 
 
 ###################################################
-### code chunk number 119: dend
+### code chunk number 123: dend
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plot (dendrogram)
 
 
 ###################################################
-### code chunk number 120: dendcut
+### code chunk number 124: dendcut
 ###################################################
 chondro$clusters <- as.factor (cutree (dendrogram, k = 3))
 
 
 ###################################################
-### code chunk number 121: clustname
+### code chunk number 125: clustname
 ###################################################
 levels (chondro$clusters) <- c ("matrix", "lacuna", "cell")
 
 
 ###################################################
-### code chunk number 122: clustmap
+### code chunk number 126: clustmap
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 plotmap (chondro, clusters ~ x * y, col.regions = cluster.cols)
 
 
 ###################################################
-### code chunk number 123: clustmean
+### code chunk number 127: clustmean
 ###################################################
 getOption("SweaveHooks")[["fig"]]()
 means <- aggregate (chondro, by = chondro$clusters, mean_pm_sd)
@@ -1186,14 +1214,14 @@ plot (means, col = cluster.cols, stacked = ".aggregate", fill = ".aggregate")
 
 
 ###################################################
-### code chunk number 124: split
+### code chunk number 128: split
 ###################################################
 clusters <- split (chondro, chondro$clusters)
 clusters
 
 
 ###################################################
-### code chunk number 125: speed1
+### code chunk number 129: speed1
 ###################################################
 tmp <- chondro [1 : 50]
 shifts <- rnorm (nrow (tmp))
@@ -1204,7 +1232,7 @@ system.time ({
 
 
 ###################################################
-### code chunk number 126: speed3
+### code chunk number 130: speed3
 ###################################################
 tmp <- chondro [1 : 50]
 system.time ({
@@ -1217,7 +1245,7 @@ system.time ({
 
 
 ###################################################
-### code chunk number 127: tab-fn
+### code chunk number 131: tab-fn
 ###################################################
 make.fn.table <- function (){
 load ("functions.RData")
@@ -1243,7 +1271,7 @@ make.fn.table()
 
 
 ###################################################
-### code chunk number 128: hyperspec.Rnw:1685-1690
+### code chunk number 132: hyperspec.Rnw:1719-1724
 ###################################################
 make.bib (c ("baseline", "compiler", "Rcpp", "inline"), file = "hyperspec-pkg.bib")
 print (as.matrix(Sys.info()))

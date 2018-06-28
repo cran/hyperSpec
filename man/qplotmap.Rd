@@ -35,9 +35,6 @@ Note that \code{qplotmap} will currently produce the wrong scales if x or y are 
 \examples{
 qplotmap (chondro)
 qplotmap (chondro) + scale_fill_gradientn (colours = alois.palette ())
-
-## works also with discrete x or y axis:
-qplotmap (chondro, mapping = aes (x = x, y = as.factor (y), fill = spc))
 }
 \seealso{
 \code{\link{plotmap}}

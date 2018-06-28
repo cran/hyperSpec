@@ -51,10 +51,9 @@ a \code{hyperSpec} object, possibly with different row order (for
   \code{bind ("c", \dots{})} and \code{cbind2}).
 }
 \description{
-Two S3 functions \code{cbind.hyperSpec} and \code{rbind.hyperSpec} act as
-an interfaces to \code{cbind2} and \code{rbind2} because neither
-\code{\link[Matrix]{rBind}} and \code{\link[Matrix]{cBind}} nor S4 versions
-of \code{cbind} and \code{rbind} do work at the moment.
+The former difficulties with binding S4 objects
+are resolved since R version 3.2.0 and \code{cbind} and \code{rbind} now work as intended and
+expected for hyperSpec objects.
 
 \code{cbind2} binds the spectral matrices of two \code{hyperSpec} objects by column. All columns
 besides \code{spc} with the same name in \code{x@data} and \code{y@data} must have the same
@@ -64,10 +63,12 @@ elements.  Rows are ordered before checking.
 the same columns.
 }
 \details{
-While it is now possible to do S4 despatch on \code{\dots{}}, defining such
-S4 methods for \code{cbind} and \code{rbind} breaks the binding of
-\code{Matrix} objects. Therefore, two S3 methods \code{rbind.hyperSpec} and
-\code{cbind.hyperSpec} are defined.
+Therefore, calling \code{rbind.hyperSpec} and
+\code{cbind.hyperSpec} is now depecated: \code{cbind} and \code{rbind} should now be called
+directly.
+
+However, in consequence it is no longer possible to call \code{cbind} or \code{rbind} with a
+list of hyperSpec objects. In that case, use \code{bind} or \code{\link[base]{do.call}} (see example).
 
 \code{bind} does the common work for both column- and row-wise binding.
 }
@@ -95,10 +96,13 @@ cbind2 (x, y) # works
 y$y[3] <- 5
 try (cbind2 (x, y)) # error
 
+# list of hyperSpec objects
 
+lhy <- list (flu, flu)
+do.call ("rbind", lhy)
+bind ("r", lhy)
 }
 \seealso{
-\code{\link[Matrix]{rBind}}, \code{\link[Matrix]{cBind}}
 \code{\link[methods]{rbind2}}, \code{\link[methods]{cbind2}}
 \code{\link[base]{rbind}}, \code{\link[base]{cbind}}
 

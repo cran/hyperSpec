@@ -3,8 +3,8 @@ Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.99-20171005
-Date: 2017-10-05
+Version: 0.99-20180627
+Date: 2018-06-27
 Maintainer: Claudia Beleites <chemometrie@beleites.de>
 Authors@R: c(
     person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "chemometrie@beleites.de"),
@@ -13,6 +13,7 @@ Authors@R: c(
     person("Marcel",    "Dahms",     role = "ctb"),
     person("Björn",     "Egert",     role = "ctb"),
     person("Simon",     "Fuller",    role = "ctb"),
+    person("Vilmantas", "Gegzna",    role = "ctb"),
     person("Rustam",    "Guliev",    role = "ctb"),
     person("Bryan",     "Hanson",    role = "ctb"),
     person("Michael",   "Hermes",    role = "ctb"),
@@ -34,7 +35,7 @@ Depends: R (>= 2.15), lattice, grid, ggplot2 (>= 2.2.0)
 Suggests: R.matlab, tripack, deldir, rgl, plotrix, sp, baseline,
         compiler, inline, Rcpp, MASS, fastcluster, pls, mvtnorm,
         digest, reshape, devtools, R.rsp
-Imports: testthat, methods, utils, latticeExtra
+Imports: testthat, methods, utils, latticeExtra, lazyeval, XML
 URL: http://hyperSpec.r-forge.r-project.org/
 BugReports: https://github.com/cbeleites/hyperSpec/issues
 VignetteBuilder: R.rsp
@@ -67,13 +68,14 @@ Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'write.txt.wide.R' 'y-pastenames.R' 'zzz.R'
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2017-10-05 15:45:45 UTC; cb
+Packaged: 2018-06-27 13:03:37 UTC; cb
 Author: Claudia Beleites [aut, cre, dtc],
   Valter Sergo [aut],
   Alois Bonifacio [ctb, dtc],
   Marcel Dahms [ctb],
   Björn Egert [ctb],
   Simon Fuller [ctb],
+  Vilmantas Gegzna [ctb],
   Rustam Guliev [ctb],
   Bryan Hanson [ctb],
   Michael Hermes [ctb],
@@ -81,4 +83,4 @@ Author: Claudia Beleites [aut, cre, dtc],
   Roman Kiselev [ctb],
   Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2017-10-06 07:50:51 UTC
+Date/Publication: 2018-06-28 19:47:59 UTC

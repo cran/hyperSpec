@@ -41,7 +41,7 @@ hyperSpec object
 hdr list with \code{key=value} pairs
 }
 \description{
-Import function for WinSpec SPE files (file version 2.5). The calibration
+Import function for WinSpec SPE files (file version up to 3.0). The calibration
 data (polynome and calibration data pairs) for x-axis are automatically
 read and applied to the spectra. Note that the y-calibration data structure
 is not extracted from the file since it is not saved there by WinSpec and is

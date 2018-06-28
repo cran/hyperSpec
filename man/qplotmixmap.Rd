@@ -25,9 +25,6 @@ chondro <- sweep (chondro, 2, apply (chondro, 2, quantile, 0.05), "-")
 qplotmixmap (chondro [,,c (940, 1002, 1440)],
              purecol = c (colg = "red", Phe = "green", Lipid = "blue"))
 
-qplotmixmap (chondro [,,c (940, 1002, 1440)],
-             purecol = c (colg = "red", Phe = "green", Lipid = "blue"))
-
 }
 \seealso{
 \code{\link[hyperSpec]{qmixtile}}

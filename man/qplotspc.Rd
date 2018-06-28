@@ -4,8 +4,8 @@
 \alias{qplotspc}
 \title{Spectra plotting with ggplot2}
 \usage{
-qplotspc(x, wl.range, ..., mapping = aes_string(x = ".wavelength", y = "spc",
-  group = ".rownames"), spc.nmax = hy.getOption("ggplot.spc.nmax"),
+qplotspc(x, wl.range = TRUE, ..., mapping = aes_string(x = ".wavelength", y
+  = "spc", group = ".rownames"), spc.nmax = hy.getOption("ggplot.spc.nmax"),
   map.lineonly = FALSE, debuglevel = hy.getOption("debuglevel"))
 }
 \arguments{

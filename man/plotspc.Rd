@@ -8,7 +8,7 @@ Plot the spectra of a \code{hyperSpec} object, i.e. intensity over
 wavelength. Instead of the intensity values of the spectra matrix summary
 values calculated from these may be used.}
 \usage{
-plotspc(object, wl.range = NULL, wl.index = FALSE, wl.reverse = FALSE,
+plotspc(object, wl.range = TRUE, wl.index = FALSE, wl.reverse = FALSE,
   spc.nmax = hy.getOption("plot.spc.nmax"), func = NULL,
   func.args = list(), stacked = NULL, stacked.args = list(),
   add = FALSE, bty = "l", plot.args = list(), col = "black",

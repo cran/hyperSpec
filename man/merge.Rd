@@ -4,26 +4,34 @@
 \name{merge,hyperSpec,hyperSpec-method}
 \alias{merge,hyperSpec,hyperSpec-method}
 \alias{merge}
+\alias{merge,hyperSpec,data.frame-method}
+\alias{merge,data.frame,hyperSpec-method}
 \title{Merge hyperSpec objects}
 \usage{
 \S4method{merge}{hyperSpec,hyperSpec}(x, y, ...)
+
+\S4method{merge}{hyperSpec,data.frame}(x, y, ...)
+
+\S4method{merge}{data.frame,hyperSpec}(x, y, ...)
 }
 \arguments{
-\item{x}{a hyperSpec object}
+\item{x}{a hyperSpec object or data.frame}
 
-\item{y}{a hyperSpec object}
+\item{y}{a hyperSpec object or data.frame (including derived classes like tibble)}
 
 \item{...}{handed to \code{\link[base]{merge.data.frame}}}
 }
 \description{
 Merges two hyperSpec objects and \code{\link[base]{cbind}}s their spectra
-matrices.
+matrices, or merges additional extra data into a hyperSpec object.
 }
 \details{
 After merging, the spectra matrix can contain duplicates, and is not
 ordered according to the wavelength.
 
 If the wavelength axis should be ordered, use \code{\link{orderwl}}.
+
+If a \code{hyperSpec} object and  a \code{data.frame} are merged, the result is of the class of the first (\code{x}) object.
 }
 \examples{
 
@@ -47,7 +55,14 @@ merged <- apply (merged, 1, approxfun,
                  new.wavelength = "new.wl")
 merged$.
 
+## merging data.frame into hyperSpec object => hyperSpec object
+y <- data.frame (filename = sample (flu$filename, 4, replace = TRUE), cpred = 1:4)
+y
+tmp <- merge (flu, y)
+tmp$..
 
+## merging hyperSpec object into data.frame => data.frame
+merge (y, flu)
 }
 \seealso{
 \code{\link[base]{merge}}.

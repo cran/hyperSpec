@@ -7,7 +7,7 @@
 Index \code{wl2i} returns the column indices for the spectra matrix for the given wavelengths.
 \code{i2wl} converts column indices into wavelengths.}
 \usage{
-wl2i(x, wavelength = stop("wavelengths are required."))
+wl2i(x, wavelength = stop("wavelengths are required."), unlist = TRUE)
 
 i2wl(x, i)
 }
@@ -16,6 +16,8 @@ i2wl(x, i)
 
 \item{wavelength}{the wavelengths to be converted into column indices,
 either numeric or a formula, see details.}
+
+\item{unlist}{if multiple wavelength ranges are given, should the indices be unlisted or kept in a list?}
 
 \item{i}{the column indices into the spectra matrix for which the
 wavelength is to be computed}
