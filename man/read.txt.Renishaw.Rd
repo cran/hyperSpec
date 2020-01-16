@@ -5,18 +5,24 @@
 \alias{scan.zip.Renishaw}
 \alias{read.txt.Renishaw}
 \alias{read.zip.Renishaw}
-\alias{read.zip.Renishaw}
 \title{import Raman measurements from Renishaw ASCII-files}
 \usage{
 scan.txt.Renishaw(...)
 
 scan.zip.Renishaw(...)
 
-read.txt.Renishaw(file = stop("file is required"), data = "xyspc",
-  nlines = 0, nspc = NULL)
+read.txt.Renishaw(
+  file = stop("file is required"),
+  data = "xyspc",
+  nlines = 0,
+  nspc = NULL
+)
 
-read.zip.Renishaw(file = stop("filename is required"),
-  txt.file = sub("[.]zip", ".txt", basename(file)), ...)
+read.zip.Renishaw(
+  file = stop("filename is required"),
+  txt.file = sub("[.]zip", ".txt", basename(file)),
+  ...
+)
 }
 \arguments{
 \item{...}{Arguments for \code{read.txt.Renishaw}}

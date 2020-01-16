@@ -7,8 +7,13 @@
 \usage{
 scan.asc.Andor(...)
 
-read.asc.Andor(file = stop("filename or connection needed"), ...,
-  quiet = TRUE, dec = ".", sep = ",")
+read.asc.Andor(
+  file = stop("filename or connection needed"),
+  ...,
+  quiet = TRUE,
+  dec = ".",
+  sep = ","
+)
 }
 \arguments{
 \item{..., quiet, dec, sep}{handed to \code{\link[base]{scan}}}

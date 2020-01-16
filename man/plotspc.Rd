@@ -8,18 +8,44 @@ Plot the spectra of a \code{hyperSpec} object, i.e. intensity over
 wavelength. Instead of the intensity values of the spectra matrix summary
 values calculated from these may be used.}
 \usage{
-plotspc(object, wl.range = TRUE, wl.index = FALSE, wl.reverse = FALSE,
-  spc.nmax = hy.getOption("plot.spc.nmax"), func = NULL,
-  func.args = list(), stacked = NULL, stacked.args = list(),
-  add = FALSE, bty = "l", plot.args = list(), col = "black",
-  lines.args = list(), xoffset = 0, yoffset = 0, nxticks = 10,
-  axis.args = list(), break.args = list(), title.args = list(),
-  fill = NULL, fill.col = NULL, border = NA, polygon.args = list(),
+plotspc(
+  object,
+  wl.range = TRUE,
+  wl.index = FALSE,
+  wl.reverse = FALSE,
+  spc.nmax = hy.getOption("plot.spc.nmax"),
+  func = NULL,
+  func.args = list(),
+  stacked = NULL,
+  stacked.args = list(),
+  add = FALSE,
+  bty = "l",
+  plot.args = list(),
+  col = "black",
+  lines.args = list(),
+  xoffset = 0,
+  yoffset = 0,
+  nxticks = 10,
+  axis.args = list(),
+  break.args = list(),
+  title.args = list(),
+  fill = NULL,
+  fill.col = NULL,
+  border = NA,
+  polygon.args = list(),
   zeroline = list(lty = 2, col = col),
-  debuglevel = hy.getOption("debuglevel"))
+  debuglevel = hy.getOption("debuglevel")
+)
 
-stacked.offsets(x, stacked = TRUE, min.zero = FALSE, add.factor = 0.05,
-  add.sum = 0, .spc = NULL, debuglevel = hy.getOption("debuglevel"))
+stacked.offsets(
+  x,
+  stacked = TRUE,
+  min.zero = FALSE,
+  add.factor = 0.05,
+  add.sum = 0,
+  .spc = NULL,
+  debuglevel = hy.getOption("debuglevel")
+)
 }
 \arguments{
 \item{object}{the \code{hyperSpec} object}

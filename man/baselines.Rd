@@ -6,13 +6,24 @@
 \title{Polynomial Baseline Fitting
 These functions fit polynomal baselines.}
 \usage{
-spc.fit.poly(fit.to, apply.to = NULL, poly.order = 1,
-  offset.wl = !(is.null(apply.to)))
+spc.fit.poly(
+  fit.to,
+  apply.to = NULL,
+  poly.order = 1,
+  offset.wl = !(is.null(apply.to))
+)
 
-spc.fit.poly.below(fit.to, apply.to = fit.to, poly.order = 1,
+spc.fit.poly.below(
+  fit.to,
+  apply.to = fit.to,
+  poly.order = 1,
   npts.min = max(round(nwl(fit.to) * 0.05), 3 * (poly.order + 1)),
-  noise = 0, offset.wl = FALSE, max.iter = nwl(fit.to),
-  stop.on.increase = FALSE, debuglevel = hy.getOption("debuglevel"))
+  noise = 0,
+  offset.wl = FALSE,
+  max.iter = nwl(fit.to),
+  stop.on.increase = FALSE,
+  debuglevel = hy.getOption("debuglevel")
+)
 }
 \arguments{
 \item{fit.to}{\code{hyperSpec} object on which the baselines are fitted}
@@ -52,10 +63,6 @@ Both functions fit polynomials to be used as baselines. If \code{apply.to}
 is \code{NULL}, a \code{hyperSpec} object with the polynomial coefficients
 is returned, otherwise the polynomials are evaluated on the spectral range
 of \code{apply.to}.
-
-\code{spc.fit.poly.below} tries to fit the baseline on appropriate spectral
-ranges of the spectra in \code{fit.to}.  For details, see the
-\code{vignette ("baseline")}.
 }
 \details{
 \code{spc.fit.poly} calculates the least squares fit of order
@@ -87,8 +94,6 @@ see \code{\link[hyperSpec]{options}} for more on \code{debuglevel}
 \author{
 C. Beleites
 }
-\concept{
-baseline
-}
+\concept{baseline}
 \keyword{datagen}
 \keyword{manip}

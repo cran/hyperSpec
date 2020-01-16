@@ -6,8 +6,14 @@
 \code{plotc} plots intensities of a \code{hyperSpec} object over another
 dimension such as concentration, time, or a spatial coordinate.}
 \usage{
-plotc(object, model = spc ~ c, groups = NULL, func = NULL,
-  func.args = list(), ...)
+plotc(
+  object,
+  model = spc ~ c,
+  groups = NULL,
+  func = NULL,
+  func.args = list(),
+  ...
+)
 }
 \arguments{
 \item{object}{the \code{hyperSpec} object}

@@ -4,10 +4,19 @@
 \alias{mark.dendrogram}
 \title{Mark groups in \code{\link[stats]{hclust}} dendrograms}
 \usage{
-mark.dendrogram(dendrogram, groups, col = seq_along(unique(groups)),
-  pos.marker = 0, height = 0.025 * max(dendrogram$height), pos.text = -2.5
-  * height, border = NA, text.col = "black", label, label.right = TRUE,
-  ...)
+mark.dendrogram(
+  dendrogram,
+  groups,
+  col = seq_along(unique(groups)),
+  pos.marker = 0,
+  height = 0.025 * max(dendrogram$height),
+  pos.text = -2.5 * height,
+  border = NA,
+  text.col = "black",
+  label,
+  label.right = TRUE,
+  ...
+)
 }
 \arguments{
 \item{dendrogram}{the dendrogram}

@@ -19,7 +19,7 @@ returns the spectra matrix \code{x@data$spc} as matrix}
 
 \method{as.matrix}{hyperSpec}(x, ...)
 
-as.wide.df(x)
+as.wide.df(x, wl.prefix = "")
 
 as.long.df(x, rownames = FALSE, wl.factor = FALSE, na.rm = TRUE)
 
@@ -35,6 +35,8 @@ indices if no rownames are set. If character vector, the rownames are set accord
 
 \item{...}{ignored}
 
+\item{wl.prefix}{prefix to prepend wavelength column names}
+
 \item{rownames}{should the rownames be in column \code{.rownames} of the
 long-format data.frame?}
 
@@ -47,8 +49,8 @@ numeric)?}
 \code{x@data} and \code{x@data$spc} (== \code{x$spc} == \code{x [[]]}), respectively.
 
 \code{as.wide.df} returns a data.frame that consists of the extra data and
-  the spectra matrix converted to a data.frame. The spectra matrix is
-  expanded \emph{in place}.
+the spectra matrix converted to a data.frame. The spectra matrix is
+expanded \emph{in place}.
 
 \code{as.long.df} returns the stacked or molten version of \code{x@data}. The
   wavelengths are in column \code{.wavelength}.
@@ -58,19 +60,9 @@ numeric)?}
   see the example.
 }
 \description{
-Conversion of a hyperSpec object into a data.frame or matrix
-\code{as.data.frame} returns \code{x@data} (as data.frame) \code{as.matrix}
-returns the spectra matrix \code{x@data$spc} as matrix
-
-\code{as.wide.df} converts the spectra matrix to a data.frame. The extra
-data together with this data is returned. The column names of the spectra
-matrix are retained (if they are numbers, without preceeding letters).
-
 The data.frame returned by \code{as.long.df} is guaranteed to have columns
 \code{spc} and \code{.wavelength}. If \code{nwl (x) == 0} these columns
 will be \code{NA}.
-
-\code{as.t.df} produces a 'transposed' data.frame with columns containing the spectra.
 }
 \examples{
 
@@ -99,9 +91,9 @@ if (require (ggplot2)){
 \seealso{
 \code{\link[base]{as.data.frame}}
 
-and \code{\link[base]{as.matrix}}
+and \code{\link[base:as.matrix]{base::as.matrix()}}
 
-\code{\link[hyperSpec:extractreplace]{[}} for a shortcut to \code{as.matrix}
+[\code{[[}()] (\verb{[[]]}) for a shortcut to \code{as.matrix}
 
 \code{\link[utils]{stack}} and \code{\link[reshape]{melt}} or \code{\link[reshape2]{melt}} for
 other functions producing long-format data.frames.

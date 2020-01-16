@@ -15,20 +15,38 @@ scan.dat.Witec(...)
 
 scan.txt.Witec.Graph(...)
 
-read.txt.Witec(file = stop("filename or connection needed"),
-  points.per.line = NULL, lines.per.image = NULL, nwl = NULL,
-  remove.zerospc = TRUE, type = c("single", "map"), hdr.label = FALSE,
-  hdr.units = FALSE, encoding = "unknown", ..., quiet = TRUE)
+read.txt.Witec(
+  file = stop("filename or connection needed"),
+  points.per.line = NULL,
+  lines.per.image = NULL,
+  type = c("single", "map"),
+  hdr.label = FALSE,
+  hdr.units = FALSE,
+  encoding = "unknown",
+  ...,
+  quiet = TRUE
+)
 
-read.dat.Witec(filex = stop("filename or connection needed"),
-  filey = sub("-x", "-y", filex), points.per.line = NULL,
-  lines.per.image = NULL, type = c("single", "map"), encoding = "unknown",
-  ..., quiet = hy.getOption("debuglevel") < 1L)
+read.dat.Witec(
+  filex = stop("filename or connection needed"),
+  filey = sub("-x", "-y", filex),
+  points.per.line = NULL,
+  lines.per.image = NULL,
+  type = c("single", "map"),
+  encoding = "unknown",
+  ...,
+  quiet = hy.getOption("debuglevel") < 1L
+)
 
-read.txt.Witec.Graph(headerfile = stop("filename or connection needed"),
-  filex = gsub("Header", "X-Axis", headerfile), filey = gsub("Header",
-  "Y-Axis", headerfile), type = c("single", "map"), encoding = "unknown",
-  ..., quiet = TRUE)
+read.txt.Witec.Graph(
+  headerfile = stop("filename or connection needed"),
+  filex = gsub("Header", "X-Axis", headerfile),
+  filey = gsub("Header", "Y-Axis", headerfile),
+  type = c("single", "map"),
+  encoding = "unknown",
+  ...,
+  quiet = TRUE
+)
 }
 \arguments{
 \item{..., quiet}{handed to \code{\link[base]{scan}}}
@@ -38,10 +56,6 @@ read.txt.Witec.Graph(headerfile = stop("filename or connection needed"),
 \item{points.per.line}{number of spectra in x direction of the map}
 
 \item{lines.per.image}{number of spectra in y direction}
-
-\item{nwl}{is deprecated and will be removed soon. Number of wavelengths is calculated automatically.}
-
-\item{remove.zerospc}{is deprecated and will be removed soon. Use \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead.}
 
 \item{type}{type of spectra: \code{single} for single spectra (including time series), \code{map} for imaging data.}
 
@@ -56,6 +70,10 @@ read.txt.Witec.Graph(headerfile = stop("filename or connection needed"),
 \item{filey}{filename intensity file}
 
 \item{headerfile}{filename or connection to ASCII file with header information}
+
+\item{nwl}{is deprecated and will be removed soon. Number of wavelengths is calculated automatically.}
+
+\item{remove.zerospc}{is deprecated and will be removed soon. Use \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead.}
 }
 \value{
 a hyperSpec object

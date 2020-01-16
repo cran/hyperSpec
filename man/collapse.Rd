@@ -5,13 +5,21 @@
 \alias{collapse.hyperSpec}
 \title{Collapse hyperSpec objects}
 \usage{
-collapse(..., wl.tolerance = hy.getOption("wl.tolerance"))
+collapse(
+  ...,
+  wl.tolerance = hy.getOption("wl.tolerance"),
+  collapse.equal = TRUE
+)
 }
 \arguments{
 \item{...}{hyperSpec objects to be collapsed into one object. Instead of giving several
 arguments, a list with all objects to be collapsed may be given.}
 
 \item{wl.tolerance}{tolerance to decide which wavelengths are considered equal.}
+
+\item{collapse.equal}{logical indicating whether to try first finding groups of spectra
+with (approximately) equal wavelength axes. If the data is known to contain few or no
+such groups, \code{collapse()} will be faster with this first pass being turned off.}
 }
 \value{
 a hyperSpec object
@@ -23,18 +31,28 @@ collapse/bind several hyperSpec objects into one object
 The spectra from all objects will be put into one object.
 The resulting object has all wavelengths that occur in any of the input objects,
 \code{wl.tolerance} is used to determine which difference in the wavelengths is
-tolerated as equal. The returned object has wavelengths rounded according to the
-precision indicated by \code{wl.tolerance}.
+tolerated as equal: clusters of approximately equal wavelengths will span at most \code{2 * wl.tolerance}.
+Differences up to +/- \code{wl.tolerance} are considered equal.
+
+The returned object has wavelengths that are the weighted average
+(by number of spectra) of the wavelengths within any such cluster of approximately
+equal wavelengths.
+
+Labels will be taken from the first object where they are encountered. However,
+the order of processing objects is not necessarily the same as the order of objects
+in the input: \code{collapse} first processes groups of input objects that share all
+wavelengths (within \code{wl.tolerance}).
 
 Data points corresponding to wavelengths not in the original spectrum will be set to NA.
 Extra data is combined in the same manner.
 
-If the objects are named, the names will be preserved in extra data column \code{$.name}.
+If the objects are named, the names will be preserved in extra data column \verb{$.name}.
+If the wavelengths are names, names are preserved and taken from the first object where they were encountered,
+the same applies to possible column names of the spectra matrix.
 }
 \examples{
 barbiturates [1:3]
-barb <- collapse (barbiturates [1:3])
-barb
+collapse (barbiturates [1:3])
 
 a <- barbiturates [[1]]
 b <- barbiturates [[2]]
@@ -45,11 +63,11 @@ b
 c
 collapse (a, b, c)
 
+collapse (barbiturates [1:3], collapse.equal = FALSE)
 
 }
 \seealso{
-\code{\link[base]{merge}} to merge hyperSpec objects that share wavelengths but contain
-  different spectra,  \code{\link[base]{rbind}}, and  \code{\link[plyr]{rbind.fill}} for
+\code{\link[=merge]{merge()}},  \code{\link[=rbind]{rbind()}}, and \code{\link[plyr:rbind.fill]{plyr::rbind.fill()}}
 }
 \author{
 C. Beleites

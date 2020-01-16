@@ -7,8 +7,15 @@
 \title{apply
 Computes summary statistics for the spectra of a \code{hyperSpec} object.}
 \usage{
-\S4method{apply}{hyperSpec}(X, MARGIN, FUN, ..., label.wl = NULL,
-  label.spc = NULL, new.wavelength = NULL)
+\S4method{apply}{hyperSpec}(
+  X,
+  MARGIN,
+  FUN,
+  ...,
+  label.wl = NULL,
+  label.spc = NULL,
+  new.wavelength = NULL
+)
 }
 \arguments{
 \item{X, spc}{a \code{hyperSpec} object}

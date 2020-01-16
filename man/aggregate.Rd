@@ -7,9 +7,15 @@
 \alias{ave,hyperSpec-method}
 \title{aggregate hyperSpec objects}
 \usage{
-\S4method{aggregate}{hyperSpec}(x, by = stop("by is needed"),
-  FUN = stop("FUN is needed."), ..., out.rows = NULL, append.rows = NULL,
-  by.isindex = FALSE)
+\S4method{aggregate}{hyperSpec}(
+  x,
+  by = stop("by is needed"),
+  FUN = stop("FUN is needed."),
+  ...,
+  out.rows = NULL,
+  append.rows = NULL,
+  by.isindex = FALSE
+)
 }
 \arguments{
 \item{x}{a \code{hyperSpec} object}
@@ -71,16 +77,16 @@ by <- as.factor (c (1, 1, 1, 1, 1, 1, 5, 1, 2, 2))
 by
 plot (spc, "spc", col = color[by])
 
-## Example 1: plot the mean of the groups 
+## Example 1: plot the mean of the groups
 plot (aggregate (spc, by, mean), "spc", col = color, add = TRUE,
       lines.args = list(lwd = 3, lty = 2))
 
 ## Example 2: FUN may return more than one value (here: 3)
 plot (aggregate (spc, by, mean_pm_sd), "spc",
-      col = rep(color, each = 3), lines.args = list(lwd = 3, lty = 2)) 
+      col = rep(color, each = 3), lines.args = list(lwd = 3, lty = 2))
 
 ## Example 3: aggregate even takes FUN that return different numbers of
-##            values for different groups 
+##            values for different groups
 plot (spc, "spc", col = color[by])
 
 weird.function <- function (x){
@@ -93,7 +99,7 @@ weird.function <- function (x){
 }
 
 agg <- aggregate (spc, by, weird.function)
-agg$.aggregate 
+agg$.aggregate
 plot (agg, "spc",  add = TRUE, col = color[agg$.aggregate],
       lines.args = list (lwd = 3, lty = 2))
 

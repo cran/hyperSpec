@@ -4,8 +4,14 @@
 \alias{qplotc}
 \title{Spectra plotting with ggplot2}
 \usage{
-qplotc(object, mapping = aes_string(x = "c", y = "spc"), ..., func = NULL,
-  func.args = list(), map.pointonly = FALSE)
+qplotc(
+  object,
+  mapping = aes_string(x = "c", y = "spc"),
+  ...,
+  func = NULL,
+  func.args = list(),
+  map.pointonly = FALSE
+)
 }
 \arguments{
 \item{object}{hyperSpec object}

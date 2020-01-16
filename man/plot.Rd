@@ -7,7 +7,6 @@
 \alias{plot,ANY,ANY-method}
 \alias{plot,hyperSpec,character-method}
 \alias{plot,hyperSpec,missing-method}
-\alias{plot,hyperSpec,character-method}
 \title{Plotting hyperSpec Objects}
 \usage{
 \S4method{plot}{hyperSpec,missing}(x, y, ...)

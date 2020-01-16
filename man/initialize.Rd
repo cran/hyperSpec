@@ -8,12 +8,9 @@
 \alias{create,hyperSpec-method}
 \alias{new,hyperSpec-method}
 \alias{new}
-\title{Creating a hyperSpec Object
-Like other S4 objects, a hyperSpec object can be created by \code{new}. The
-hyperSpec object is then \code{initialize}d using the given parameters.}
+\title{Creating a hyperSpec Object}
 \usage{
-\S4method{initialize}{hyperSpec}(.Object, spc = NULL, data = NULL,
-  wavelength = NULL, labels = NULL)
+\S4method{initialize}{hyperSpec}(.Object, spc = NULL, data = NULL, wavelength = NULL, labels = NULL)
 }
 \arguments{
 \item{.Object}{the new \code{hyperSpec} object.}
@@ -45,6 +42,10 @@ If \code{label} is not given, a list containing \code{NULL} for each of the
   columns of\code{data} and \code{wavelength} is used.}
 }
 \description{
+Like other S4 objects, a hyperSpec object can be created by \code{new}. The
+hyperSpec object is then \code{initialize}d using the given parameters.
+}
+\details{
 If option \code{gc} is \code{TRUE}, the initialization will have frequent
 calls to \code{gc ()} which can help to avoid swapping or running out of
 memory.

@@ -4,7 +4,6 @@
 \name{rmmvnorm}
 \alias{rmmvnorm}
 \alias{rmmvnorm,numeric,hyperSpec,matrix-method}
-\alias{rmmvnorm}
 \alias{rmmvnorm,hyperSpec-method}
 \alias{rmmvnorm,numeric,hyperSpec,array-method}
 \alias{rmmvnorm,numeric,matrix,matrix-method}

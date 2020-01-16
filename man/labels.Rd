@@ -11,8 +11,7 @@ each of the entries specified by \code{which}.}
 \usage{
 labels (object, which = NULL, ...) <- value
 
-\S4method{labels}{hyperSpec}(object, which = bquote(), drop = TRUE, ...,
-  use.colnames = TRUE)
+\S4method{labels}{hyperSpec}(object, which = bquote(), drop = TRUE, ..., use.colnames = TRUE)
 }
 \arguments{
 \item{object}{a hyperSpec object}

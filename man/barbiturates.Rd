@@ -16,7 +16,7 @@ A time series of mass spectra in a list of hyperSpec objects.
 barbiturates [1:3]
 length (barbiturates)
 
-barb <- collapse (barbiturates)
+barb <- collapse (barbiturates, collapse.equal = FALSE)
 barb <- orderwl (barb)
 
 plot (barb [1:3], lines.args = list (type = "h"),

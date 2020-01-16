@@ -33,17 +33,6 @@ nwl(x)
 \code{ncol} returns the number of columns in \code{x@data}. I.e. the number
 of columns with additional information to each spectrum (e.g. "x", "y",
 \dots{}) + 1 (for column \code{spc} containing the spectra).
-
-\code{nrow} yields the number of rows in \code{x@data}, i.e. the number of
-spectra in the \code{hyperSpec} object.
-
-\code{nwl} returns the number of columns in \code{x@data$spc}, i.e. the
-length of each spectrum.
-
-\code{dim} returns all three values in a vector.
-
-\code{length} is a synonym for \code{nrow}. It is supplied so that
-\code{seq_along (x)} returns a sequence to index each spectrum.
 }
 \examples{
 

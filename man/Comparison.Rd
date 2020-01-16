@@ -16,10 +16,6 @@
 \alias{Compare,hyperSpec,numeric-method}
 \alias{Compare,matrix,hyperSpec-method}
 \alias{Compare,numeric,hyperSpec-method}
-\alias{Compare,hyperSpec,numeric-method}
-\alias{Compare,hyperSpec,matrix-method}
-\alias{Compare,numeric,hyperSpec-method}
-\alias{Compare,matrix,hyperSpec-method}
 \alias{all.equal,hyperSpec,hyperSpec-method}
 \alias{all.equal}
 \title{Comparison of hyperSpec objects}
@@ -34,11 +30,17 @@
 
 \S4method{Compare}{matrix,hyperSpec}(e1, e2)
 
-\S4method{all.equal}{hyperSpec,hyperSpec}(target, current, ...,
-  check.attributes = FALSE, check.names = FALSE,
-  check.column.order = FALSE, check.label = FALSE,
+\S4method{all.equal}{hyperSpec,hyperSpec}(
+  target,
+  current,
+  ...,
+  check.attributes = FALSE,
+  check.names = FALSE,
+  check.column.order = FALSE,
+  check.label = FALSE,
   tolerance = hy.getOption("tolerance"),
-  wl.tolerance = hy.getOption("wl.tolerance"))
+  wl.tolerance = hy.getOption("wl.tolerance")
+)
 }
 \arguments{
 \item{e1, e2}{Either two \code{hyperSpec} objects or one \code{hyperSpec}

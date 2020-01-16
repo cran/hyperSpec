@@ -4,8 +4,11 @@
 \alias{read.ini}
 \title{Read INI files}
 \usage{
-read.ini(con = stop("Connection con needed."), skip = NULL,
-  encoding = "unknown")
+read.ini(
+  con = stop("Connection con needed."),
+  skip = NULL,
+  encoding = "unknown"
+)
 }
 \arguments{
 \item{con}{connection or file name}

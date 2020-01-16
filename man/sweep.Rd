@@ -8,8 +8,7 @@
 \title{Sweep Summary Statistic out of an hyperSpec Object
 \code{\link[base]{sweep}} for \code{hyperSpec} objects.}
 \usage{
-\S4method{sweep}{hyperSpec}(x, MARGIN, STATS, FUN = "-",
-  check.margin = TRUE, ...)
+\S4method{sweep}{hyperSpec}(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, ...)
 }
 \arguments{
 \item{x}{a \code{hyperSpec object.}}

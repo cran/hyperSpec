@@ -13,9 +13,13 @@
 \usage{
 legendright(p, l, legend.width = 8, legend.unit = "lines")
 
-qmixtile(object, purecol = stop("pure component colors needed."),
-  mapping = aes_string(x = "x", y = "y", fill = "spc"), ...,
-  map.tileonly = FALSE)
+qmixtile(
+  object,
+  purecol = stop("pure component colors needed."),
+  mapping = aes_string(x = "x", y = "y", fill = "spc"),
+  ...,
+  map.tileonly = FALSE
+)
 
 normalize.colrange(x, na.rm = TRUE, legend = FALSE, n = 100, ...)
 
@@ -25,11 +29,24 @@ normalize.null(x, na.rm = TRUE, legend = FALSE, n = 100, ...)
 
 normalize.minmax(x, min = 0, max = 1, legend = FALSE, n = 100, ...)
 
-qmixlegend(x, purecol, dx = 0.33, ny = 100, labels = names(purecol),
-  normalize = normalize.colrange, ...)
+qmixlegend(
+  x,
+  purecol,
+  dx = 0.33,
+  ny = 100,
+  labels = names(purecol),
+  normalize = normalize.colrange,
+  ...
+)
 
-colmix.rgb(x, purecol, against = 1, sub = TRUE,
-  normalize = normalize.colrange, ...)
+colmix.rgb(
+  x,
+  purecol,
+  against = 1,
+  sub = TRUE,
+  normalize = normalize.colrange,
+  ...
+)
 }
 \arguments{
 \item{p}{plot object}
@@ -87,18 +104,6 @@ character with colours
 }
 \description{
 plot graph with legend right of it
-
-plot multivariate data into colour channels using \code{\link[ggplot2]{geom_tile}}
-
-\code{normalize.colrange} normalizes the range of each column to [0, 1]
-
-\code{normalize.range} normalizes the range of all columns to [0, 1]
-
-\code{normalize.null} does not touch the values
-
-\code{normalize.minmax} normalizes the range of each column j to [min_j, max_j]
-
-legends for mixed colour plots
 }
 \author{
 Claudia Beleites

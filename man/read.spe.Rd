@@ -6,9 +6,14 @@
 \alias{spe.showcalpoints}
 \title{Import WinSpec SPE file}
 \usage{
-read.spe(filename, xaxis = "file", acc2avg = F, cts_sec = F,
-  keys.hdr2data = c("exposure_sec", "LaserWavelen", "accumulCount",
-  "numFrames", "darkSubtracted"))
+read.spe(
+  filename,
+  xaxis = "file",
+  acc2avg = F,
+  cts_sec = F,
+  keys.hdr2data = c("exposure_sec", "LaserWavelen", "accumulCount", "numFrames",
+    "darkSubtracted")
+)
 
 read.spe.header(filename)
 

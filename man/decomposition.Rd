@@ -5,8 +5,16 @@
 \title{Convert Principal Component Decomposition or the like into a hyperSpec
 Object}
 \usage{
-decomposition(object, x, wavelength = seq_len(ncol(x)), label.wavelength,
-  label.spc, scores = TRUE, retain.columns = FALSE, ...)
+decomposition(
+  object,
+  x,
+  wavelength = seq_len(ncol(x)),
+  label.wavelength,
+  label.spc,
+  scores = TRUE,
+  retain.columns = FALSE,
+  ...
+)
 }
 \arguments{
 \item{object}{A \code{hyperSpec} object.}

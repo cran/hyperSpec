@@ -156,12 +156,13 @@ pkg.or.base <- function (pkg){
 }
 
 citation.or.file <- function (pkg, svd.cit = sprintf ("%s.CITATION", pkg)){
-  if (pkg.exists (pkg))
+  if (pkg.exists (pkg)){
     citation (pkg)
-  else if (file.exists (svd.cit))
+  } else if (file.exists (svd.cit)) {
     readCitationFile (file = svd.cit)
-  else
+  } else {
     NULL
+  }
 }
 
 make.cite.keys <- function (pkg, entries){
@@ -222,7 +223,8 @@ make.bib <- function (..., file = NULL) {
     if (is.null (l))
       cat (NULL, file = file)           # touches file
     else
-      cat (toBibtex (l), file = file, sep = "\n")
+      cat (iconv (toBibtex (l), to = "UTF-8"), 
+           file = file, sep = "\n")
 
   invisible (l)
 }
@@ -1214,14 +1216,35 @@ plot (means, col = cluster.cols, stacked = ".aggregate", fill = ".aggregate")
 
 
 ###################################################
-### code chunk number 128: split
+### code chunk number 128: droplevels
+###################################################
+tmp <- chondro [1 : 50]
+table (tmp$clusters)
+tmp <- droplevels (tmp)
+table (tmp$clusters)
+
+
+###################################################
+### code chunk number 129: split
 ###################################################
 clusters <- split (chondro, chondro$clusters)
 clusters
 
 
 ###################################################
-### code chunk number 129: speed1
+### code chunk number 130: hyperspec.Rnw:1621-1628
+###################################################
+lacunae <- droplevels (chondro [chondro$clusters == "lacuna" & ! is.na (chondro$clusters)])
+summary (lacunae$clusters)
+cells <- droplevels (chondro [chondro$clusters == "cell" & ! is.na (chondro$clusters)])
+summary (cells$clusters)
+
+summary (rbind (cells, lacunae)$clusters)
+summary (collapse (cells, lacunae)$clusters)
+
+
+###################################################
+### code chunk number 131: speed1
 ###################################################
 tmp <- chondro [1 : 50]
 shifts <- rnorm (nrow (tmp))
@@ -1232,7 +1255,7 @@ system.time ({
 
 
 ###################################################
-### code chunk number 130: speed3
+### code chunk number 132: speed3
 ###################################################
 tmp <- chondro [1 : 50]
 system.time ({
@@ -1245,7 +1268,7 @@ system.time ({
 
 
 ###################################################
-### code chunk number 131: tab-fn
+### code chunk number 133: tab-fn
 ###################################################
 make.fn.table <- function (){
 load ("functions.RData")
@@ -1271,7 +1294,7 @@ make.fn.table()
 
 
 ###################################################
-### code chunk number 132: hyperspec.Rnw:1719-1724
+### code chunk number 134: hyperspec.Rnw:1740-1745
 ###################################################
 make.bib (c ("baseline", "compiler", "Rcpp", "inline"), file = "hyperspec-pkg.bib")
 print (as.matrix(Sys.info()))

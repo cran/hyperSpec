@@ -10,8 +10,12 @@ read.spc.Kaiser(files, ..., glob = TRUE)
 
 read.spc.KaiserMap(files, keys.log2data = NULL, ...)
 
-read.spc.KaiserLowHigh(files = stop("file names needed"), type = c("single",
-  "map"), ..., glob = TRUE)
+read.spc.KaiserLowHigh(
+  files = stop("file names needed"),
+  type = c("single", "map"),
+  ...,
+  glob = TRUE
+)
 }
 \arguments{
 \item{files}{If \code{glob = TRUE}, \code{filename} can contain wildcards.
@@ -31,13 +35,6 @@ hyperSpec
 }
 \description{
 Import functions for Kaiser Optical Systems .spc files
-
-\code{read.spc.KaiserMap} is a wrapper for \code{read.spc.Kaiser} with predefined \code{log2data}
-to fetch the stage position for each file.
-
-\code{read.spc.KaiserLowHigh} is a wrapper for \code{read.spc.Kaiser} for raw data that is saved
-in separate files for low and high wavenumber range.  The wavelength axis holds the pixel
-numbers, which repeat for low and high wavenumber ranges.
 }
 \details{
 \code{read.spc.Kaiser} imports sets of .spc files written by Kaiser Optical Systems' Hologram

@@ -21,17 +21,6 @@
 \alias{\%*\%,hyperSpec,hyperSpec-method}
 \alias{\%*\%,matrix,hyperSpec-method}
 \alias{\%*\%,hyperSpec,matrix-method}
-\alias{Arith,hyperSpec,numeric-method}
-\alias{Arith,hyperSpec,matrix-method}
-\alias{Arith,hyperSpec,missing-method}
-\alias{Arith,numeric,hyperSpec-method}
-\alias{Arith,matrix,hyperSpec-method}
-\alias{\%*\%,hyperSpec,hyperSpec-method}
-\alias{\%*\%}
-\alias{\%*\%,matrix,hyperSpec-method}
-\alias{\%*\%,hyperSpec,matrix-method}
-\alias{\%*\%,hyperSpec,matrix-method}
-\alias{\%*\%,matrix,hyperSpec-method}
 \title{Arithmetical Operators for hyperSpec objects}
 \usage{
 \S4method{Arith}{hyperSpec,hyperSpec}(e1, e2)
@@ -118,18 +107,11 @@ flu / flu$c
 \author{
 C. Beleites
 }
-\concept{
-hyperSpec arithmetic
-
-hyperSpec arithmetical operators
-
-hyperSpec plus
-
-hyperSpec division
-
-hyperSpec spectra conversion
-
-hyperSpec matrix multiplication
-}
+\concept{hyperSpec arithmetic}
+\concept{hyperSpec arithmetical operators}
+\concept{hyperSpec division}
+\concept{hyperSpec matrix multiplication}
+\concept{hyperSpec plus}
+\concept{hyperSpec spectra conversion}
 \keyword{arith}
 \keyword{methods}

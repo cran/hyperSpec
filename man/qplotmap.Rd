@@ -4,8 +4,14 @@
 \alias{qplotmap}
 \title{Spectra plotting with ggplot2}
 \usage{
-qplotmap(object, mapping = aes_string(x = "x", y = "y", fill = "spc"), ...,
-  func = mean, func.args = list(), map.tileonly = FALSE)
+qplotmap(
+  object,
+  mapping = aes_string(x = "x", y = "y", fill = "spc"),
+  ...,
+  func = mean,
+  func.args = list(),
+  map.tileonly = FALSE
+)
 }
 \arguments{
 \item{object}{hyperSpec object}

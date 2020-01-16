@@ -4,7 +4,7 @@
 \alias{markpeak}
 \title{Mark peak
   
-Marks location of the \emph{first} spectrum at the data point closes to the
+Marks location of the \emph{first} spectrum at the data point closest to the
 specified position on the current plot.}
 \usage{
 markpeak(spc, xpos, col = "red")
@@ -19,7 +19,7 @@ markpeak(spc, xpos, col = "red")
 \description{
 Mark peak
   
-Marks location of the \emph{first} spectrum at the data point closes to the
+Marks location of the \emph{first} spectrum at the data point closest to the
 specified position on the current plot.
 }
 \examples{

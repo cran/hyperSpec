@@ -3,11 +3,11 @@ Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.99-20180627
-Date: 2018-06-27
-Maintainer: Claudia Beleites <chemometrie@beleites.de>
+Version: 0.99-20200115
+Date: 2020-01-15
+Maintainer: Claudia Beleites <Claudia.Beleites@chemometrix.gmbh>
 Authors@R: c(
-    person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "chemometrie@beleites.de"),
+    person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "Claudia.Beleites@chemometrix.gmbh"),
     person("Valter",    "Sergo",     role = c("aut")),
     person("Alois",     "Bonifacio", role = c ("ctb", "dtc")),
     person("Marcel",    "Dahms",     role = "ctb"),
@@ -31,12 +31,12 @@ Description: Comfortable ways to work with hyperspectral data sets.
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
-Depends: R (>= 2.15), lattice, grid, ggplot2 (>= 2.2.0)
+Depends: R (>= 3.6.0), lattice, grid, ggplot2 (>= 2.2.0)
 Suggests: R.matlab, tripack, deldir, rgl, plotrix, sp, baseline,
         compiler, inline, Rcpp, MASS, fastcluster, pls, mvtnorm,
-        digest, reshape, devtools, R.rsp
-Imports: testthat, methods, utils, latticeExtra, lazyeval, XML
-URL: http://hyperSpec.r-forge.r-project.org/
+        digest, reshape, devtools, R.rsp, tibble
+Imports: testthat, methods, utils, latticeExtra, lazyeval, XML, dplyr
+URL: https://github.com/cbeleites/hyperSpec
 BugReports: https://github.com/cbeleites/hyperSpec/issues
 VignetteBuilder: R.rsp
 Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
@@ -54,21 +54,22 @@ Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'mvtnorm.R' 'normalize01.R' 'orderwl.R' 'pearson.dist.R'
         'plot.R' 'plotc.R' 'plotmat.R' 'plotspc.R' 'plotvoronoi.R'
         'qplot.R' 'qplotmixmap.R' 'quantile.R' 'rbind.fill.R'
-        'read.ENVI.Nicolet.R' 'read.ENVI.R' 'read.txt.Witec.R'
-        'read.asc.Andor.R' 'read.ini.R' 'read.jdx.R'
-        'read.mat.Cytospec.R' 'read.mat.Witec.R' 'read.spc.Kaiser.R'
-        'read.spc.R' 'read.spe.R' 'read.txt.Horiba.R'
-        'read.txt.Renishaw.R' 'read.txt.Shimadzu.R' 'read.txt.long.R'
-        'read.txt.wide.R' 'replace.R' 'sample.R' 'scale.R' 'seq.R'
-        'show.R' 'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R'
-        'spc.identify.R' 'spc.loess.R' 'spc.rubberband.R'
-        'spc.spline.R' 'split.R' 'split.string.R' 'splitdots.R'
-        'subset.R' 'sweep.R' 'trellis.factor.key.R' 'units.R'
-        'vandermonde.R' 'wc.R' 'wl.R' 'wleval.R' 'write.txt.long.R'
-        'write.txt.wide.R' 'y-pastenames.R' 'zzz.R'
-RoxygenNote: 6.0.1
+        'read.ENVI.R' 'read.ENVI.HySpex.R' 'read.ENVI.Nicolet.R'
+        'read.txt.Witec.R' 'read.asc.Andor.R' 'read.asc.PerkinElmer.R'
+        'read.ini.R' 'read.jdx.R' 'read.mat.Cytospec.R'
+        'read.mat.Witec.R' 'read.spc.Kaiser.R' 'read.spc.R'
+        'read.spe.R' 'read.txt.Horiba.R' 'read.txt.Renishaw.R'
+        'read.txt.Shimadzu.R' 'read.txt.long.R' 'read.txt.wide.R'
+        'replace.R' 'sample.R' 'scale.R' 'seq.R' 'show.R'
+        'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R' 'spc.identify.R'
+        'spc.loess.R' 'spc.rubberband.R' 'spc.spline.R' 'split.R'
+        'split.string.R' 'splitdots.R' 'subset.R' 'sweep.R'
+        'trellis.factor.key.R' 'units.R' 'vandermonde.R' 'wc.R' 'wl.R'
+        'wleval.R' 'write.txt.long.R' 'write.txt.wide.R'
+        'y-pastenames.R' 'zzz.R'
+RoxygenNote: 7.0.2
 NeedsCompilation: no
-Packaged: 2018-06-27 13:03:37 UTC; cb
+Packaged: 2020-01-15 12:24:05 UTC; cb
 Author: Claudia Beleites [aut, cre, dtc],
   Valter Sergo [aut],
   Alois Bonifacio [ctb, dtc],
@@ -83,4 +84,4 @@ Author: Claudia Beleites [aut, cre, dtc],
   Roman Kiselev [ctb],
   Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2018-06-28 19:47:59 UTC
+Date/Publication: 2020-01-17 00:00:05 UTC

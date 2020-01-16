@@ -12,11 +12,17 @@
 \alias{max,hyperSpec-method}
 \alias{range,hyperSpec-method}
 \alias{is.na,hyperSpec-method}
+\alias{all_wl}
+\alias{any_wl}
 \title{The functions}
 \usage{
 \S4method{Summary}{hyperSpec}(x, ..., na.rm = FALSE)
 
 \S4method{is.na}{hyperSpec}(x)
+
+all_wl(expression, na.rm = FALSE)
+
+any_wl(expression, na.rm = FALSE)
 }
 \arguments{
 \item{x}{hyperSpec object}
@@ -24,6 +30,8 @@
 \item{...}{further objects}
 
 \item{na.rm}{logical indicating whether missing values should be removed}
+
+\item{expression}{expression that evaluates to a logical matrix of the same size as the spectra matrix}
 }
 \value{
 \code{sum}, \code{prod}, \code{min}, \code{max}, and \code{range} return  a numeric,
@@ -35,7 +43,7 @@
 \details{
 \code{sum}, \code{prod},
 
-\code{min}, \code{max},
+\code{min}, \code{max}, 
 
 \code{range}, and
 
@@ -51,6 +59,11 @@ All these functions work on the spectra matrix.
 
 
 is.na (flu [,, 405 ~ 410]);
+
+all_wl (flu > 100)
+
+any_wl (flu > 300)
+! any_wl (is.na (flu))
 }
 \seealso{
 \code{\link[base]{Summary}} for the base summary functions.

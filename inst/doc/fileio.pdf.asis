@@ -23,8 +23,8 @@
 \subtitle{Vignette for the R package \Rpackage{hyperSpec}}
 \maketitle
 
-\warnbox{Consistent naming of file import functions in version >= 0.99}{ 
-From now on, all import functions have names starting with \texttt{read.}. All functions previously named \texttt{scan.*} have been renamed accordingly. 
+\warnbox{Consistent naming of file import functions in version >= 0.99}{
+From now on, all import functions have names starting with \texttt{read.}. All functions previously named \texttt{scan.*} have been renamed accordingly.
 }
 \warnbox{Supported File Formats}{ \phy supports a number of file formats relevant for different types
   of spectroscopy. This is naturally only a subset of the file formats produced by different
@@ -56,26 +56,6 @@ From now on, all import functions have names starting with \texttt{read.}. All f
 }
 
 \tableofcontents
-<<echo = FALSE, results=hide>>=
-options (warn = 1)
-if (!require ("testthat") || !require ("digest")){
-  test_file <- function (...) cat ("tests skipped: packages testthat and/or digest missing.\n")
-  test_dir <- test_file
-}
-@
-<<testthat-setup, echo = FALSE, results=hide>>=
-reporter <- SummaryReporter$new ()
-reporter$start_reporter()
-tests <- character (0L)
-test_file_keep <- function (file, reporter, tests) {
-  result <- capture.output(test_file(file, reporter = reporter, start_end_reporter = FALSE))
-  result <- paste (result, collapse = "\n")
-  names (result) <- file
-
-  cat (result)
-  c (tests, result)
-}
-@
 
 \section{Introduction}
 This document describes how spectra can be imported into \chy objects. Some possibilities to export
@@ -310,10 +290,6 @@ read.jdx ("jcamp-dx/virgilio.jdx", ytol = 1e-9)
 \phy will use that package once it is available on CRAN. Maintenance of \phy's \Rfunction{read.jdx} function
 is limited from now on in favor of Bryan's pacakge.}
 
-<<test-read.jdx, echo = FALSE, results=hide>>=
-tests <- test_file_keep ("test-read.jdx.R", reporter, tests)
-@
-
 \subsection{Basic Atomic Spectra from NIST Tables}
 \label{sec:aes-nist}
 \index{ASCII!reference!atomic emission!NIST}
@@ -472,11 +448,6 @@ spc
 Please see also the manufacturer specific notes in section~\ref{sec:manuf-spec-import},
 p.~\pageref{sec:manuf-spec-import}.
 
-\paragraph{Unit Tests}
-<<test-read.ENVI, echo=FALSE>>=
-tests <- test_file_keep ("test-read.ENVI.R", reporter, tests)
-@
-
 \subsubsection{ENVI Export}
 \label{sec:envi-export}
 Use package \Rpackage{caTools} or \Rpackage{rgdal} with GDAL for writing ENVI files.
@@ -540,10 +511,6 @@ read.spc ("spc.Kaisermap/ebroAVII.spc", keys.hdr2data = TRUE)
 read.spc ("spc.Kaisermap/ebroAVII.spc", keys.log2data = TRUE)
 @
 
-<<test-hdr2data, echo=FALSE, results=hide>>=
-read.spc ("spc/BARBITUATES.SPC", keys.hdr2data = TRUE)
-@
-
 
 .spc files may contain multiple spectra that do \emph{not} share a common wavelength axis. In this
 case, \Rfunction{read.spc} returns a list of \chy objects with one spectrum
@@ -553,19 +520,9 @@ barbiturates <- read.spc ("spc/BARBITUATES.SPC")
 save (barbiturates, file = "barbiturates.rda")
 class (barbiturates)
 length (barbiturates)
-barbiturates <- do.call (collapse, barbiturates)
-barbiturates <- orderwl (barbiturates)
+barbiturates <- collapse (barbiturates, collapse.equal = FALSE)
 barbiturates
 barbiturates [[1:10, , 25 ~ 30]]
-@
-
-\paragraph{Unit Tests}
-<<spc-tests, echo = FALSE>>=
-tests <- test_file_keep ("test-read.spc.R", reporter, tests)
-@
-<<Horiba-spc, echo=FALSE, results=hide>>=
-read.spc("spc.LabRam/LabRam-1.spc")
-read.spc("spc.LabRam/LabRam-2.spc")
 @
 
 \paragraph{Deriving manufacturer specific import filters.}
@@ -640,7 +597,7 @@ spc ## dummy sample with all intensities zero
 \index{Agilent!ENVI}
 \index{Varian|see{Agilent}}
 
-Agilent (Varian) uses a variant of ENVI (with binary header). 
+Agilent (Varian) uses a variant of ENVI (with binary header).
 
 \subsection{Kaiser Optical Systems Raman}
 \label{sec:Kaiser}
@@ -983,7 +940,7 @@ fluorescence spectra, but it should be possible to change them if needed.
 wavelength axis as the others.
 \item If no file can be found, an empty \chy object is a reasonable result: There is no need
 to stop with an error, but it is polite to issue an additional warning.
-\item Finally, \phy does some optional common post-processing for all imported files such as attaching the filename (or connection description) to the \chy object (column \Rcode{filename}) and deleting empty spectra. These options can be globally switched on or off by options. 
+\item Finally, \phy does some optional common post-processing for all imported files such as attaching the filename (or connection description) to the \chy object (column \Rcode{filename}) and deleting empty spectra. These options can be globally switched on or off by options.
 \end{itemize}
 
 \VerbatimInput[frame=single, label={read.txt.PerkinElmer.R},
@@ -1128,23 +1085,6 @@ res <- apply (fileformats [i,][fileformats$Spectroscopy [i] != "",], 1,
 @
 \end{tabular}
 \end{footnotesize}
-
-\section{Unit Test Results}
-<<catch-missing-tests, echo=FALSE>>=
-test_files <- find_test_scripts(".")
-not_done <- setdiff (basename (test_files), names (tests))
-
-if (length (not_done) > 0L)
-  warning ("found unexecuted test files: ", not_done)
-
-for (f in not_done)
-  tests <- test_file_keep (f, reporter, tests)
-@
-
-<<unittest-summary, echo = FALSE>>=
-cat (tests, sep = "\n")
-reporter$end_reporter()
-@
 
 \section*{Session Info}
 \begin{footnotesize}

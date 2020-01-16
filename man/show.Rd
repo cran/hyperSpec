@@ -14,8 +14,13 @@
 \code{print}, \code{show}, and \code{summary} show the result of
 \code{as.character}.}
 \usage{
-\S4method{as.character}{hyperSpec}(x, digits = getOption("digits"),
-  range = TRUE, max.print = 5, shorten.to = c(2, 1))
+\S4method{as.character}{hyperSpec}(
+  x,
+  digits = getOption("digits"),
+  range = TRUE,
+  max.print = 5,
+  shorten.to = c(2, 1)
+)
 
 \S4method{show}{hyperSpec}(object)
 
@@ -51,11 +56,6 @@ printed}
 \description{
 \code{print}, \code{show}, and \code{summary} differ only in the defaults.
 \code{show} displays the range of values instead,
-
-\code{print} shows the overview giving the first and last values of each
-data column (fastest).
-
-\code{summary} displays the logbook in addition.
 }
 \examples{
 

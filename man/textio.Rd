@@ -12,21 +12,51 @@
 Besides \code{\link[base]{save}} and \code{\link[base]{load}}, two general
 ways to import and export data into \code{hyperSpec} objects exist.}
 \usage{
-read.txt.long(file = stop("file is required"), cols = list(.wavelength =
-  expression(lambda/nm), spc = "I / a.u."), header = TRUE, ...)
+read.txt.long(
+  file = stop("file is required"),
+  cols = list(.wavelength = expression(lambda/nm), spc = "I / a.u."),
+  header = TRUE,
+  ...
+)
 
-read.txt.wide(file = stop("file is required"), cols = list(spc = "I / a.u.",
-  .wavelength = expression(lambda/nm)), sep = "\\t", row.names = NULL,
-  check.names = FALSE, ...)
+read.txt.wide(
+  file = stop("file is required"),
+  cols = list(spc = "I / a.u.", .wavelength = expression(lambda/nm)),
+  sep = "\\t",
+  row.names = NULL,
+  check.names = FALSE,
+  ...
+)
 
-write.txt.long(object, file = "", order = c(".rownames", ".wavelength"),
-  na.last = TRUE, decreasing = FALSE, quote = FALSE, sep = "\\t",
-  row.names = FALSE, cols = NULL, col.names = TRUE, col.labels = FALSE,
-  append = FALSE, ...)
+write.txt.long(
+  object,
+  file = "",
+  order = c(".rownames", ".wavelength"),
+  na.last = TRUE,
+  decreasing = FALSE,
+  quote = FALSE,
+  sep = "\\t",
+  row.names = FALSE,
+  cols = NULL,
+  col.names = TRUE,
+  col.labels = FALSE,
+  append = FALSE,
+  ...
+)
 
-write.txt.wide(object, file = "", cols = NULL, quote = FALSE,
-  sep = "\\t", row.names = FALSE, col.names = TRUE, header.lines = 1,
-  col.labels = if (header.lines == 1) FALSE else TRUE, append = FALSE, ...)
+write.txt.wide(
+  object,
+  file = "",
+  cols = NULL,
+  quote = FALSE,
+  sep = "\\t",
+  row.names = FALSE,
+  col.names = TRUE,
+  header.lines = 1,
+  col.labels = if (header.lines == 1) FALSE else TRUE,
+  append = FALSE,
+  ...
+)
 }
 \arguments{
 \item{file}{filename or connection}
@@ -106,15 +136,15 @@ For further information, see the examples below and the documentation of
 
 Firstly, hyperSpec objects can be imported  and exported as ASCII files.
 
-A second option is using the package \code{\link[R.matlab]{R.matlab}}
+  A second option is using the package \code{\link[R.matlab]{R.matlab}}
   which provides the functions \code{\link[R.matlab]{readMat}} and
   \code{\link[R.matlab]{writeMat}}.
 
-hyperSpec comes with a number of pre-defined functions to import
+  hyperSpec comes with a number of pre-defined functions to import
   manufacturer specific file formats. For details, see \code{vignette
   ("fileio")}.
 
-\code{\link[hyperSpec]{read.spc}} imports Thermo Galactic's .spc file
+  \code{\link[hyperSpec]{read.spc}} imports Thermo Galactic's .spc file
   format, and ENVI files may be read using
   \code{\link[hyperSpec]{read.ENVI}}.
 
@@ -137,13 +167,14 @@ of \code{\link[R.matlab]{R.matlab}}.
 \dontrun{vignette  ("file-io")}
 
 ## export & import matlab files
-if (require (R.matlab)){
+if (require (R.matlab)) {
    # export to matlab file
-   writeMat ("test.mat", x = flu[[]], wavelength = flu@wavelength,
+   writeMat (paste0 (tempdir(), "/test.mat"),
+             x = flu[[]], wavelength = flu@wavelength,
              label = lapply (flu@label, as.character))
 
    # reading a matlab file
-   data <- readMat ("test.mat")
+   data <- readMat (paste0 (tempdir(), "/test.mat"))
    print (data)
    mat <- new ("hyperSpec", spc = data$x,
                wavelength = as.numeric(data$wavelength),
@@ -153,23 +184,30 @@ if (require (R.matlab)){
 ## ascii export & import
 
 
-write.txt.long (flu,  file = "flu.txt", cols = c(".wavelength", "spc", "c"),
+write.txt.long (flu,
+    file = paste0 (tempdir(), "/flu.txt"),
+    cols = c(".wavelength", "spc", "c"),
 		order = c("c", ".wavelength"),
 		decreasing = c(FALSE, TRUE))
 
-read.txt.long (file = "flu.txt", cols = list (.wavelength = expression (lambda / nm),
-      spc= "I / a.u", c = expression ("/" (c, (mg/l)))))
+read.txt.long (file = paste0 (tempdir(), "/flu.txt"),
+      cols = list (.wavelength = expression (lambda / nm),
+      spc = "I / a.u", c = expression ("/" (c, (mg/l)))))
 
-write.txt.wide (flu,  file = "flu.txt", cols = c("c", "spc"),
+write.txt.wide (flu,  file = paste0 (tempdir(), "/flu.txt"),
+    cols = c("c", "spc"),
 		col.labels = TRUE, header.lines = 2, row.names = TRUE)
 
-write.txt.wide (flu,  file = "flu.txt", col.labels = FALSE, row.names = FALSE)
+write.txt.wide (flu,  file = paste0 (tempdir(), "/flu.txt"),
+                col.labels = FALSE, row.names = FALSE)
 
-read.txt.wide (file = "flu.txt",
+read.txt.wide (file = paste0 (tempdir(), "/flu.txt"),
     # give columns in same order as they are in the file
-    cols = list (spc = "I / a.u", c = expression ("/"("c", "mg/l")), filename = "filename", 
-    # plus wavelength label last
-    .wavelength = "lambda / nm"),
+    cols = list (spc = "I / a.u",
+                 c = expression ("/"("c", "mg/l")),
+                 filename = "filename",
+                 # plus wavelength label last
+                 .wavelength = "lambda / nm"),
 		header = TRUE)
 
 

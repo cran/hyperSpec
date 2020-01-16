@@ -5,8 +5,14 @@
 \alias{spc.NA.linapprox}
 \title{Impute missing data points}
 \usage{
-spc.NA.approx(spc, neighbours = 1, w = rep(1, 2 * neighbours), df = 1 +
-  .Machine$double.eps, spar = NULL, debuglevel = hy.getOption("debuglevel"))
+spc.NA.approx(
+  spc,
+  neighbours = 1,
+  w = rep(1, 2 * neighbours),
+  df = 1 + .Machine$double.eps,
+  spar = NULL,
+  debuglevel = hy.getOption("debuglevel")
+)
 
 spc.NA.linapprox(...)
 }

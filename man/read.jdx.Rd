@@ -4,14 +4,22 @@
 \alias{read.jdx}
 \title{JCAMP-DX Import for Shimadzu Library Spectra}
 \usage{
-read.jdx(filename = stop("filename is needed"), encoding = "",
-  header = list(), keys.hdr2data = FALSE, ..., NA.symbols = c("NA", "N/A",
-  "N.A."), collapse.multi = TRUE)
+read.jdx(
+  filename = stop("filename is needed"),
+  encoding = "",
+  header = list(),
+  keys.hdr2data = FALSE,
+  ...,
+  NA.symbols = c("NA", "N/A", "N.A."),
+  collapse.multi = TRUE,
+  wl.tolerance = hy.getOption("wl.tolerance"),
+  collapse.equal = TRUE
+)
 }
 \arguments{
 \item{filename}{file name and path of the .jdx file}
 
-\item{encoding}{encoding of the JCAMP-DX file (used by \code{\link[base]{readLines}})}
+\item{encoding}{encoding of the JCAMP-DX file (used by \code{\link[base:readLines]{base::readLines()}})}
 
 \item{header}{list with manually set header values}
 
@@ -19,17 +27,18 @@ read.jdx(filename = stop("filename is needed"), encoding = "",
 extra data. Usually a character vector of labels (lowercase, without and dashes, blanks,
 underscores). If \code{TRUE}, all header entries are read.}
 
-\item{...}{further parameters handed to the data import function, e.g.
-\tabular{ll}{
-\code{xtol} \tab tolerance for checking calculated x values against checkpoints at beginning
-                 of line, defaults to XFACTOR\cr
-\code{ytol} \tab tolerance for checking Y values against MINY and MAXY, defaults to YFACTOR\cr
+\item{...}{further parameters handed to the data import function, e.g.\tabular{lll}{
+   parameter \tab meaning \tab default \cr
+   \code{xtol} \tab tolerance for checking calculated x values against checkpoints at beginning of line \tab XFACTOR \cr
+   \code{ytol} \tab tolerance for checking Y values against MINY and MAXY \tab YFACTOR \cr
 }}
 
 \item{NA.symbols}{character vector of text values that should be converted to \code{NA}}
 
 \item{collapse.multi}{should hyperSpec objects from multispectra files be collapsed into one
 hyperSpec object (if \code{FALSE}, a list of hyperSpec objects is returned).}
+
+\item{wl.tolerance, collapse.equal}{see \link{collapse}}
 }
 \value{
 hyperSpec object

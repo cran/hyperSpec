@@ -5,9 +5,16 @@
 \title{Import for Thermo Galactic's spc file format
 These functions allow to import Thermo Galactic/Grams .spc files.}
 \usage{
-read.spc(filename, keys.hdr2data = FALSE, keys.hdr2log = FALSE,
-  keys.log2data = FALSE, keys.log2log = FALSE, log.txt = TRUE,
-  log.bin = FALSE, log.disk = FALSE, hdr = list(), no.object = FALSE)
+read.spc(
+  filename,
+  keys.hdr2data = FALSE,
+  keys.log2data = FALSE,
+  log.txt = TRUE,
+  log.bin = FALSE,
+  log.disk = FALSE,
+  hdr = list(),
+  no.object = FALSE
+)
 }
 \arguments{
 \item{filename}{The complete file name of the .spc file.}
@@ -18,8 +25,6 @@ the returned hyperSpec object.
 
 All header fields specified in the .spc file format specification (see
   below) are imported and can be referred to by their de-capitalized names.}
-
-\item{keys.hdr2log, keys.log2log}{deprecated}
 
 \item{log.txt}{Should the text part of the .spc file's log block be read?}
 

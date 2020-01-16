@@ -4,8 +4,14 @@
 \alias{plotmat}
 \title{Plot spectra matrix}
 \usage{
-plotmat(object, y = ".row", ylab, col = alois.palette(20), ...,
-  contour = FALSE)
+plotmat(
+  object,
+  y = ".row",
+  ylab,
+  col = alois.palette(20),
+  ...,
+  contour = FALSE
+)
 }
 \arguments{
 \item{object}{hyperSpec object}
