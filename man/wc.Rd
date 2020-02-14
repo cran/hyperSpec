@@ -2,8 +2,7 @@
 % Please edit documentation in R/wc.R
 \name{wc}
 \alias{wc}
-\title{wc
-word count of ASCII files}
+\title{line/word/character count of ASCII files}
 \usage{
 wc(file, flags = c("lines", "words", "bytes"))
 }
@@ -14,11 +13,17 @@ wc(file, flags = c("lines", "words", "bytes"))
 of the parameters}
 }
 \value{
-data.frame with the counts and file names, or \code{NULL} if wc is
-  not available
+data.frame with the counts and file names, or `NULL` if wc is
+  not available on the system.
 }
 \description{
-wc uses the system command wc
+`wc()` uses the system command `wc`. Use at your own risk.
+}
+\note{
+`wc()` now is deprecated and will be removed from hyperSpec in future. Consider using [count_lines()] instead for line counting.
+}
+\seealso{
+[count_lines()]
 }
 \author{
 C. Beleites

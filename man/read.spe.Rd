@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.spe.R
 \name{read.spe}
 \alias{read.spe}
-\alias{read.spe.header}
+\alias{.read.spe.header}
 \alias{spe.showcalpoints}
 \title{Import WinSpec SPE file}
 \usage{
@@ -15,7 +15,7 @@ read.spe(
     "darkSubtracted")
 )
 
-read.spe.header(filename)
+.read.spe.header(filename)
 
 spe.showcalpoints(filename, xaxis = "file", acc2avg = F, cts_sec = F)
 }
@@ -54,7 +54,7 @@ always empty.
 }
 \section{Functions}{
 \itemize{
-\item \code{read.spe.header}: Read only header of a WinSpec SPE file (version 2.5)
+\item \code{.read.spe.header}: Read only header of a WinSpec SPE file (version 2.5)
 
 \item \code{spe.showcalpoints}: Plot the WinSpec SPE file (version 2.5) and show the
 calibration points stored inside of it (x-axis calibration)
