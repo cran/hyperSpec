@@ -3,8 +3,8 @@ Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.99-20200213.1
-Date: 2020-02-13
+Version: 0.99-20200527
+Date: 2020-05-27
 Maintainer: Claudia Beleites <Claudia.Beleites@chemometrix.gmbh>
 Authors@R: c(
     person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "Claudia.Beleites@chemometrix.gmbh"),
@@ -46,30 +46,31 @@ Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'colMeans.R' 'collapse.R' 'count_lines.R' 'cov.R'
         'decomposition.R' 'deprecated.R' 'dim.R' 'dimnames.R'
         'droplevels.R' 'empty.R' 'wl2i.R' 'extract.R' 'factor2num.R'
-        'fileio.optional.R' 'flu.R' 'getbynames.R' 'options.R'
-        'regexps.R' 'guesswavelength.R' 'paracetamol.R' 'laser.R'
-        'hyperspec-package.R' 'initialize.R' 'labels.R' 'plotmap.R'
-        'levelplot.R' 'makeraster.R' 'map.identify.R' 'map.sel.poly.R'
-        'mark.dendrogram.R' 'mark.peak.R' 'matlab.palette.R'
-        'mean_sd.R' 'merge.R' 'mvtnorm.R' 'normalize01.R' 'orderwl.R'
-        'pearson.dist.R' 'plot.R' 'plotc.R' 'plotmat.R' 'plotspc.R'
-        'plotvoronoi.R' 'qplot.R' 'qplotmixmap.R' 'quantile.R'
-        'rbind.fill.R' 'read.ENVI.R' 'read.ENVI.HySpex.R'
-        'read.ENVI.Nicolet.R' 'read.txt.Witec.R' 'read.asc.Andor.R'
-        'read.asc.PerkinElmer.R' 'read.ini.R' 'read.jdx.R'
-        'read.mat.Cytospec.R' 'read.mat.Witec.R' 'read.spc.Kaiser.R'
-        'read.spc.R' 'read.spe.R' 'read.txt.Horiba.R'
-        'read.txt.Renishaw.R' 'read.txt.Shimadzu.R' 'read.txt.long.R'
-        'read.txt.wide.R' 'replace.R' 'sample.R' 'scale.R' 'seq.R'
-        'show.R' 'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R'
-        'spc.identify.R' 'spc.loess.R' 'spc.rubberband.R'
-        'spc.spline.R' 'split.R' 'split.string.R' 'splitdots.R'
-        'subset.R' 'sweep.R' 'trellis.factor.key.R' 'units.R'
-        'vandermonde.R' 'wc.R' 'wl.R' 'wleval.R' 'write.txt.long.R'
-        'write.txt.wide.R' 'y-pastenames.R' 'zzz.R'
-RoxygenNote: 7.0.2
+        'fileio.optional.R' 'fix_spc_colnames.R' 'flu.R' 'getbynames.R'
+        'options.R' 'regexps.R' 'guesswavelength.R' 'paracetamol.R'
+        'laser.R' 'hyperspec-package.R' 'initialize.R' 'labels.R'
+        'plotmap.R' 'levelplot.R' 'makeraster.R' 'map.identify.R'
+        'map.sel.poly.R' 'mark.dendrogram.R' 'mark.peak.R'
+        'matlab.palette.R' 'mean_sd.R' 'merge.R' 'mvtnorm.R'
+        'normalize01.R' 'orderwl.R' 'pearson.dist.R' 'plot.R' 'plotc.R'
+        'plotmat.R' 'plotspc.R' 'plotvoronoi.R' 'qplot.R'
+        'qplotmixmap.R' 'quantile.R' 'rbind.fill.R' 'read.ENVI.R'
+        'read.ENVI.HySpex.R' 'read.ENVI.Nicolet.R' 'read.txt.Witec.R'
+        'read.asc.Andor.R' 'read.asc.PerkinElmer.R' 'read.ini.R'
+        'read.jdx.R' 'read.mat.Cytospec.R' 'read.mat.Witec.R'
+        'read.spc.Kaiser.R' 'read.spc.R' 'read.spc.Shimadzu.R'
+        'read.spe.R' 'read.txt.Horiba.R' 'read.txt.Renishaw.R'
+        'read.txt.Shimadzu.R' 'read.txt.long.R' 'read.txt.wide.R'
+        'replace.R' 'sample.R' 'scale.R' 'seq.R' 'show.R'
+        'spc.NA.approx.R' 'spc.bin.R' 'spc.fit.poly.R' 'spc.identify.R'
+        'spc.loess.R' 'spc.rubberband.R' 'spc.spline.R' 'split.R'
+        'split.string.R' 'splitdots.R' 'subset.R' 'sweep.R'
+        'trellis.factor.key.R' 'units.R' 'vandermonde.R' 'wc.R' 'wl.R'
+        'wleval.R' 'write.txt.long.R' 'write.txt.wide.R'
+        'y-pastenames.R' 'zzz.R'
+RoxygenNote: 7.1.0
 NeedsCompilation: no
-Packaged: 2020-03-30 12:08:20 UTC; hornik
+Packaged: 2020-05-27 13:29:28 UTC; cb
 Author: Claudia Beleites [aut, cre, dtc],
   Valter Sergo [aut],
   Alois Bonifacio [ctb, dtc],
@@ -84,4 +85,4 @@ Author: Claudia Beleites [aut, cre, dtc],
   Roman Kiselev [ctb],
   Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2020-04-01 05:44:41 UTC
+Date/Publication: 2020-05-29 00:00:03 UTC

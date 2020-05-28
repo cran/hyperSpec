@@ -5,9 +5,11 @@
 \alias{paracetamol}
 \title{Paracetamol Spectrum
 A Raman spectrum of a paracetamol tablet.}
-\format{The spectrum was acquired with a Renishaw InVia spectrometer from
+\format{
+The spectrum was acquired with a Renishaw InVia spectrometer from
   100 to 3200 cm^-1 in step scan mode. Thus the spectrum has several
-  overlapping wavelength regions.}
+  overlapping wavelength regions.
+}
 \description{
 Paracetamol Spectrum
 A Raman spectrum of a paracetamol tablet.

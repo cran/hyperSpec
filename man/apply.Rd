@@ -14,7 +14,8 @@ Computes summary statistics for the spectra of a \code{hyperSpec} object.}
   ...,
   label.wl = NULL,
   label.spc = NULL,
-  new.wavelength = NULL
+  new.wavelength = NULL,
+  simplify
 )
 }
 \arguments{
@@ -44,6 +45,8 @@ axes}
 \item{new.wavelength}{for \code{MARGIN = 2}: numeric vector or name of the
 argument in \dots{} that is to be used (character) as wavelength axis of
 the resulting object.}
+
+\item{simplify}{ignored: apply for hyperSpec results are always simplified}
 }
 \value{
 A \code{hyperSpec} object

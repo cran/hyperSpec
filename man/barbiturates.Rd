@@ -5,8 +5,10 @@
 \alias{barbiturates}
 \title{Barbiturates Spectra from .spc example files
 A time series of mass spectra in a list of hyperSpec objects.}
-\format{The data sets consists of 286 spectra. They are the result of importing the
-BARBITUATES.SPC example data from Thermo Galactic's spc file format specification.}
+\format{
+The data sets consists of 286 spectra. They are the result of importing the
+BARBITUATES.SPC example data from Thermo Galactic's spc file format specification.
+}
 \description{
 Barbiturates Spectra from .spc example files
 A time series of mass spectra in a list of hyperSpec objects.

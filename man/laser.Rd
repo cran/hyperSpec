@@ -5,9 +5,11 @@
 \alias{laser}
 \title{Laser Emission
 A time series of an unstable laser emission.}
-\format{The data set consists of 84 laser emission spectra measured during
+\format{
+The data set consists of 84 laser emission spectra measured during
   95 min.  Each spectrum has 36 data points in the range of 404.5 nm to
-  405.8 nm.}
+  405.8 nm.
+}
 \description{
 see the Vignette
 }
