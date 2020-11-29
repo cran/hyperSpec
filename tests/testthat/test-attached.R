@@ -1,8 +1,4 @@
 # C. Beleites
-# get all tests attached to objects 
-tests <- eapply(env=getNamespace ("hyperSpec"), FUN=get.test, all.names=TRUE) 
-tests <- tests [! sapply (tests, is.null)] 
+# get all tests attached to objects
 
-for (t in seq_along (tests))   
-  tests [[t]] ()
-
+hy.unittest(standalone = FALSE)

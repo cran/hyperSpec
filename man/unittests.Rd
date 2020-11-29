@@ -4,7 +4,13 @@
 \alias{hy.unittest}
 \title{hyperSpec unit tests}
 \usage{
-hy.unittest()
+hy.unittest(standalone = TRUE, reporter = "progress")
+}
+\arguments{
+\item{standalone}{run the unit test on their own, e.g. from the console
+(`TRUE`) or within testthat tests (`FALSE`), e.g. via `devtools::test()`}
+
+\item{reporter}{the reporter to use, defaults to [testthat::ProgressReporter]}
 }
 \value{
 Invisibly returns a data frame with the test results

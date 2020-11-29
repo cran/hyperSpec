@@ -3,8 +3,8 @@ Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.99-20200527
-Date: 2020-05-27
+Version: 0.99-20201127
+Date: 2020-11-27
 Maintainer: Claudia Beleites <Claudia.Beleites@chemometrix.gmbh>
 Authors@R: c(
     person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "Claudia.Beleites@chemometrix.gmbh"),
@@ -68,9 +68,9 @@ Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'trellis.factor.key.R' 'units.R' 'vandermonde.R' 'wc.R' 'wl.R'
         'wleval.R' 'write.txt.long.R' 'write.txt.wide.R'
         'y-pastenames.R' 'zzz.R'
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-05-27 13:29:28 UTC; cb
+Packaged: 2020-11-27 16:14:40 UTC; cb
 Author: Claudia Beleites [aut, cre, dtc],
   Valter Sergo [aut],
   Alois Bonifacio [ctb, dtc],
@@ -85,4 +85,4 @@ Author: Claudia Beleites [aut, cre, dtc],
   Roman Kiselev [ctb],
   Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2020-05-29 00:00:03 UTC
+Date/Publication: 2020-11-29 22:40:02 UTC

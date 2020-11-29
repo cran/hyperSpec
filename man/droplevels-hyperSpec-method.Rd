@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{hyperSpec object}
 
-\item{...}{handed to \code{\link[base:droplevels.data.frame]{base::droplevels.data.frame()}}}
+\item{...}{handed to \code{\link[base:droplevels]{base::droplevels.data.frame()}}}
 }
 \value{
 hyperSpec object with unused levels of all factors in \verb{@data} dropped.

@@ -91,7 +91,7 @@ if (require (ggplot2)){
 \seealso{
 \code{\link[base]{as.data.frame}}
 
-and \code{\link[base:as.matrix]{base::as.matrix()}}
+and \code{\link[base:matrix]{base::as.matrix()}}
 
 [\code{[[}()] (\verb{[[]]}) for a shortcut to \code{as.matrix}
 
