@@ -20,6 +20,10 @@ The matrices are bound together using their column names or the column indices (
 precedence.) Numeric columns may be converted to character beforehand, e.g. using format.  If a
 matrix doesn't have colnames, the column number is used (via \code{\link[base]{make.names}(unique
 = TRUE)}).
+
+This is an enhancement to \code{\link{rbind}} which adds in columns
+that are not present in all inputs, accepts a list of data frames, and
+operates substantially faster
 }
 \details{
 Note that this means that a column with name \code{"X1"} is merged with the first column of a
@@ -51,7 +55,7 @@ The return matrix will always have column names.
 #' rbind.fill(mtcars[c("mpg", "wt")], mtcars[c("wt", "cyl")])
 }
 \seealso{
-\code{\link[base]{rbind}}, \code{\link[base]{cbind}}, \code{\link[plyr]{rbind.fill}}
+\code{\link[base]{rbind}}, \code{\link[base]{cbind}}, \code{plyr::rbind.fill()}
 }
 \author{
 C. Beleites

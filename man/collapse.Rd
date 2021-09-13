@@ -67,7 +67,7 @@ collapse (barbiturates [1:3], collapse.equal = FALSE)
 
 }
 \seealso{
-\code{\link[=merge]{merge()}},  \code{\link[=rbind]{rbind()}}, and \code{\link[plyr:rbind.fill]{plyr::rbind.fill()}}
+\code{\link[=merge]{merge()}},  \code{\link[=rbind]{rbind()}}, and \code{plyr::rbind.fill()}
 }
 \author{
 C. Beleites

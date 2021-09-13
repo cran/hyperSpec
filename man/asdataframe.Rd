@@ -95,7 +95,7 @@ and \code{\link[base:matrix]{base::as.matrix()}}
 
 [\code{[[}()] (\verb{[[]]}) for a shortcut to \code{as.matrix}
 
-\code{\link[utils]{stack}} and \code{\link[reshape]{melt}} or \code{\link[reshape2]{melt}} for
+\code{\link[utils]{stack}} and \code{\link[reshape]{melt}} or \code{reshape2::melt()} for
 other functions producing long-format data.frames.
 }
 \author{

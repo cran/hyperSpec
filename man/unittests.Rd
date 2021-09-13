@@ -21,7 +21,7 @@ display the results.
 }
 \examples{
 
-hy.unittest ()
+\donttest{hy.unittest ()}
 
 }
 \author{

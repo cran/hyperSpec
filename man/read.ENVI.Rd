@@ -155,13 +155,13 @@ pixel size values (i.e. the step sizes) are multiplied by 1000.
 
 \references{
 This function was adapted from
-  \code{\link[caTools]{read.ENVI}}:
+  \code{caTools::read.ENVI()}:
 
 Jarek Tuszynski (2008). caTools: Tools: moving window statistics, GIF,
   Base64, ROC AUC, etc.. R package version 1.9.
 }
 \seealso{
-\code{\link[caTools]{read.ENVI}}
+\code{caTools::read.ENVI()}
 
 \code{\link[hyperSpec]{textio}}
 }
