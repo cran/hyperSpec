@@ -3,12 +3,15 @@
 ##' \code{read.txt.Witec} reads Witec ASCII files where the first column gives the wavelength
 ##' axes and the other columns the spectra. \code{read.dat.Witec} reads Witec's ASCII exported data
 ##' which comes in separate files with x and y data.
+##'
+##' Parameters `nwl` (automatically calculated now) and `remove.zerospc`
+##' (use \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead) have
+##' been deprecated and removed.
+##'
 ##' @title File Import Witec Raman
 ##' @param file filename or connection to ASCII file
 ##' @param points.per.line number of spectra in x direction of the map
 ##' @param lines.per.image number of spectra in y direction
-##' @param nwl is deprecated and will be removed soon. Number of wavelengths is calculated automatically.
-##' @param remove.zerospc is deprecated and will be removed soon. Use \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead.
 ##' @param type type of spectra: \code{single} for single spectra (including time series), \code{map} for imaging data.
 ##' @param hdr.label WITec Project exports the spectra names (contain information of map position or number of spectra) within the \code{file}.
 ##' @param hdr.units WITec Project exports the spectra units within the \code{file}.

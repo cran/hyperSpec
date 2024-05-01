@@ -1,0 +1,12 @@
+---
+title: "hyperSpec"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{hyperSpec}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+**hyperSpec**'s vignettes are now available as articles at 
+https://r-hyperspec.github.io/hyperSpec/articles/index.html
+

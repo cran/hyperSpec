@@ -1,12 +1,11 @@
-citHeader("To cite package 'hyperSpec' please use:")
-
 year <- sub ("^[^-]*-([[:digit:]]{4}).*$", "\\1", meta$Version)
 vers <- paste ("R package version", meta$Version)
 
-citEntry (entry="Manual",
+bibentry (bibtype="Manual",
+          header="To cite package 'hyperSpec' please use:",
           title = "hyperSpec: a package to handle hyperspectral data sets in R",
-          author = personList (as.person("Claudia Beleites"),
-                               as.person("Valter Sergo")),
+          author = c (as.person("Claudia Beleites"),
+                      as.person("Valter Sergo")),
           year = year,
           note = vers,
           URL = 'https://github.com/r-hyperspec/hyperSpec',

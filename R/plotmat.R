@@ -100,8 +100,10 @@ plotmat <- function (object, y = ".row", ylab, col = alois.palette (20), ...,
     tmp [[]] <- tmp [[,, max ~ min]]
     tmp@wavelength <- rev (tmp@wavelength)
 
-    expect_silent (plotmat (tmp))
-  })
+    tmp <- capture_condition (plotmat (flu))
+    tmp <- tmp[! grepl("package 'plotrix' not available: omitting legend", tmp)]
+    expect_equal(length(tmp), 0)
+})
 
   ## TODO vdiffr
 

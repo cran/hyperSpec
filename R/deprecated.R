@@ -23,7 +23,7 @@ scan.txt.Witec <- function (...) {.Deprecated("read.txt.Witec()"); read.txt.Wite
 ##' @rdname read.txt.Witec
 ##' @export
 ##' @keywords internal
-scan.dat.Witec <- function (...) {.Deprecated("read.(dat.Witec)"); read.dat.Witec(...)}
+scan.dat.Witec <- function (...) {.Deprecated("read.dat.Witec())"); read.dat.Witec(...)}
 
 ##' @rdname read.txt.Witec
 ##' @export

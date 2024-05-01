@@ -70,10 +70,6 @@ read.txt.Witec.Graph(
 \item{filey}{filename intensity file}
 
 \item{headerfile}{filename or connection to ASCII file with header information}
-
-\item{nwl}{is deprecated and will be removed soon. Number of wavelengths is calculated automatically.}
-
-\item{remove.zerospc}{is deprecated and will be removed soon. Use \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead.}
 }
 \value{
 a hyperSpec object
@@ -85,6 +81,10 @@ Import Raman Spectra/Maps from Witec Instrument via ASCII files
 \code{read.txt.Witec} reads Witec ASCII files where the first column gives the wavelength
 axes and the other columns the spectra. \code{read.dat.Witec} reads Witec's ASCII exported data
 which comes in separate files with x and y data.
+
+Parameters \code{nwl} (automatically calculated now) and \code{remove.zerospc}
+(use  \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead) have
+been deprecated and removed.
 }
 \seealso{
 \code{vignette ("fileio")} for more information on file import and

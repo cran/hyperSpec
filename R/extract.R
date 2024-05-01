@@ -101,7 +101,7 @@
 ##' @param x a \code{hyperSpec} Object
 ##' @param i row index: selects spectra
 ##'
-##' \code{[[} and code{[[<-} accept indexing with logical matrix or a n by 2
+##' \code{[[} and \´code{[[<-} accept indexing with logical matrix or a n by 2
 ##'   integer index matrix. In this case the indexing is done inside the
 ##'   spectra matrix. See the examples below.
 ##' @param j selecting columns of \code{x@@data}

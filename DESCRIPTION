@@ -3,8 +3,8 @@ Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.100.0
-Date: 2021-09-13
+Version: 0.100.2
+Date: 2024-05-01
 Maintainer: Claudia Beleites <Claudia.Beleites@chemometrix.gmbh>
 Authors@R: c(
     person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "Claudia.Beleites@chemometrix.gmbh", comment = c(ORCID = "0000-0003-1626-154X")),
@@ -13,7 +13,7 @@ Authors@R: c(
     person("Marcel",    "Dahms",     role = "ctb"),
     person("Björn",     "Egert",     role = "ctb"),
     person("Simon",     "Fuller",    role = "ctb"),
-    person("Vilmantas", "Gegzna",    role = "ctb"),
+    person("Vilmantas", "Gegzna",    role = "aut"),
     person("Rustam",    "Guliev",    role = "ctb"),
     person("Bryan A.",  "Hanson",    role = "ctb"),
     person("Michael",   "Hermes",    role = "ctb"),
@@ -32,14 +32,14 @@ License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
 Depends: R (>= 3.6.0), lattice, grid, ggplot2 (>= 2.2.0), xml2
-Suggests: R.matlab, tripack, deldir, rgl, plotrix, sp, baseline,
-        compiler, inline, Rcpp, MASS, fastcluster, pls, mvtnorm,
-        digest, reshape, devtools, R.rsp, tibble
-Imports: testthat, methods, utils, latticeExtra, lazyeval, dplyr
+Suggests: R.matlab, deldir, rgl, plotrix, sp, baseline, compiler,
+        inline, Rcpp, MASS, fastcluster, pls, mvtnorm, digest, reshape,
+        devtools, R.rsp, tibble, knitr, rmarkdown
+Imports: testthat, methods, utils, latticeExtra, lazyeval, dplyr, rlang
 URL: https://r-hyperspec.github.io/hyperSpec/ (documentation),
         https://github.com/r-hyperspec/hyperSpec (code)
 BugReports: https://github.com/r-hyperspec/hyperSpec/issues
-VignetteBuilder: R.rsp
+VignetteBuilder: knitr
 Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'Arith.R' 'Compare.R' 'DollarNames.R' 'Math.R' 'chk.hy.R'
         'read.txt.wide.R' 'read.txt.long.R' 'options.R' 'wl.R'
@@ -71,7 +71,7 @@ Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'write.txt.wide.R' 'y-pastenames.R' 'zzz.R'
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2021-09-13 11:16:56 UTC; cb
+Packaged: 2024-05-01 13:53:43 UTC; cb
 Author: Claudia Beleites [aut, cre, dtc]
     (<https://orcid.org/0000-0003-1626-154X>),
   Valter Sergo [aut],
@@ -79,7 +79,7 @@ Author: Claudia Beleites [aut, cre, dtc]
   Marcel Dahms [ctb],
   Björn Egert [ctb],
   Simon Fuller [ctb],
-  Vilmantas Gegzna [ctb],
+  Vilmantas Gegzna [aut],
   Rustam Guliev [ctb],
   Bryan A. Hanson [ctb],
   Michael Hermes [ctb],
@@ -87,4 +87,4 @@ Author: Claudia Beleites [aut, cre, dtc]
   Roman Kiselev [ctb],
   Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2021-09-13 13:00:02 UTC
+Date/Publication: 2024-05-01 16:02:11 UTC

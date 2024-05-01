@@ -4,23 +4,10 @@
 \alias{wc}
 \title{line/word/character count of ASCII files}
 \usage{
-wc(file, flags = c("lines", "words", "bytes"))
-}
-\arguments{
-\item{file}{the file name or pattern}
-
-\item{flags}{the parameters to count, character vector with the long form
-of the parameters}
-}
-\value{
-data.frame with the counts and file names, or `NULL` if wc is
-  not available on the system.
+wc()
 }
 \description{
-`wc()` uses the system command `wc`. Use at your own risk.
-}
-\note{
-`wc()` now is deprecated and will be removed from hyperSpec in future. Consider using [count_lines()] instead for line counting.
+`wc()` is defunct and will be removed from hyperSpec in future. Consider using [count_lines()] instead for line counting.
 }
 \seealso{
 [count_lines()]

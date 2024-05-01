@@ -163,7 +163,7 @@ For further information, see the examples below and the documentation of
 \examples{
 
 
-\dontrun{vignette  ("file-io")}
+\dontrun{vignette  ("file-io")
 
 ## export & import matlab files
 if (require (R.matlab)) {
@@ -208,7 +208,7 @@ read.txt.wide (file = paste0 (tempdir(), "/flu.txt"),
                  # plus wavelength label last
                  .wavelength = "lambda / nm"),
 		header = TRUE)
-
+}
 
 }
 \seealso{

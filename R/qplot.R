@@ -46,9 +46,9 @@ qplotspc <- function (x,
   }
 
   wl.range <- wl2i (x, wl.range, unlist = FALSE)
-  
+
   x <- x [,, unlist (wl.range), wl.index = TRUE]
-  
+
   df <- as.long.df (x, rownames = TRUE, na.rm = FALSE) # with na.rm trouble with wl.range
 
   ## ranges go into facets
@@ -56,11 +56,11 @@ qplotspc <- function (x,
     tmp <- wl.range
     for (r in seq_along(tmp))
       tmp [[r]][TRUE] <- r
-    
+
     df$.wl.range <- rep (unlist (tmp), each = nrow (x))
   }
-  
-  
+
+
   df <- df [! is.na (df$spc),, drop = FALSE]
   if (map.lineonly)
       p <- ggplot (df) + geom_line (mapping = mapping, ...)
@@ -131,15 +131,15 @@ qplotmap <- function (object, mapping = aes_string (x = "x", y = "y", fill = "sp
 
   ## generate axis/scale labels
   ## TODO: own function
-  x <- as.character (mapping$x)
+  x <- as_label (mapping$x)
   xlabel <- labels (object)[[tail (x, 1)]]
   if (is.null (xlabel)) xlabel <- x
 
-  y <- as.character (mapping$y)
+  y <- as_label (mapping$y)
   ylabel <- labels (object)[[tail (y, 1)]]
   if (is.null (ylabel)) ylabel <- y
 
-  f <- as.character (mapping$fill)
+  f <- as_label (mapping$fill)
   flabel <- labels (object)[[tail (f, 1)]]
   if (is.null (flabel)) flabel <- f
 
@@ -164,6 +164,7 @@ qplotmap <- function (object, mapping = aes_string (x = "x", y = "y", fill = "sp
 ##' @seealso \code{\link{plotc}}
 ##'
 ##' \code{\link[ggplot2]{ggplot}}\code{\link[ggplot2]{geom_point}}
+##' @importFrom rlang as_label
 ##' @examples
 ##' qplotc (flu)
 ##' qplotc (flu) + geom_smooth (method = "lm")
@@ -184,16 +185,16 @@ qplotc <- function (object, mapping = aes_string(x = "c", y = "spc"), ...,
   ## find out whether the wavelengths are needed individually,
   ## if not, use only the first wavelength and issue a warning
 
-  if (any (grepl ("spc", as.character (mapping))) && # use intensities
+  if (any (grepl ("spc", as_label (mapping))) && # use intensities
       nwl (object) > 1 &&                            # has > 1 wavelength
       is.null (func) &&                              # no stats function
-      ! any (grepl ("[.]wavelength", as.character (mapping)))) {
+      ! any (grepl ("[.]wavelength", as_label (mapping)))) {
     object <- object [,, 1, wl.index = TRUE]
     warning ("Intensity at first wavelengh only is used.")
   }
 
   ## produce fancy y label
-  ylab <- labels (object, as.character (mapping$y))
+  ylab <- labels (object, as_label (mapping$y))
   if (! is.null (func))
     ylab <- make.fn.expr (substitute (func), c (ylab, func.args))
   ylab <- as.expression (ylab)
@@ -211,7 +212,7 @@ qplotc <- function (object, mapping = aes_string(x = "c", y = "spc"), ...,
       p <- ggplot (df, mapping = mapping) + geom_point ()
 
   p + ylab (ylab) +
-      xlab (labels (object, as.character (mapping$x)))
+      xlab (labels (object, as_label (mapping$x)))
 }
 
 make.fn.expr <- function (fn, l = list ()){

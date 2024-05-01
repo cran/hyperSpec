@@ -1,3 +1,5 @@
+* since: fixes of CRAN NOTEs
+
 # hyperSpec 0.100 (2021-08-05)
 
 ## Changes

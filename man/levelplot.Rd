@@ -89,7 +89,7 @@ axis.
 \code{plotmap}, \code{map.identify}, and the \code{levelplot} methods internally use the same
 gateway function to \code{\link[lattice]{levelplot}}. Thus \code{transform.factor} can be used
 with all of them and the panel function defaults to \code{\link[lattice]{panel.levelplot.raster}}
-for all three. Two special column names, \code{.rownames} and \code{.wavelength} may be used. 
+for all three. Two special column names, \code{.rownames} and \code{.wavelength} may be used.
 
 \code{levelplot} plots the spectra matrix.
 
@@ -137,9 +137,7 @@ plotmap (chondro, clusters ~ x * y)
 # Voronoi plots
 smpl <- sample (chondro, 300)
 plotmap (smpl, clusters ~ x * y)
-if (require (tripack)) 
-    plotvoronoi (smpl, clusters ~ x * y)
-if (require (deldir)) 
+if (require (deldir))
     plotvoronoi (smpl, clusters ~ x * y,
                  use.tripack = FALSE)
 

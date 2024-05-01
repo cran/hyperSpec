@@ -1,7 +1,7 @@
 #################################################################################
 ###
 ###  plotvoronoi - plot spectral maps with irregular point pattern
-###  
+###
 ###  plots intensity or extra data column over 2 extra data columns
 
 ##' @param use.tripack Whether package tripack should be used for calculating
@@ -22,14 +22,14 @@ plotvoronoi <- function (object, model = spc ~ x * y,
   if (!requireNamespace ("latticeExtra"))
    stop ("package latticeExtra is needed for Voronoi plots.")
 
-  if (use.tripack){
-    if (!requireNamespace ("tripack"))
-      stop ("package tripack requested but not available.")
-  } else {
-    if (!requireNamespace ("deldir"))
-      stop ("package deldir requested but not available.")
-  }
- 
+  # if (use.tripack){
+  #   if (!requireNamespace ("tripack"))
+  #     stop ("package tripack requested but not available.")
+  # } else {
+  #   if (!requireNamespace ("deldir"))
+  #     stop ("package deldir requested but not available.")
+  # }
+
   if (use.tripack && mix)
       object@data <- object@data [sample (nrow (object)),]
 

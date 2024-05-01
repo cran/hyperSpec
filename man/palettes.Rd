@@ -22,7 +22,7 @@ alois.palette(n = 100, ...)
 (\code{alois.palette}: \code{\link[grDevices]{colorRampPalette}})}
 }
 \value{
-A vector containing the color values in the form "\#rrbbggaa".
+A vector containing the color values in the form "#rrbbggaa".
 }
 \description{
 Matlab-like Palettes

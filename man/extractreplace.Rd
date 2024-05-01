@@ -33,7 +33,7 @@
 
 \item{i}{row index: selects spectra
 
-\code{[[} and code{[[<-} accept indexing with logical matrix or a n by 2
+\code{[[} and \code{[[<-} accept indexing with logical matrix or a n by 2
   integer index matrix. In this case the indexing is done inside the
   spectra matrix. See the examples below.}
 
@@ -234,7 +234,7 @@ spc [[]]
 spc$.
 spc$z <- 1 : 6
 spc
-spc$z <- list (1 : 6, "z / a.u.") 
+spc$z <- list (1 : 6, "z / a.u.")
 
 }
 \seealso{
