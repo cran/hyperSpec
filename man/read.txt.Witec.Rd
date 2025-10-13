@@ -82,8 +82,8 @@ Import Raman Spectra/Maps from Witec Instrument via ASCII files
 axes and the other columns the spectra. \code{read.dat.Witec} reads Witec's ASCII exported data
 which comes in separate files with x and y data.
 
-Parameters \code{nwl} (automatically calculated now) and \code{remove.zerospc}
-(use  \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead) have
+Parameters `nwl` (automatically calculated now) and `remove.zerospc`
+(use \code{\link{hy.setOptions} (file.remove.emptyspc = TRUE)} instead) have
 been deprecated and removed.
 }
 \seealso{

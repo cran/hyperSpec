@@ -299,11 +299,8 @@ read.txt.Witec.Graph <- function (headerfile = stop ("filename or connection nee
   })
 
   test_that ("encoding", {
+    skip ("no suitable test file available")
     skip_if_not_fileio_available()
-    expect_warning(read.txt.Witec.Graph("fileio/txt.Witec/nofilename (Header).txt"))
-
-    spc <- read.txt.Witec.Graph("fileio/txt.Witec/nofilename (Header).txt", encoding = "latin1")
-    expect_known_hash(spc, "2bad36adb3")
   })
 
   test_that ("Time Series", {

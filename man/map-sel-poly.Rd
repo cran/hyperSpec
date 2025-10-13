@@ -30,8 +30,8 @@ Click the points that should be connected as polygon. Input ends with right clic
 }
 \details{
 \code{map.sel.poly} is a convenience wrapper for \code{\link{plotmap}}, \code{sel.poly}, 
-and \code{\link[sp]{point.in.polygon}}. For custiomized plotting, the plot can be produced by 
-\code{\link{plotmap}}, \code{\link{plotvoronoi}} or \code{\link{levelplot}}, and the result of 
+and \code{\link[sp]{point.in.polygon}}. For customized plotting, the plot can be produced by 
+\code{\link{plotmap}}, \code{\link{plotvoronoi}} or \code{\link[hyperSpec]{levelplot}}, and the result of 
 that plot command handed over to \code{map.sel.poly}, see the example below.
 
 If even more customized plotting is required,\code{sel.poly} should be used (see example).

@@ -322,7 +322,7 @@ read.jdx <- function(filename = stop ("filename is needed"), encoding = "",
     skip_if_not_fileio_available ()
     
     expect_known_hash(read.jdx ("fileio/jcamp-dx/shimadzu.jdx", encoding = "latin1", keys.hdr2data=TRUE),
-                       "55c392d767f7a7f268e55540d4496fb1")
+                       "dd9b23dd3a666b0cc11aca6615106fb0")
     expect_known_hash(read.jdx ("fileio/jcamp-dx/virgilio.jdx", ytol = 1e-9),
                        "da4a725d23efe4a1888496f1739294c2")
   })

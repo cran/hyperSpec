@@ -63,7 +63,7 @@ of the columns (determined by the names) differs, should they be regarded
 as different?}
 
 \item{check.label}{Should the slot \code{label} be checked? \cr If the
-labels differ only in the order of their entries, they are conidered
+labels differ only in the order of their entries, they are considered
 equal.}
 
 \item{tolerance, wl.tolerance}{tolerances for checking wavelengths and data, respectively}

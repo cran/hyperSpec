@@ -2,6 +2,7 @@
 % Please edit documentation in R/hyperspec-package.R
 \docType{package}
 \name{hyperSpec-package}
+\alias{hyperSpec}
 \alias{hyperSpec-package}
 \title{Package hyperSpec}
 \description{
@@ -32,4 +33,3 @@ C. Beleites
 
 Maintainer: Claudia Beleites <claudia.beleites@chemometrix.eu>
 }
-\keyword{package}

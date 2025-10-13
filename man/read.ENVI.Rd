@@ -148,11 +148,11 @@ pixel size values (i.e. the step sizes) are multiplied by 1000.
 }
 \section{Functions}{
 \itemize{
-\item \code{read.ENVI.HySpex}: 
+\item \code{read.ENVI.HySpex()}: 
 
-\item \code{read.ENVI.Nicolet}: 
+\item \code{read.ENVI.Nicolet()}: 
+
 }}
-
 \references{
 This function was adapted from
   \code{caTools::read.ENVI()}:

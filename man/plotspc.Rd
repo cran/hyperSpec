@@ -260,7 +260,5 @@ See \code{\link{plot}} for some predefined spectra plots such as mean
 }
 \author{
 C. Beleites
-
-C. Beleites
 }
 \keyword{hplot}

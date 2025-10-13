@@ -3,8 +3,8 @@ Encoding: UTF-8
 Type: Package
 Title: Work with Hyperspectral Data, i.e. Spectra + Meta Information
         (Spatial, Time, Concentration, ...)
-Version: 0.100.2
-Date: 2024-05-01
+Version: 0.100.3
+Date: 2025-10-12
 Maintainer: Claudia Beleites <Claudia.Beleites@chemometrix.gmbh>
 Authors@R: c(
     person("Claudia",   "Beleites",  role = c("aut","cre", "dtc"), email = "Claudia.Beleites@chemometrix.gmbh", comment = c(ORCID = "0000-0003-1626-154X")),
@@ -69,11 +69,10 @@ Collate: 'validate.R' 'hyperspec-class.R' 'unittest.R' 'paste.row.R'
         'subset.R' 'sweep.R' 'trellis.factor.key.R' 'units.R'
         'vandermonde.R' 'wc.R' 'wleval.R' 'write.txt.long.R'
         'write.txt.wide.R' 'y-pastenames.R' 'zzz.R'
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2024-05-01 13:53:43 UTC; cb
-Author: Claudia Beleites [aut, cre, dtc]
-    (<https://orcid.org/0000-0003-1626-154X>),
+Author: Claudia Beleites [aut, cre, dtc] (ORCID:
+    <https://orcid.org/0000-0003-1626-154X>),
   Valter Sergo [aut],
   Alois Bonifacio [ctb, dtc],
   Marcel Dahms [ctb],
@@ -87,4 +86,5 @@ Author: Claudia Beleites [aut, cre, dtc]
   Roman Kiselev [ctb],
   Sebastian Mellor [ctb]
 Repository: CRAN
-Date/Publication: 2024-05-01 16:02:11 UTC
+Date/Publication: 2025-10-13 05:10:33 UTC
+Packaged: 2025-10-12 16:16:09 UTC; cb

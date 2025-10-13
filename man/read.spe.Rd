@@ -54,12 +54,12 @@ always empty.
 }
 \section{Functions}{
 \itemize{
-\item \code{.read.spe.header}: Read only header of a WinSpec SPE file (version 2.5)
+\item \code{.read.spe.header()}: Read only header of a WinSpec SPE file (version 2.5)
 
-\item \code{spe.showcalpoints}: Plot the WinSpec SPE file (version 2.5) and show the
+\item \code{spe.showcalpoints()}: Plot the WinSpec SPE file (version 2.5) and show the
 calibration points stored inside of it (x-axis calibration)
-}}
 
+}}
 \author{
 R. Kiselev, C. Beleites
 }

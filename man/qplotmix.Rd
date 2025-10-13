@@ -107,8 +107,4 @@ plot graph with legend right of it
 }
 \author{
 Claudia Beleites
-
-Claudia Beleites
-
-Claudia Beleites
 }

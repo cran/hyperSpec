@@ -234,7 +234,7 @@ spc [[]]
 spc$.
 spc$z <- 1 : 6
 spc
-spc$z <- list (1 : 6, "z / a.u.")
+spc$z <- list (1 : 6, "z / a.u.") 
 
 }
 \seealso{

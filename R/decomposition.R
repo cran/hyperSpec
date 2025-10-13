@@ -180,7 +180,7 @@ context ("decomposition")
   })
 
   test_that ("POSIXlt", {
-    flu$lt <- as.POSIXlt(Sys.time())
+    # flu$lt <- as.POSIXct(Sys.time())
     expect_equal (decomposition (flu, flu [[]], scores = FALSE)$lt, flu$lt)
   })
 

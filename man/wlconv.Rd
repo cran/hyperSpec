@@ -86,47 +86,47 @@ The following units can be converted into each other:
 }
 \section{Functions}{
 \itemize{
-\item \code{nm2raman}: conversion \strong{nanometers} -> \strong{Raman shift (relative wavenumber)}
+\item \code{nm2raman()}: conversion \strong{nanometers} -> \strong{Raman shift (relative wavenumber)}
 
-\item \code{nm2invcm}: conversion \strong{nanometers} -> \strong{inverse cm (absolute wavenumber)}
+\item \code{nm2invcm()}: conversion \strong{nanometers} -> \strong{inverse cm (absolute wavenumber)}
 
-\item \code{nm2ev}: conversion \strong{nanometers} -> \strong{electronvolt}
+\item \code{nm2ev()}: conversion \strong{nanometers} -> \strong{electronvolt}
 
-\item \code{nm2freq}: conversion \strong{nm} -> \strong{frequency in THz}
+\item \code{nm2freq()}: conversion \strong{nm} -> \strong{frequency in THz}
 
-\item \code{invcm2raman}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{Raman shift (relative wavenumber)}
+\item \code{invcm2raman()}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{Raman shift (relative wavenumber)}
 
-\item \code{invcm2nm}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{nanometers}
+\item \code{invcm2nm()}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{nanometers}
 
-\item \code{invcm2ev}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{electronvolt}
+\item \code{invcm2ev()}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{electronvolt}
 
-\item \code{invcm2freq}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{frequency in THz}
+\item \code{invcm2freq()}: conversion \strong{inverse cm (absolute wavenumber)} -> \strong{frequency in THz}
 
-\item \code{raman2invcm}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{inverse cm (absolute wavenumber)}
+\item \code{raman2invcm()}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{inverse cm (absolute wavenumber)}
 
-\item \code{raman2nm}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{nanometers}
+\item \code{raman2nm()}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{nanometers}
 
-\item \code{raman2ev}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{electronvolt}
+\item \code{raman2ev()}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{electronvolt}
 
-\item \code{raman2freq}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{frequency in THz}
+\item \code{raman2freq()}: conversion \strong{Raman shift (relative wavenumber)} -> \strong{frequency in THz}
 
-\item \code{ev2raman}: conversion \strong{electronvolt} -> \strong{Raman shift (relative wavenumber)}
+\item \code{ev2raman()}: conversion \strong{electronvolt} -> \strong{Raman shift (relative wavenumber)}
 
-\item \code{ev2invcm}: conversion \strong{electronvolt} -> \strong{inverse cm (absolute wavenumber)}
+\item \code{ev2invcm()}: conversion \strong{electronvolt} -> \strong{inverse cm (absolute wavenumber)}
 
-\item \code{ev2nm}: conversion \strong{electronvolt} -> \strong{nanometers}
+\item \code{ev2nm()}: conversion \strong{electronvolt} -> \strong{nanometers}
 
-\item \code{ev2freq}: conversion \strong{electronvolt} -> \strong{frequency in THz}
+\item \code{ev2freq()}: conversion \strong{electronvolt} -> \strong{frequency in THz}
 
-\item \code{freq2nm}: conversion \strong{frequency in THz} -> \strong{nanometers}
+\item \code{freq2nm()}: conversion \strong{frequency in THz} -> \strong{nanometers}
 
-\item \code{freq2invcm}: conversion \strong{frequency in THz} -> \strong{inverse cm (absolute wavenumber)}
+\item \code{freq2invcm()}: conversion \strong{frequency in THz} -> \strong{inverse cm (absolute wavenumber)}
 
-\item \code{freq2ev}: conversion \strong{frequency in THz} -> \strong{electronvolt}
+\item \code{freq2ev()}: conversion \strong{frequency in THz} -> \strong{electronvolt}
 
-\item \code{freq2raman}: conversion \strong{frequency in THz} -> \strong{Raman shift (relative wavenumber)}
+\item \code{freq2raman()}: conversion \strong{frequency in THz} -> \strong{Raman shift (relative wavenumber)}
+
 }}
-
 \examples{
 wlconv (3200, "Raman shift", "nm", laser = 785.04)
 wlconv( 785, "nm", "invcm")
